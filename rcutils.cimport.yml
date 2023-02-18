@@ -1,54 +1,34 @@
 
 imports:
 
-- name: "rosidl_runtime_c"
-  sources: "deps/rosidl/rosidl_runtime_c/include"
+- name: "rcutils"
+  sources: "deps/rcutils/include"
   globs: ["**/*.h"]
+  skips: ["rcutils/stdatomic_helper/win32/stdatomic.h"]
   includes: [
     "deps/rcutils/include",
-    "deps/rosidl/rosidl_runtime_c/include",
-    "deps/rosidl/rosidl_typesupport_interface/include",
-    "deps/rosidl/rosidl_typesupport_introspection_c/include",
     ]
-  defines: []
-  skips: []
-
+  
   cSourceModifications:
-  - cSourceModification: "'u16string.h'"
+  - cSourceModification: "'rcutils/logging.h'"
+    deletes:
+    - match: "'RCUTILS_LOGGING_AUTOINIT'"
+    - match: "'g_rcutils_log_severity_names'"
     c2NimExtras:
     - rawNims: |
-        type
-          uintLeast16T * {.importc: "uint_least16_t", header: "stddef.h", bycopy.} = object
+        import ./time
+        proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: "rcutils/logging.h".}
 
-- name: "rosidl_adapter"
-  sources: "deps/rosidl/rosidl_adapter/include"
-  globs: ["**/*.h"]
-  includes: [
-    "deps/rcutils/include",
-    "deps/rosidl/rosidl_runtime_c/include",
-    "deps/rosidl/rosidl_typesupport_interface/include",
-    "deps/rosidl/rosidl_typesupport_introspection_c/include",
-    ]
 
-- name: "rosidl_parser"
-  sources: "deps/rosidl/rosidl_parser/include"
-  globs: ["**/*.h"]
-  includes: [
-    "deps/rcutils/include",
-    "deps/rosidl/rosidl_runtime_c/include",
-    "deps/rosidl/rosidl_typesupport_interface/include",
-    "deps/rosidl/rosidl_typesupport_introspection_c/include",
-    ]
-
-- name: "rosidl_typesupport_introspection_c"
-  sources: "deps/rosidl/rosidl_typesupport_introspection_c/include"
-  globs: ["**/*.h"]
-  includes: [
-    "deps/rcutils/include",
-    "deps/rosidl/rosidl_runtime_c/include",
-    "deps/rosidl/rosidl_typesupport_interface/include",
-    "deps/rosidl/rosidl_typesupport_introspection_c/include",
-    ]
+# - name: "rosidl_typesupport_introspection_c"
+#   sources: "deps/rosidl/rosidl_typesupport_introspection_c/include"
+#   globs: ["**/*.h"]
+#   includes: [
+#     "deps/rcutils/include",
+#     "deps/rosidl/rosidl_runtime_c/include",
+#     "deps/rosidl/rosidl_typesupport_interface/include",
+#     "deps/rosidl/rosidl_typesupport_introspection_c/include",
+#     ]
   
   # cSourceModifications:
   # - cSourceModification: "'field_types.h'"
