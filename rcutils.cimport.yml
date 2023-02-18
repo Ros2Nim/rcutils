@@ -7,13 +7,16 @@ imports:
   skips:
   - "rcutils/stdatomic_helper/win32/stdatomic.h"
   - "rcutils/stdatomic_helper/gcc/stdatomic.h"
-  - "rcutils/visibility_control.h"
   - "rcutils/stdatomic_helper.h"
   includes: [
     "deps/rcutils/include",
     ]
   
   cSourceModifications:
+  - cSourceModification: "'rcutils/visibility_control.h'"
+    deletes:
+    - match: "'RCUTILS_PUBLIC'"
+    - match: "'RCUTILS_PUBLIC_TYPE'"
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"
