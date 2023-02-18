@@ -17,6 +17,9 @@ imports:
     deletes:
     - match: "'RCUTILS_PUBLIC'"
     - match: "'RCUTILS_PUBLIC_TYPE'"
+  - cSourceModification: "'rcutils/macros.h'"
+    deletes:
+    - match: "'RCUTILS_THREAD_LOCAL'"
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"
@@ -25,6 +28,10 @@ imports:
     - rawNims: |
         import ./time
         proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: "rcutils/logging.h".}
+  - cSourceModification: "'rcutils/isalnum_no_locale.h'"
+    c2NimExtras:
+    - rawNims: |
+        converter charToNum*(c: char): int = c.int 
 
   - cSourceModification: "'.h'"
     deletes:

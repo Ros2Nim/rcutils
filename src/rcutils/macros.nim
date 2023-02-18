@@ -25,11 +25,9 @@
 
 ##  A macro to make the compiler warn when the return value of a function is not used.
 
-const
-  RCUTILS_THREAD_LOCAL* = _Thread_local ##  \cond Doxygen_Suppress
-                                     ##  This block either sets RCUTILS_THREAD_LOCAL or RCUTILS_THREAD_LOCAL_PTHREAD.
-                                     ##  Apple OS's
-                                     ##  macOS
+##  \cond Doxygen_Suppress
+##  Apple OS's
+##  macOS
 
 ##  A macro to mark an argument or variable as unused.
 
