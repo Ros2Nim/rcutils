@@ -4,7 +4,8 @@ imports:
 - name: "rcutils"
   sources: "deps/rcutils/include"
   globs: ["**/*.h"]
-  skips: ["rcutils/stdatomic_helper/win32/stdatomic.h"]
+  skips: ["rcutils/stdatomic_helper/win32/stdatomic.h",
+          "rcutils/stdatomic_helper/gcc/stdatomic.h"]
   includes: [
     "deps/rcutils/include",
     ]
