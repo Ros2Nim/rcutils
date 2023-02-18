@@ -58,6 +58,6 @@ proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): 
   ##  @cond Doxygen_Suppress
 
 proc rcutils_vsnprintf*(buffer: cstring; buffer_size: csize_t; format: cstring;
-                       args: va_list): cint {.importc: "rcutils_vsnprintf",
-    header: "snprintf.h".}
+                       args: varargs[pointer]): cint {.
+    importc: "rcutils_vsnprintf", header: "snprintf.h".}
   ##  Format a string with va_list for arguments, see rcutils_snprintf().

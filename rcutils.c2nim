@@ -19,6 +19,7 @@
 
 // #pragma c2nim render nobody
 #pragma c2nim mangle "'rosidl_runtime_c__' {\\w+}" "$1"
+#pragma c2nim mangle "'va_list'" "varargs[pointer]"
 
 #pragma c2nim mangle "'_Bool'" "bool"
 

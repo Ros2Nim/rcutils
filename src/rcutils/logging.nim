@@ -187,7 +187,7 @@ proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
 type
 
   rcutils_logging_output_handler_t* = proc (a1: ptr rcutils_log_location_t; a2: cint;
-      a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: ptr va_list) ##
+      a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: varargs[pointer]) ##
                               ##  The function signature to log messages.
                               ##
                               ##  \param[in] location The location information about where the log came from
@@ -482,7 +482,7 @@ proc rcutils_log*(location: ptr rcutils_log_location_t; severity: cint; name: cs
 
 proc rcutils_logging_console_output_handler*(
     location: ptr rcutils_log_location_t; severity: cint; name: cstring;
-    timestamp: rcutils_time_point_value_t; format: cstring; args: ptr va_list) {.
+    timestamp: rcutils_time_point_value_t; format: cstring; args: varargs[pointer]) {.
     importc: "rcutils_logging_console_output_handler", header: "logging.h".}
   ##  The default output handler outputs log messages to the standard streams.
   ##

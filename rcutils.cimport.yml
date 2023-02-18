@@ -7,6 +7,7 @@ imports:
   skips:
   - "rcutils/stdatomic_helper/win32/stdatomic.h"
   - "rcutils/stdatomic_helper/gcc/stdatomic.h"
+  - "rcutils/visibility_control.h"
   - "rcutils/stdatomic_helper.h"
   includes: [
     "deps/rcutils/include",
@@ -22,6 +23,14 @@ imports:
         import ./time
         proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: "rcutils/logging.h".}
 
+  - cSourceModification: "'.h'"
+    deletes:
+    - match: "'RCUTILS_STEADY_TIME'"
+    substitutes:
+    - peg: "'va_list' \\s+ '*'"
+      repl: "va_list"
+
+#pragma c2nim mangle "'ptr va_list'" "varargs[pointer]"
 
 # - name: "rosidl_typesupport_introspection_c"
 #   sources: "deps/rosidl/rosidl_typesupport_introspection_c/include"

@@ -135,7 +135,7 @@ proc rcutils_char_array_expand_as_needed*(char_array: ptr rcutils_char_array_t;
   ##
 
 proc rcutils_char_array_vsprintf*(char_array: ptr rcutils_char_array_t;
-                                 format: cstring; args: va_list): rcutils_ret_t {.
+                                 format: cstring; args: varargs[pointer]): rcutils_ret_t {.
     importc: "rcutils_char_array_vsprintf", header: "char_array.h".}
   ##  Produce output according to format and args.
   ##
