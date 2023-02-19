@@ -32,6 +32,21 @@ imports:
     c2NimExtras:
     - fileContents: |
         #mangle "'_rcutils_fault_injection_maybe_fail'" "rcutils_fault_injection_maybe_fail"
+  - cSourceModification: "'rcutils/types/array_list.h'"
+    substitutes:
+    - peg: "'rcutils_array_list_impl_s'"
+      repl: "rcutils_array_list_impl_t"
+    c2NimExtras:
+    - rawNims: |
+        import rcutils.allocator
+
+        type rcutils_array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_list.h"} = object
+          size*: csize_t 
+          capacity*: csize_t 
+          list*: pointer
+          data_size*: csize_t 
+          allocator*: rcutils_allocator_t 
+
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"

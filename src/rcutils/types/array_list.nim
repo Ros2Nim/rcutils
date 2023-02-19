@@ -8,6 +8,15 @@
 
 ##  #pragma c2nim render nobody
 
+import rcutils.allocator
+
+type rcutils_array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_list.h"} = object
+  size*: csize_t
+  capacity*: csize_t
+  list*: pointer
+  data_size*: csize_t
+  allocator*: rcutils_allocator_t
+
 ##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,12 +39,12 @@ import
   rcutils.visibility_control_macros, rcutils.visibility_control_macros,
   rcutils.visibility_control, rcutils.allocator
 
-discard "forward decl of rcutils_array_list_impl_s"
+discard "forward decl of rcutils_array_list_impl_t"
 type
 
   rcutils_array_list_t* {.importc: "rcutils_array_list_t", header: "array_list.h",
                          bycopy.} = object
-    impl* {.importc: "impl".}: ptr rcutils_array_list_impl_s ##
+    impl* {.importc: "impl".}: ptr rcutils_array_list_impl_t ##
                               ##  A pointer to the PIMPL implementation type.
 
 
