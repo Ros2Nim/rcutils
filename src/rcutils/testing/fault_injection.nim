@@ -32,11 +32,11 @@ const
   RCUTILS_FAULT_INJECTION_FAIL_NOW* = 0
 
 
-proc rcutils_fault_injection_is_test_complete*(): Bool {.
+proc rcutils_fault_injection_is_test_complete*(): bool {.
     importc: "rcutils_fault_injection_is_test_complete",
     header: "fault_injection.h".}
 
-proc rcutils_fault_injection_set_count*(count: int_least64_t) {.
+proc rcutils_fault_injection_set_count*(count: int64) {.
     importc: "rcutils_fault_injection_set_count", header: "fault_injection.h".}
   ##
   ##  \brief Atomically set the fault injection counter.
@@ -61,7 +61,7 @@ proc rcutils_fault_injection_set_count*(count: int_least64_t) {.
   ##  RCUTILS_FAULT_INJECTION_NEVER_FAIL.
   ##
 
-proc rcutils_fault_injection_get_count*(): int_least64_t {.
+proc rcutils_fault_injection_get_count*(): int64 {.
     importc: "rcutils_fault_injection_get_count", header: "fault_injection.h".}
   ##
   ##  \brief Atomically get the fault injection counter value
@@ -70,7 +70,7 @@ proc rcutils_fault_injection_get_count*(): int_least64_t {.
   ##  `RCUTILS_FAULT_INJECTION_TEST`
   ##
 
-proc rcutils_fault_injection_maybe_fail*(): int_least64_t {.
+proc rcutils_fault_injection_maybe_fail*(): int64 {.
     importc: "_rcutils_fault_injection_maybe_fail", header: "fault_injection.h".}
   ##
   ##  \brief Implementation of fault injection decrementer

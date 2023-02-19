@@ -29,7 +29,7 @@ import
   rcutils.visibility_control_macros, rcutils.visibility_control
 
 
-proc rcutils_set_env*(env_name: cstring; env_value: cstring): Bool {.
+proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.
     importc: "rcutils_set_env", header: "env.h".}
   ##  Set or un-set a process-scoped environment variable.
   ##

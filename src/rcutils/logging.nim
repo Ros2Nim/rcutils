@@ -55,7 +55,7 @@ const
                               ##
 
 var g_rcutils_logging_initialized* {.importc: "g_rcutils_logging_initialized",
-                                   header: "logging.h".}: Bool
+                                   header: "logging.h".}: bool
 
 
 proc rcutils_logging_initialize_with_allocator*(allocator: rcutils_allocator_t): rcutils_ret_t {.
@@ -373,7 +373,7 @@ proc rcutils_logging_set_logger_level*(name: cstring; level: cint): rcutils_ret_
   ##  \return `RCUTILS_RET_ERROR` if an unspecified error occured
   ##
 
-proc rcutils_logging_logger_is_enabled_for*(name: cstring; severity: cint): Bool {.
+proc rcutils_logging_logger_is_enabled_for*(name: cstring; severity: cint): bool {.
     importc: "rcutils_logging_logger_is_enabled_for", header: "logging.h".}
   ##  Determine if a logger is enabled for a severity level.
   ##

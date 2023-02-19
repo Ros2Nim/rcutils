@@ -22,6 +22,6 @@
 #pragma c2nim mangle "'va_list'" "varargs[pointer]"
 
 #pragma c2nim mangle "'int_least64_t'" "int64"
-#pragma c2nim mangle "'_' {.+}" "$1"
 #pragma c2nim mangle "'_Bool'" "bool"
+#pragma c2nim mangle "'_' {.+}" "$1"
 

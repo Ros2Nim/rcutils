@@ -99,7 +99,7 @@ proc rcutils_get_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring
   ##  \return `NULL` if the symbol doesn't exist.
   ##
 
-proc rcutils_has_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): Bool {.
+proc rcutils_has_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): bool {.
     importc: "rcutils_has_symbol", header: "shared_library.h".}
   ##  Return true if the shared library contains a specific symbol name otherwise returns false.
   ##
@@ -119,7 +119,7 @@ proc rcutils_unload_shared_library*(lib: ptr rcutils_shared_library_t): rcutils_
   ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
   ##
 
-proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): Bool {.
+proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): bool {.
     importc: "rcutils_is_shared_library_loaded", header: "shared_library.h".}
   ##  Check if the library is loaded.
   ##
@@ -133,7 +133,7 @@ proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): Bool 
 
 proc rcutils_get_platform_library_name*(library_name: cstring;
                                        library_name_platform: cstring;
-                                       buffer_size: cuint; debug: Bool): rcutils_ret_t {.
+                                       buffer_size: cuint; debug: bool): rcutils_ret_t {.
     importc: "rcutils_get_platform_library_name", header: "shared_library.h".}
   ##  Get the library name for the compiled platform
   ##

@@ -35,7 +35,7 @@ type
   rcutils_char_array_t* {.importc: "rcutils_char_array_t", header: "char_array.h",
                          bycopy.} = object ##  The structure holding the metadata for a char array.
     buffer* {.importc: "buffer".}: cstring ##  A pointer to the allocated memory for this char array.
-    owns_buffer* {.importc: "owns_buffer".}: Bool ##
+    owns_buffer* {.importc: "owns_buffer".}: bool ##
                                               ##  if this is true, we may safely free/realloc the buffer as needed;
                                               ##  otherwise we will leave the buffer alone and alloc new memory if
                                               ##  more space is needed

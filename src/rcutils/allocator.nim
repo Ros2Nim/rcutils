@@ -106,7 +106,7 @@ proc rcutils_get_default_allocator*(): rcutils_allocator_t {.
   ##  Lock-Free          | Yes
   ##
 
-proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): Bool {.
+proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
     importc: "rcutils_allocator_is_valid", header: "allocator.h".}
   ##  Return true if the given allocator has non-null function pointers.
   ##

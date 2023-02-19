@@ -288,7 +288,7 @@ proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rc
   ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
   ##
 
-proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer): Bool {.
+proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer): bool {.
     importc: "rcutils_hash_map_key_exists", header: "hash_map.h".}
   ##  Get whether or not a key exists.
   ##

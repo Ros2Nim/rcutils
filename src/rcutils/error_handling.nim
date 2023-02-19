@@ -198,7 +198,7 @@ proc rcutils_set_error_state*(error_string: cstring; file: cstring;
 ##
 
 
-proc rcutils_error_is_set*(): Bool {.importc: "rcutils_error_is_set",
+proc rcutils_error_is_set*(): bool {.importc: "rcutils_error_is_set",
                                   header: "error_handling.h".}
   ##  Return `true` if the error is set, otherwise `false`.
 
