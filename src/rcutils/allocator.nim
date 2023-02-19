@@ -80,39 +80,39 @@ type
 
 proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.
     importc: "rcutils_get_zero_initialized_allocator", header: "allocator.h".}
-  ##  Return a zero initialized allocator.
-  ##
-  ##  Note that this is an invalid allocator and should only be used as a placeholder.
-  ##
 
 proc rcutils_get_default_allocator*(): rcutils_allocator_t {.
     importc: "rcutils_get_default_allocator", header: "allocator.h".}
-  ##  Return a properly initialized rcutils_allocator_t with default values.
-  ##
-  ##  This defaults to:
-  ##
-  ##  - allocate = wraps malloc()
-  ##  - deallocate = wraps free()
-  ##  - reallocate = wraps realloc()
-  ##  - zero_allocate = wraps calloc()
-  ##  - state = `NULL`
-  ##
-  ##  <hr>
-  ##  Attribute          | Adherence
-  ##  ------------------ | -------------
-  ##  Allocates Memory   | No
-  ##  Thread-Safe        | Yes
-  ##  Uses Atomics       | No
-  ##  Lock-Free          | Yes
-  ##
 
 proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
     importc: "rcutils_allocator_is_valid", header: "allocator.h".}
-  ##  Return true if the given allocator has non-null function pointers.
-  ##
-  ##  \param[in] allocator to be checked by the function
-  ##  \return `true` if the allocator is valid, `false` otherwise.
-  ##
+##  Return a zero initialized allocator.
+##
+##  Note that this is an invalid allocator and should only be used as a placeholder.
+##
+##  Return a properly initialized rcutils_allocator_t with default values.
+##
+##  This defaults to:
+##
+##  - allocate = wraps malloc()
+##  - deallocate = wraps free()
+##  - reallocate = wraps realloc()
+##  - zero_allocate = wraps calloc()
+##  - state = `NULL`
+##
+##  <hr>
+##  Attribute          | Adherence
+##  ------------------ | -------------
+##  Allocates Memory   | No
+##  Thread-Safe        | Yes
+##  Uses Atomics       | No
+##  Lock-Free          | Yes
+##
+##  Return true if the given allocator has non-null function pointers.
+##
+##  \param[in] allocator to be checked by the function
+##  \return `true` if the allocator is valid, `false` otherwise.
+##
 ##  Check the given allocator and run fail_statement if it is not valid.
 
 ##  Check the given allocator, and set the message in msg and run fail_statement if it is not valid.
@@ -121,11 +121,11 @@ proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
 proc rcutils_reallocf*(pointer: pointer; size: csize_t;
                       allocator: ptr rcutils_allocator_t): pointer {.
     importc: "rcutils_reallocf", header: "allocator.h".}
-  ##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
-  ##
-  ##  This function will return `NULL` if the allocator is `NULL` or has `NULL` for
-  ##  function pointer fields.
-  ##  \param[inout] pointer to the memory which will be reallocated
-  ##  \param[in] size in bytes
-  ##  \param[in] allocator to be used to allocate and deallocate memory
-  ## 
+##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
+##
+##  This function will return `NULL` if the allocator is `NULL` or has `NULL` for
+##  function pointer fields.
+##  \param[inout] pointer to the memory which will be reallocated
+##  \param[in] size in bytes
+##  \param[in] allocator to be used to allocate and deallocate memory
+## 

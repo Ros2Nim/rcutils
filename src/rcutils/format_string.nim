@@ -40,32 +40,32 @@ import
 proc rcutils_format_string_limit*(allocator: rcutils_allocator_t; limit: csize_t;
                                  format_string: cstring): cstring {.varargs,
     importc: "rcutils_format_string_limit", header: "format_string.h".}
-  ##  Return a newly allocated string, created with a format string up to a limit.
-  ##
-  ##  This function uses snprintf_s to determine the length of the resulting
-  ##  string and allocates storage for the resulting string, formats it, and
-  ##  then returns the result.
-  ##
-  ##  This function can fail and therefore return null if the format_string is
-  ##  null or if memory allocation fails or if snprintf_s fails.
-  ##  An error message is not set in any case.
-  ##
-  ##  Output strings that would be longer than the given limit are truncated.
-  ##
-  ##  All returned strings are null terminated.
-  ##
-  ##  The format string is passed to snprintf_s(), see its documentation for
-  ##  how to use the format string.
-  ##
-  ##  The returned string must be deallocated using the same allocator given once
-  ##  it is no longer needed.
-  ##
-  ##  \see rcutils_snprintf()
-  ##
-  ##  \param[in] allocator the allocator to use for allocation
-  ##  \param[in] limit maximum length of the output string
-  ##  \param[in] format_string format of the output, must be null terminated
-  ##  \return The newly allocated and format output string, or
-  ##  \return `NULL` if there was an error.
-  ##
-  ##  @cond Doxygen_Suppress
+##  Return a newly allocated string, created with a format string up to a limit.
+##
+##  This function uses snprintf_s to determine the length of the resulting
+##  string and allocates storage for the resulting string, formats it, and
+##  then returns the result.
+##
+##  This function can fail and therefore return null if the format_string is
+##  null or if memory allocation fails or if snprintf_s fails.
+##  An error message is not set in any case.
+##
+##  Output strings that would be longer than the given limit are truncated.
+##
+##  All returned strings are null terminated.
+##
+##  The format string is passed to snprintf_s(), see its documentation for
+##  how to use the format string.
+##
+##  The returned string must be deallocated using the same allocator given once
+##  it is no longer needed.
+##
+##  \see rcutils_snprintf()
+##
+##  \param[in] allocator the allocator to use for allocation
+##  \param[in] limit maximum length of the output string
+##  \param[in] format_string format of the output, must be null terminated
+##  \return The newly allocated and format output string, or
+##  \return `NULL` if there was an error.
+##
+##  @cond Doxygen_Suppress

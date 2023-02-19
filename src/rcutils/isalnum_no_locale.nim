@@ -26,13 +26,5 @@ converter charToNum*(c: char): int = c.int
 ##  \file
 
 
-proc rcutils_isalnum_no_locale*(c: char): bool {.inline.} =
-  ##  Custom isalnum() which is not affected by locale.
-  ##  if in '0', ..., '9', then ok
-  if c >= 0x30 and c <= 0x39:
-    return true
-  if c >= 0x41 and c <= 0x5a:
-    return true
-  if c >= 0x61 and c <= 0x7a:
-    return true
-  return false
+proc rcutils_isalnum_no_locale*(c: char): bool
+##  Custom isalnum() which is not affected by locale.

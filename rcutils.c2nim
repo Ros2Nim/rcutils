@@ -16,6 +16,8 @@
 
 #pragma c2nim render extranewlines
 #pragma c2nim render reindentlongcomments
+#pragma c2nim render nobody
+#pragma c2nim header
 
 // #pragma c2nim render nobody
 #pragma c2nim mangle "'rosidl_runtime_c__' {\\w+}" "$1"

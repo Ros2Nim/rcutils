@@ -57,35 +57,35 @@ type
 
 proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.
     importc: "rcutils_sha256_init", header: "sha256.h".}
-  ##  Initialize the sha256 algorithm context with starting state.
-  ##
-  ##  Call this on any new context before starting to input data.
-  ##
-  ##  \param[inout] ctx
-  ##  \return void
-  ##
 
 proc rcutils_sha256_update*(ctx: ptr rcutils_sha256_ctx_t; data: ptr uint8;
                            data_len: csize_t) {.importc: "rcutils_sha256_update",
     header: "sha256.h".}
-  ##  Add data to the sha256 algorithm
-  ##
-  ##  This may be called repeatedly on an initialized context.
-  ##
-  ##  \param[inout] ctx Initialized sha256 context struct
-  ##  \param[in] data Data to add to the total message being hashed
-  ##  \param[in] data_len Size of the input data.
-  ##  \return void
-  ##
 
 proc rcutils_sha256_final*(ctx: ptr rcutils_sha256_ctx_t;
                           output_hash: array[32, uint8]) {.
     importc: "rcutils_sha256_final", header: "sha256.h".}
-  ##  Finalize and output sha256 hash for all data added.
-  ##
-  ##  Call only once on a context that has been initialized, and optionally updated with data.
-  ##
-  ##  \param[inout] ctx Initialized sha256 context struct
-  ##  \param[out] output_hash Calculated sha256 message digest to be filled
-  ##  \return void
-  ## 
+##  Initialize the sha256 algorithm context with starting state.
+##
+##  Call this on any new context before starting to input data.
+##
+##  \param[inout] ctx
+##  \return void
+##
+##  Add data to the sha256 algorithm
+##
+##  This may be called repeatedly on an initialized context.
+##
+##  \param[inout] ctx Initialized sha256 context struct
+##  \param[in] data Data to add to the total message being hashed
+##  \param[in] data_len Size of the input data.
+##  \return void
+##
+##  Finalize and output sha256 hash for all data added.
+##
+##  Call only once on a context that has been initialized, and optionally updated with data.
+##
+##  \param[inout] ctx Initialized sha256 context struct
+##  \param[out] output_hash Calculated sha256 message digest to be filled
+##  \return void
+## 
