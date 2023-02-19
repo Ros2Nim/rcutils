@@ -52,4 +52,4 @@ export
   time,
   types,
   visibility_control,
-  visibility_control_macros,
+  visibility_control_macros

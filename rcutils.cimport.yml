@@ -91,6 +91,7 @@ imports:
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"
+    - match: "'RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL'"
     - match: "'g_rcutils_log_severity_names'"
     c2NimExtras:
     - rawNims: |
