@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -45,30 +43,30 @@ import
 
 
 proc rcutils_split*(str: cstring; delimiter: char; allocator: rcutils_allocator_t;
-                   string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
+                   string_array: ptr rcutils_string_array_t): rcutils_ret_t {.cdecl,
     importc: "rcutils_split", header: "split.h".}
+  ##  Split a given string with the specified delimiter
+  ##
+  ##  \param[in] str string to split
+  ##  \param[in] delimiter on where to split
+  ##  \param[in] allocator for allocating new memory for the output array
+  ##  \param[out] string_array with the split tokens
+  ##  \return #RCUTILS_RET_OK if successful, or
+  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+  ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
+  ##
 
 proc rcutils_split_last*(str: cstring; delimiter: char;
                         allocator: rcutils_allocator_t;
                         string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    importc: "rcutils_split_last", header: "split.h".}
-##  Split a given string with the specified delimiter
-##
-##  \param[in] str string to split
-##  \param[in] delimiter on where to split
-##  \param[in] allocator for allocating new memory for the output array
-##  \param[out] string_array with the split tokens
-##  \return #RCUTILS_RET_OK if successful, or
-##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-##  \return #RCUTILS_RET_ERROR if an unknown error occurs
-##
-##  Split a given string on the last occurrence of the specified delimiter
-##
-##  \param[in] str string to split
-##  \param[in] delimiter on where to split
-##  \param[in] allocator for allocating new memory for the output array
-##  \param[out] string_array with the split tokens
-##  \return #RCUTILS_RET_OK if successful, or
-##  \return #RCUTILS_RET_ERROR if an unknown error occurs
-## 
+    cdecl, importc: "rcutils_split_last", header: "split.h".}
+  ##  Split a given string on the last occurrence of the specified delimiter
+  ##
+  ##  \param[in] str string to split
+  ##  \param[in] delimiter on where to split
+  ##  \param[in] allocator for allocating new memory for the output array
+  ##  \param[out] string_array with the split tokens
+  ##  \return #RCUTILS_RET_OK if successful, or
+  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
+  ## 

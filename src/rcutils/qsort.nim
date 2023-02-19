@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -31,20 +29,20 @@ import
 
 
 proc rcutils_qsort*(`ptr`: pointer; count: csize_t; size: csize_t;
-                   comp: proc (a1: pointer; a2: pointer): cint): rcutils_ret_t {.
-    importc: "rcutils_qsort", header: "qsort.h".}
-##  Interface to qsort with rcutils-style argument validation.
-##
-##  This function changes the order of the elements in the array so that they
-##  are in ascending order according to the given comparison function.
-##
-##  This function is thread-safe.
-##
-##  \param[inout] ptr object whose elements should be sorted.
-##  \param[in] count number of elements present in the object.
-##  \param[in] size size of each element, in bytes.
-##  \param[in] comp function used to compare two elements.
-##  \return #RCUTILS_RET_OK if successful, or
-##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-## 
+                   comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): rcutils_ret_t {.
+    cdecl, importc: "rcutils_qsort", header: "qsort.h".}
+  ##  Interface to qsort with rcutils-style argument validation.
+  ##
+  ##  This function changes the order of the elements in the array so that they
+  ##  are in ascending order according to the given comparison function.
+  ##
+  ##  This function is thread-safe.
+  ##
+  ##  \param[inout] ptr object whose elements should be sorted.
+  ##  \param[in] count number of elements present in the object.
+  ##  \param[in] size size of each element, in bytes.
+  ##  \param[in] comp function used to compare two elements.
+  ##  \return #RCUTILS_RET_OK if successful, or
+  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+  ## 

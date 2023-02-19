@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -44,58 +42,58 @@ import
   rcutils.types.uint8_array, rcutils.types.uint8_array, rcutils.types
 
 
-proc rcutils_find*(str: cstring; delimiter: char): csize_t {.importc: "rcutils_find",
-    header: "find.h".}
+proc rcutils_find*(str: cstring; delimiter: char): csize_t {.cdecl,
+    importc: "rcutils_find", header: "find.h".}
+  ##  Return the first index of a character in a string.
+  ##
+  ##  Search in a string for the first occurence of a delimiter.
+  ##
+  ##  \param[in] str null terminated c string to search
+  ##  \param[in] delimiter the character to search for
+  ##  \return the index of the first occurence of the delimiter if found, or
+  ##  \return `SIZE_MAX` for invalid arguments, or
+  ##  \return `SIZE_MAX` if the delimiter is not found.
+  ##
 
 proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    importc: "rcutils_findn", header: "find.h".}
+    cdecl, importc: "rcutils_findn", header: "find.h".}
+  ##  Return the first index of a character in a string of specified length.
+  ##
+  ##  Identical to rcutils_find_first() but without relying on the string to be a
+  ##  null terminated c string.
+  ##
+  ##  \param[in] str string to search
+  ##  \param[in] delimiter the character to search for
+  ##  \param[in] string_length length of the string to search
+  ##  \return the index of the first occurence of the delimiter if found, or
+  ##  \return `SIZE_MAX` for invalid arguments, or
+  ##  \return `SIZE_MAX` if the delimiter is not found.
+  ##
 
-proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.
+proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
     importc: "rcutils_find_last", header: "find.h".}
+  ##  Return the last index of a character in a string.
+  ##
+  ##  Search in a string for the last occurence of a delimiter.
+  ##
+  ##  \param[in] str null terminated c string to search
+  ##  \param[in] delimiter the character to search for
+  ##  \return the index of the last occurence of the delimiter if found, or
+  ##  \return `SIZE_MAX` for invalid arguments, or
+  ##  \return `SIZE_MAX` if the delimiter is not found.
+  ##
 
 proc rcutils_find_lastn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    importc: "rcutils_find_lastn", header: "find.h".}
-##  Return the first index of a character in a string.
-##
-##  Search in a string for the first occurence of a delimiter.
-##
-##  \param[in] str null terminated c string to search
-##  \param[in] delimiter the character to search for
-##  \return the index of the first occurence of the delimiter if found, or
-##  \return `SIZE_MAX` for invalid arguments, or
-##  \return `SIZE_MAX` if the delimiter is not found.
-##
-##  Return the first index of a character in a string of specified length.
-##
-##  Identical to rcutils_find_first() but without relying on the string to be a
-##  null terminated c string.
-##
-##  \param[in] str string to search
-##  \param[in] delimiter the character to search for
-##  \param[in] string_length length of the string to search
-##  \return the index of the first occurence of the delimiter if found, or
-##  \return `SIZE_MAX` for invalid arguments, or
-##  \return `SIZE_MAX` if the delimiter is not found.
-##
-##  Return the last index of a character in a string.
-##
-##  Search in a string for the last occurence of a delimiter.
-##
-##  \param[in] str null terminated c string to search
-##  \param[in] delimiter the character to search for
-##  \return the index of the last occurence of the delimiter if found, or
-##  \return `SIZE_MAX` for invalid arguments, or
-##  \return `SIZE_MAX` if the delimiter is not found.
-##
-##  Return the last index of a character in a string of specifed length.
-##
-##  Identical to rcutils_find_last() but without relying on the string to be a
-##  null terminated c string.
-##
-##  \param[in] str string to search
-##  \param[in] delimiter the character to search for
-##  \param[in] string_length length of the string to search
-##  \return the index of the last occurence of the delimiter if found, or
-##  \return `SIZE_MAX` for invalid arguments, or
-##  \return `SIZE_MAX` if the delimiter is not found.
-## 
+    cdecl, importc: "rcutils_find_lastn", header: "find.h".}
+  ##  Return the last index of a character in a string of specifed length.
+  ##
+  ##  Identical to rcutils_find_last() but without relying on the string to be a
+  ##  null terminated c string.
+  ##
+  ##  \param[in] str string to search
+  ##  \param[in] delimiter the character to search for
+  ##  \param[in] string_length length of the string to search
+  ##  \return the index of the last occurence of the delimiter if found, or
+  ##  \return `SIZE_MAX` for invalid arguments, or
+  ##  \return `SIZE_MAX` if the delimiter is not found.
+  ## 

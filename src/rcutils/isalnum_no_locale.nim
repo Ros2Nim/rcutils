@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -26,5 +24,6 @@ converter charToNum*(c: char): int = c.int
 ##  \file
 
 
-proc rcutils_isalnum_no_locale*(c: char): bool
-##  Custom isalnum() which is not affected by locale.
+proc rcutils_isalnum_no_locale*(c: char): bool {.cdecl,
+    importc: "rcutils_isalnum_no_locale".}
+  ##  Custom isalnum() which is not affected by locale.

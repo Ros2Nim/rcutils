@@ -5,18 +5,20 @@
 // #pragma c2nim reordertypes
 #pragma c2nim mergeDuplicates
 #pragma c2nim skipFuncDefines
+#pragma c2nim importFuncDefines
+#pragma c2nim importc
+#pragma c2nim cdecl
 
 #pragma c2nim mergeblocks
 #pragma c2nim stdints
-// #pragma c2nim header
 #pragma c2nim cppSkipCallOp
 #pragma c2nim cppSkipConverter
-// #pragma c2nim importc
 #pragma c2nim cppskipconverter
 
 #pragma c2nim render extranewlines
 #pragma c2nim render reindentlongcomments
-#pragma c2nim render nobody
+// #pragma c2nim render nobody
+
 #pragma c2nim header
 
 // #pragma c2nim render nobody

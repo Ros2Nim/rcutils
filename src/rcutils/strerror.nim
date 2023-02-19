@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -28,18 +26,18 @@ import
   rcutils.visibility_control_macros, rcutils.visibility_control
 
 
-proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.
+proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.cdecl,
     importc: "rcutils_strerror", header: "strerror.h".}
-##  Retrieve the string corresponding to the last system error.
-##
-##  This function retrieves the value of errno, and calls the system-specific
-##  equivalent of `strerror` on it, storing the output in the provided buffer.
-##  If the error message is longer than the buffer, it will be truncated.
-##  The memory for the c-string buffer that is passed in must be managed by the
-##  caller.
-##
-##  This function is thread-safe.
-##
-##  \param[inout] buffer The buffer in which to store the data
-##  \param[in] buffer_length the maximum length of the buffer
-## 
+  ##  Retrieve the string corresponding to the last system error.
+  ##
+  ##  This function retrieves the value of errno, and calls the system-specific
+  ##  equivalent of `strerror` on it, storing the output in the provided buffer.
+  ##  If the error message is longer than the buffer, it will be truncated.
+  ##  The memory for the c-string buffer that is passed in must be managed by the
+  ##  caller.
+  ##
+  ##  This function is thread-safe.
+  ##
+  ##  \param[inout] buffer The buffer in which to store the data
+  ##  \param[in] buffer_length the maximum length of the buffer
+  ## 

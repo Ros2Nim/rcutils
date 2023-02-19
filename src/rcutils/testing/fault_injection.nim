@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -32,52 +30,52 @@ const
   RCUTILS_FAULT_INJECTION_FAIL_NOW* = 0
 
 
-proc rcutils_fault_injection_is_test_complete*(): bool {.
+proc rcutils_fault_injection_is_test_complete*(): bool {.cdecl,
     importc: "rcutils_fault_injection_is_test_complete",
     header: "fault_injection.h".}
 
-proc rcutils_fault_injection_set_count*(count: int64) {.
+proc rcutils_fault_injection_set_count*(count: int64) {.cdecl,
     importc: "rcutils_fault_injection_set_count", header: "fault_injection.h".}
+  ##
+  ##  \brief Atomically set the fault injection counter.
+  ##
+  ##  This is typically not the preferred method of interacting directly with the fault injection
+  ##  logic, instead use `RCUTILS_FAULT_INJECTION_TEST` instead.
+  ##
+  ##  This function may also be used for pausing code inside of a `RCUTILS_FAULT_INJECTION_TEST` with
+  ##  something like the following:
+  ##
+  ##  RCUTILS_FAULT_INJECTION_TEST({
+  ##      ...  // code to run with fault injection
+  ##      int64_t count = rcutils_fault_injection_get_count();
+  ##      rcutils_fault_injection_set_count(RCUTILS_FAULT_INJECTION_NEVER_FAIL);
+  ##      ...  // code to run without fault injection
+  ##      rcutils_fault_injection_set_count(count);
+  ##      ...  // code to run with fault injection
+  ##  });
+  ##
+  ##  \param count The count to set the fault injection counter to. If count is negative, then fault
+  ##  injection errors will be disabled. The counter is globally initialized to
+  ##  RCUTILS_FAULT_INJECTION_NEVER_FAIL.
+  ##
 
-proc rcutils_fault_injection_get_count*(): int64 {.
+proc rcutils_fault_injection_get_count*(): int64 {.cdecl,
     importc: "rcutils_fault_injection_get_count", header: "fault_injection.h".}
+  ##
+  ##  \brief Atomically get the fault injection counter value
+  ##
+  ##  This function is typically not used directly but instead indirectly inside an
+  ##  `RCUTILS_FAULT_INJECTION_TEST`
+  ##
 
-proc rcutils_fault_injection_maybe_fail*(): int64 {.
+proc rcutils_fault_injection_maybe_fail*(): int64 {.cdecl,
     importc: "_rcutils_fault_injection_maybe_fail", header: "fault_injection.h".}
-##
-##  \brief Atomically set the fault injection counter.
-##
-##  This is typically not the preferred method of interacting directly with the fault injection
-##  logic, instead use `RCUTILS_FAULT_INJECTION_TEST` instead.
-##
-##  This function may also be used for pausing code inside of a `RCUTILS_FAULT_INJECTION_TEST` with
-##  something like the following:
-##
-##  RCUTILS_FAULT_INJECTION_TEST({
-##      ...  // code to run with fault injection
-##      int64_t count = rcutils_fault_injection_get_count();
-##      rcutils_fault_injection_set_count(RCUTILS_FAULT_INJECTION_NEVER_FAIL);
-##      ...  // code to run without fault injection
-##      rcutils_fault_injection_set_count(count);
-##      ...  // code to run with fault injection
-##  });
-##
-##  \param count The count to set the fault injection counter to. If count is negative, then fault
-##  injection errors will be disabled. The counter is globally initialized to
-##  RCUTILS_FAULT_INJECTION_NEVER_FAIL.
-##
-##
-##  \brief Atomically get the fault injection counter value
-##
-##  This function is typically not used directly but instead indirectly inside an
-##  `RCUTILS_FAULT_INJECTION_TEST`
-##
-##
-##  \brief Implementation of fault injection decrementer
-##
-##  This is included inside of macros, so it needs to be exported as a public function, but it
-##  should not be used directly.
-##
+  ##
+  ##  \brief Implementation of fault injection decrementer
+  ##
+  ##  This is included inside of macros, so it needs to be exported as a public function, but it
+  ##  should not be used directly.
+  ##
 ##
 ##  \def RCUTILS_FAULT_INJECTION_MAYBE_RETURN_ERROR
 ##  \brief This macro checks and decrements a static global variable atomic counter and returns

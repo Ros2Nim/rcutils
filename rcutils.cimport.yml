@@ -8,10 +8,11 @@ imports:
   - "rcutils/stdatomic_helper/win32/stdatomic.h"
   - "rcutils/stdatomic_helper/gcc/stdatomic.h"
   - "rcutils/stdatomic_helper.h"
-  includes: [
-    "deps/rcutils/include",
-    ]
-  
+  includes:
+  - "deps/rcutils/include"
+  defines: 
+  - inline=
+  - static=
   cSourceModifications:
   - cSourceModification: "'rcutils/visibility_control.h'"
     deletes:

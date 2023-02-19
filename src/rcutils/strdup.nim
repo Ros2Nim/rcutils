@@ -2,9 +2,7 @@
 
 ##  #pragma c2nim reordertypes
 
-##  #pragma c2nim header
-
-##  #pragma c2nim importc
+##  #pragma c2nim render nobody
 
 ##  #pragma c2nim render nobody
 
@@ -31,42 +29,42 @@ import
   rcutils.visibility_control, rcutils.allocator
 
 
-proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
+proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.cdecl,
     importc: "rcutils_strdup", header: "strdup.h".}
+  ##  Return a duplicated string with an allocator, or null if an error occurs.
+  ##
+  ##  This function is identical to rcutils_strndup() except the length of the
+  ##  c string does not have to be given and therefore the c string must be
+  ##  null terminated.
+  ##
+  ##  \see rcutils_strndup()
+  ##
+  ##  \param[in] str null terminated c string to be duplicated
+  ##  \param[in] allocator the allocator to use for allocation
+  ##  \return duplicated string, or
+  ##  \return `NULL` if there is an error.
+  ##
 
 proc rcutils_strndup*(str: cstring; max_length: csize_t;
-                     allocator: rcutils_allocator_t): cstring {.
+                     allocator: rcutils_allocator_t): cstring {.cdecl,
     importc: "rcutils_strndup", header: "strdup.h".}
-##  Return a duplicated string with an allocator, or null if an error occurs.
-##
-##  This function is identical to rcutils_strndup() except the length of the
-##  c string does not have to be given and therefore the c string must be
-##  null terminated.
-##
-##  \see rcutils_strndup()
-##
-##  \param[in] str null terminated c string to be duplicated
-##  \param[in] allocator the allocator to use for allocation
-##  \return duplicated string, or
-##  \return `NULL` if there is an error.
-##
-##  Return a duplicated string with an allocator, or null if an error occurs.
-##
-##  This function can fail and return null if memory cannot be allocated or
-##  if the input c string pointer is null.
-##  In both cases no error message is set.
-##  The returned string should be deallocated using the given allocator when
-##  it is no longer needed.
-##
-##  The max_length given does not include the null terminating character.
-##  Therefore a max_length of 0 will still result in a duplicated string, but
-##  the string will be an empty string of strlen 0, but it still must be
-##  deallocated.
-##  All returned strings are null terminated.
-##
-##  \param[in] str null terminated c string to be duplicated
-##  \param[in] max_length maximum length of the string to duplicate
-##  \param[in] allocator the allocator to use for allocation
-##  \return duplicated string, or
-##  \return `NULL` if there is an error.
-## 
+  ##  Return a duplicated string with an allocator, or null if an error occurs.
+  ##
+  ##  This function can fail and return null if memory cannot be allocated or
+  ##  if the input c string pointer is null.
+  ##  In both cases no error message is set.
+  ##  The returned string should be deallocated using the given allocator when
+  ##  it is no longer needed.
+  ##
+  ##  The max_length given does not include the null terminating character.
+  ##  Therefore a max_length of 0 will still result in a duplicated string, but
+  ##  the string will be an empty string of strlen 0, but it still must be
+  ##  deallocated.
+  ##  All returned strings are null terminated.
+  ##
+  ##  \param[in] str null terminated c string to be duplicated
+  ##  \param[in] max_length maximum length of the string to duplicate
+  ##  \param[in] allocator the allocator to use for allocation
+  ##  \return duplicated string, or
+  ##  \return `NULL` if there is an error.
+  ## 
