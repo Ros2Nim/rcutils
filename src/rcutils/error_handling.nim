@@ -80,10 +80,6 @@ type
     line_number* {.importc: "line_number".}: uint64 ##  Line number of error.
 
 
-##  make sure our math is right...
-
-Static_assert(sizeof((constructrcutils_error_string_t)) ==
-    (768 + (1024 - 768 - 20 - 6 - 1) + 20 + 6 + 1), "Maximum length calculations incorrect")
 
 proc rcutils_initialize_error_handling_thread_local_storage*(
     allocator: rcutils_allocator_t): rcutils_ret_t {.

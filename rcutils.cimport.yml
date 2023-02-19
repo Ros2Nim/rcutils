@@ -17,6 +17,11 @@ imports:
     deletes:
     - match: "'RCUTILS_PUBLIC'"
     - match: "'RCUTILS_PUBLIC_TYPE'"
+  - cSourceModification: "'rcutils/error_handling.h'"
+    deletes:
+    - match: "'make sure our math is right'"
+      until: "'Maximum length calculations incorrect'"
+      inclusive: true
   - cSourceModification: "'rcutils/macros.h'"
     deletes:
     - match: "'RCUTILS_THREAD_LOCAL'"
