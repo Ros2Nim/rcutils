@@ -32,7 +32,7 @@ const
   RCUTILS_FAULT_INJECTION_FAIL_NOW* = 0
 
 
-proc rcutils_fault_injection_is_test_complete*(): bool {.
+proc rcutils_fault_injection_is_test_complete*(): Bool {.
     importc: "rcutils_fault_injection_is_test_complete",
     header: "fault_injection.h".}
 

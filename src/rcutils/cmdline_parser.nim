@@ -29,7 +29,7 @@ import
 
 
 proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
-                              option: cstring): bool {.
+                              option: cstring): Bool {.
     importc: "rcutils_cli_option_exist", header: "cmdline_parser.h".}
   ##  Return `true` if the option is defined in the command line arguments or `false` otherwise.
   ##

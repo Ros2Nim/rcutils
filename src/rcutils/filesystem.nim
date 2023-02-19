@@ -31,7 +31,7 @@ import
   rcutils.visibility_control, rcutils.allocator
 
 
-proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): bool {.
+proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): Bool {.
     importc: "rcutils_get_cwd", header: "filesystem.h".}
   ##  Return current working directory.
   ##
@@ -42,7 +42,7 @@ proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): bool {.
   ##  \return `false` on failure.
   ##
 
-proc rcutils_is_directory*(abs_path: cstring): bool {.
+proc rcutils_is_directory*(abs_path: cstring): Bool {.
     importc: "rcutils_is_directory", header: "filesystem.h".}
   ##  Check if the provided path points to a directory.
   ##
@@ -52,7 +52,7 @@ proc rcutils_is_directory*(abs_path: cstring): bool {.
   ##  \return `false` on failure.
   ##
 
-proc rcutils_is_file*(abs_path: cstring): bool {.importc: "rcutils_is_file",
+proc rcutils_is_file*(abs_path: cstring): Bool {.importc: "rcutils_is_file",
     header: "filesystem.h".}
   ##  Check if the provided path points to a file.
   ##
@@ -62,7 +62,7 @@ proc rcutils_is_file*(abs_path: cstring): bool {.importc: "rcutils_is_file",
   ##  \return `false` on failure.
   ##
 
-proc rcutils_exists*(abs_path: cstring): bool {.importc: "rcutils_exists",
+proc rcutils_exists*(abs_path: cstring): Bool {.importc: "rcutils_exists",
     header: "filesystem.h".}
   ##  Check if the provided path points to an existing file/folder.
   ##
@@ -72,7 +72,7 @@ proc rcutils_exists*(abs_path: cstring): bool {.importc: "rcutils_exists",
   ##  \return `false` on failure.
   ##
 
-proc rcutils_is_readable*(abs_path: cstring): bool {.importc: "rcutils_is_readable",
+proc rcutils_is_readable*(abs_path: cstring): Bool {.importc: "rcutils_is_readable",
     header: "filesystem.h".}
   ##  Check if the provided path points to a file/folder readable by current user.
   ##
@@ -82,7 +82,7 @@ proc rcutils_is_readable*(abs_path: cstring): bool {.importc: "rcutils_is_readab
   ##  \return `false` on failure.
   ##
 
-proc rcutils_is_writable*(abs_path: cstring): bool {.importc: "rcutils_is_writable",
+proc rcutils_is_writable*(abs_path: cstring): Bool {.importc: "rcutils_is_writable",
     header: "filesystem.h".}
   ##  Check if the provided path points to a file/folder writable by current user.
   ##
@@ -92,7 +92,7 @@ proc rcutils_is_writable*(abs_path: cstring): bool {.importc: "rcutils_is_writab
   ##  \return `false` on failure.
   ##
 
-proc rcutils_is_readable_and_writable*(abs_path: cstring): bool {.
+proc rcutils_is_readable_and_writable*(abs_path: cstring): Bool {.
     importc: "rcutils_is_readable_and_writable", header: "filesystem.h".}
   ##  Check if the provided path points to a file/folder both readable and writable by current user.
   ##
@@ -151,7 +151,7 @@ proc rcutils_expand_user*(path: cstring; allocator: rcutils_allocator_t): cstrin
   ##  \return `NULL` on failure.
   ##
 
-proc rcutils_mkdir*(abs_path: cstring): bool {.importc: "rcutils_mkdir",
+proc rcutils_mkdir*(abs_path: cstring): Bool {.importc: "rcutils_mkdir",
     header: "filesystem.h".}
   ##  Create the specified directory.
   ##
@@ -252,7 +252,7 @@ proc rcutils_dir_iter_start*(directory_path: cstring;
   ##  \return NULL if an error occurred
   ##
 
-proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.
+proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): Bool {.
     importc: "rcutils_dir_iter_next", header: "filesystem.h".}
   ##  Continue iterating over the contents of a directory.
   ##

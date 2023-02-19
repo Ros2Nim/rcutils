@@ -82,7 +82,7 @@ type
 
 ##  make sure our math is right...
 
-_Static_assert(sizeof((constructrcutils_error_string_t)) ==
+Static_assert(sizeof((constructrcutils_error_string_t)) ==
     (768 + (1024 - 768 - 20 - 6 - 1) + 20 + 6 + 1), "Maximum length calculations incorrect")
 
 proc rcutils_initialize_error_handling_thread_local_storage*(
@@ -198,7 +198,7 @@ proc rcutils_set_error_state*(error_string: cstring; file: cstring;
 ##
 
 
-proc rcutils_error_is_set*(): bool {.importc: "rcutils_error_is_set",
+proc rcutils_error_is_set*(): Bool {.importc: "rcutils_error_is_set",
                                   header: "error_handling.h".}
   ##  Return `true` if the error is set, otherwise `false`.
 

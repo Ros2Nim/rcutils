@@ -261,7 +261,7 @@ proc rcutils_string_map_unset*(string_map: ptr rcutils_string_map_t; key: cstrin
   ##
 
 proc rcutils_string_map_key_exists*(string_map: ptr rcutils_string_map_t;
-                                   key: cstring): bool {.
+                                   key: cstring): Bool {.
     importc: "rcutils_string_map_key_exists", header: "string_map.h".}
   ##  Get whether or not a key exists.
   ##
@@ -280,7 +280,7 @@ proc rcutils_string_map_key_exists*(string_map: ptr rcutils_string_map_t;
   ##
 
 proc rcutils_string_map_key_existsn*(string_map: ptr rcutils_string_map_t;
-                                    key: cstring; key_length: csize_t): bool {.
+                                    key: cstring; key_length: csize_t): Bool {.
     importc: "rcutils_string_map_key_existsn", header: "string_map.h".}
   ##  Get whether or not a key of known length exists.
   ##
