@@ -23,10 +23,11 @@
 ##  limitations under the License.
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control,
-  ./allocator
+  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
+  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control, rcutils.allocator
 
 ##  Return a newly allocated string, created with a format string.
 ##

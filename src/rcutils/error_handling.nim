@@ -8,28 +8,29 @@
 
 ##  #pragma c2nim render nobody
 
-const
-  __STDC_WANT_LIB_EXT1__* = 1 ##  Copyright 2014 Open Source Robotics Foundation, Inc.
-                           ##
-                           ##  Licensed under the Apache License, Version 2.0 (the "License");
-                           ##  you may not use this file except in compliance with the License.
-                           ##  You may obtain a copy of the License at
-                           ##
-                           ##      http://www.apache.org/licenses/LICENSE-2.0
-                           ##
-                           ##  Unless required by applicable law or agreed to in writing, software
-                           ##  distributed under the License is distributed on an "AS IS" BASIS,
-                           ##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                           ##  See the License for the specific language governing permissions and
-                           ##  limitations under the License.
-                           ##  \file
+##  Copyright 2014 Open Source Robotics Foundation, Inc.
+##
+##  Licensed under the Apache License, Version 2.0 (the "License");
+##  you may not use this file except in compliance with the License.
+##  You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+##  Unless required by applicable law or agreed to in writing, software
+##  distributed under the License is distributed on an "AS IS" BASIS,
+##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##  See the License for the specific language governing permissions and
+##  limitations under the License.
+##  \file
 
 import
-  ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros, ./macros,
-  ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control,
-  ./allocator, ./snprintf, ./snprintf, ./snprintf, ./testing/fault_injection,
-  ./testing/fault_injection, ./testing/fault_injection
+  rcutils.allocator, rcutils.allocator, rcutils.macros, rcutils.macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
+  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control, rcutils.allocator, rcutils.snprintf,
+  rcutils.snprintf, rcutils.snprintf, rcutils.testing.fault_injection,
+  rcutils.testing.fault_injection, rcutils.testing.fault_injection
 
 ##  Write the given msg out to stderr.
 

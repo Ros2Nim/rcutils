@@ -23,4 +23,4 @@
 ##  limitations under the License.
 
 import
-  ./visibility_control_macros, ./visibility_control_macros
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros

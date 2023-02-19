@@ -20,6 +20,13 @@ imports:
   - cSourceModification: "'rcutils/macros.h'"
     deletes:
     - match: "'RCUTILS_THREAD_LOCAL'"
+  - cSourceModification: "'rcutils/error_handling.h'"
+    deletes:
+    - match: "'__STDC_WANT_LIB_EXT1__'"
+  - cSourceModification: "'rcutils/testing/fault_injection.h'"
+    c2NimExtras:
+    - fileContents: |
+        #mangle "'_rcutils_fault_injection_maybe_fail'" "rcutils_fault_injection_maybe_fail"
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"

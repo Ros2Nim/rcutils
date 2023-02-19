@@ -23,8 +23,9 @@
 ##  limitations under the License.
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
+  rcutils.visibility_control, rcutils.visibility_control_macros,
+  rcutils.visibility_control_macros, rcutils.visibility_control
 
 const
   RCUTILS_FAULT_INJECTION_NEVER_FAIL* = -1
@@ -69,7 +70,7 @@ proc rcutils_fault_injection_get_count*(): int_least64_t {.
   ##  `RCUTILS_FAULT_INJECTION_TEST`
   ##
 
-proc _rcutils_fault_injection_maybe_fail*(): int_least64_t {.
+proc rcutils_fault_injection_maybe_fail*(): int_least64_t {.
     importc: "_rcutils_fault_injection_maybe_fail", header: "fault_injection.h".}
   ##
   ##  \brief Implementation of fault injection decrementer

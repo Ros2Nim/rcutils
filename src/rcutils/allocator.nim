@@ -24,9 +24,10 @@
 ##  \file
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./types/rcutils_ret,
-  ./visibility_control, ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
+  rcutils.types.rcutils_ret, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control
 
 type
 

@@ -24,19 +24,24 @@
 ##  \file
 
 import
-  ./types, ./types/array_list, ./types/array_list, ./allocator, ./allocator,
-  ./allocator, ./macros, ./macros, ./macros, ./macros, ./macros, ./allocator,
-  ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control,
-  ./allocator, ./types/array_list, ./types, ./types/char_array, ./types/char_array,
-  ./types, ./types/hash_map, ./types/hash_map, ./types, ./types/string_array,
-  ./types/string_array, ./error_handling, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./error_handling,
-  ./snprintf, ./snprintf, ./error_handling, ./testing/fault_injection,
-  ./testing/fault_injection, ./testing/fault_injection, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./types/string_array,
-  ./qsort, ./qsort, ./types/string_array, ./types, ./types/string_map,
-  ./types/string_map, ./types, ./types/uint8_array, ./types/uint8_array, ./types
+  rcutils.types, rcutils.types.array_list, rcutils.types.array_list,
+  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
+  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control, rcutils.allocator, rcutils.types.array_list,
+  rcutils.types, rcutils.types.char_array, rcutils.types.char_array, rcutils.types,
+  rcutils.types.hash_map, rcutils.types.hash_map, rcutils.types,
+  rcutils.types.string_array, rcutils.types.string_array, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
+  rcutils.snprintf, rcutils.snprintf, rcutils.error_handling,
+  rcutils.testing.fault_injection, rcutils.testing.fault_injection,
+  rcutils.testing.fault_injection, rcutils.error_handling, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.types.string_array,
+  rcutils.qsort, rcutils.qsort, rcutils.types.string_array, rcutils.types,
+  rcutils.types.string_map, rcutils.types.string_map, rcutils.types,
+  rcutils.types.uint8_array, rcutils.types.uint8_array, rcutils.types
 
 
 proc rcutils_find*(str: cstring; delimiter: char): csize_t {.importc: "rcutils_find",

@@ -24,10 +24,11 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control,
-  ./allocator
+  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
+  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control, rcutils.allocator
 
 discard "forward decl of rcutils_hash_map_impl_s"
 type

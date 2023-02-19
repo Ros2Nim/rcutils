@@ -24,14 +24,17 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control,
-  ./allocator, ./error_handling, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./error_handling,
-  ./snprintf, ./snprintf, ./snprintf, ./error_handling, ./testing/fault_injection,
-  ./testing/fault_injection, ./testing/fault_injection, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./qsort, ./qsort
+  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
+  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
+  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
+  rcutils.visibility_control, rcutils.allocator, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
+  rcutils.snprintf, rcutils.snprintf, rcutils.snprintf, rcutils.error_handling,
+  rcutils.testing.fault_injection, rcutils.testing.fault_injection,
+  rcutils.testing.fault_injection, rcutils.error_handling, rcutils.error_handling,
+  rcutils.error_handling, rcutils.error_handling, rcutils.qsort, rcutils.qsort
 
 type
 
