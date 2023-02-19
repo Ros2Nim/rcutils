@@ -6,6 +6,9 @@
 
 ##  #pragma c2nim render nobody
 
+import rcutils.allocator
+import rcutils.types.array_list
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,12 +31,20 @@ import
   rcutils.visibility_control_macros, rcutils.visibility_control_macros,
   rcutils.visibility_control, rcutils.allocator
 
-discard "forward decl of rcutils_string_map_impl_s"
 type
 
+  rcutils_string_map_impl_t* {.importc: "rcutils_string_map_impl_t",
+                              header: "string_map.h", bycopy.} = object
+    keys* {.importc: "keys".}: cstringArray
+    values* {.importc: "values".}: cstringArray
+    capacity* {.importc: "capacity".}: csize_t
+    size* {.importc: "size".}: csize_t
+    allocator* {.importc: "allocator".}: rcutils_allocator_t
+
+
   rcutils_string_map_t* {.importc: "rcutils_string_map_t", header: "string_map.h",
-                         bycopy.} = object
-    impl* {.importc: "impl".}: ptr rcutils_string_map_impl_s ##
+                         bycopy.} = object ##  The structure holding the metadata for a string map.
+    impl* {.importc: "impl".}: ptr rcutils_string_map_impl_t ##
                               ##  A pointer to the PIMPL implementation type.
 
 

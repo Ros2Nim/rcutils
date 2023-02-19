@@ -69,6 +69,24 @@ imports:
     - rawNims: |
         import rcutils.allocator
         import rcutils.types.array_list
+  - cSourceModification: "'rcutils/types/string_map.h'"
+    substitutes:
+    - peg: "'rcutils_string_map_impl_s'"
+      repl: "rcutils_string_map_impl_t"
+    - peg: "'struct rcutils_string_map_impl_s;'"
+      repl: |
+        typedef struct rcutils_string_map_impl_s
+        {
+          char ** keys;
+          char ** values;
+          size_t capacity;
+          size_t size;
+          rcutils_allocator_t allocator;
+        } rcutils_string_map_impl_t;
+    c2NimExtras:
+    - rawNims: |
+        import rcutils.allocator
+        import rcutils.types.array_list
 
   - cSourceModification: "'rcutils/logging.h'"
     deletes:
