@@ -108,27 +108,3 @@ imports:
     substitutes:
     - peg: "'va_list' \\s+ '*'"
       repl: "va_list"
-
-#pragma c2nim mangle "'ptr va_list'" "varargs[pointer]"
-
-# - name: "rosidl_typesupport_introspection_c"
-#   sources: "deps/rosidl/rosidl_typesupport_introspection_c/include"
-#   globs: ["**/*.h"]
-#   includes: [
-#     "deps/rcutils/include",
-#     "deps/rosidl/rosidl_runtime_c/include",
-#     "deps/rosidl/rosidl_typesupport_interface/include",
-#     "deps/rosidl/rosidl_typesupport_introspection_c/include",
-#     ]
-  
-  # cSourceModifications:
-  # - cSourceModification: "'field_types.h'"
-    # substitutes:
-    # - peg: "'rosidl_typesupport_introspection_c__' {\\w+}"
-    #   repl: "$1"
-    # deletes:
-    # - match: "'__ROS_TYPE_BYTE'"
-    # - match: "'__ROS_TYPE_BOOL'"
-    # - match: "'__ROS_TYPE_FLOAT64'"
-    # - match: "'__ROS_TYPE_FLOAT32'"
-    # - match: "'__ROS_TYPE_FLOAT32'"
