@@ -1,11 +1,3 @@
-##  #pragma c2nim nep1
-
-##  #pragma c2nim reordertypes
-
-##  #pragma c2nim render nobody
-
-##  #pragma c2nim render nobody
-
 ##  Copyright 2023 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,8 +37,7 @@ const
 
 type
 
-  rcutils_sha256_ctx_t* {.importc: "rcutils_sha256_ctx_t", header: "sha256.h",
-                          bycopy.} = object
+  sha256_ctx_t* {.importc: "rcutils_sha256_ctx_t", header: "sha256.h", bycopy.} = object
     data* {.importc: "data".}: array[64, uint8]
     datalen* {.importc: "datalen".}: csize_t
     bitlen* {.importc: "bitlen".}: uint64
@@ -54,7 +45,7 @@ type
 
 
 
-proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.cdecl,
+proc rcutils_sha256_init*(ctx: ptr sha256_ctx_t) {.cdecl,
     importc: "rcutils_sha256_init", header: "sha256.h".}
   ##
                               ##  Initialize the sha256 algorithm context with starting state.
@@ -65,7 +56,7 @@ proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.cdecl,
                               ##  \return void
                               ##
 
-proc rcutils_sha256_update*(ctx: ptr rcutils_sha256_ctx_t; data: ptr uint8;
+proc rcutils_sha256_update*(ctx: ptr sha256_ctx_t; data: ptr uint8;
                             data_len: csize_t) {.cdecl,
     importc: "rcutils_sha256_update", header: "sha256.h".}
   ##
@@ -79,9 +70,8 @@ proc rcutils_sha256_update*(ctx: ptr rcutils_sha256_ctx_t; data: ptr uint8;
                               ##  \return void
                               ##
 
-proc rcutils_sha256_final*(ctx: ptr rcutils_sha256_ctx_t;
-                           output_hash: array[32, uint8]) {.cdecl,
-    importc: "rcutils_sha256_final", header: "sha256.h".}
+proc rcutils_sha256_final*(ctx: ptr sha256_ctx_t; output_hash: array[32, uint8]) {.
+    cdecl, importc: "rcutils_sha256_final", header: "sha256.h".}
   ##
                               ##  Finalize and output sha256 hash for all data added.
                               ##

@@ -1,11 +1,3 @@
-##  #pragma c2nim nep1
-
-##  #pragma c2nim reordertypes
-
-##  #pragma c2nim render nobody
-
-##  #pragma c2nim render nobody
-
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -108,7 +100,7 @@ proc rcutils_is_readable_and_writable*(abs_path: cstring): bool {.cdecl,
                               ##
 
 proc rcutils_join_path*(left_hand_path: cstring; right_hand_path: cstring;
-                        allocator: rcutils_allocator_t): cstring {.cdecl,
+                        allocator: allocator_t): cstring {.cdecl,
     importc: "rcutils_join_path", header: "filesystem.h".}
   ##
                               ##  Return newly allocated string with arguments separated by correct delimiter for the platform.
@@ -125,7 +117,7 @@ proc rcutils_join_path*(left_hand_path: cstring; right_hand_path: cstring;
                               ##  \return `NULL` on failure
                               ##
 
-proc rcutils_to_native_path*(path: cstring; allocator: rcutils_allocator_t): cstring {.
+proc rcutils_to_native_path*(path: cstring; allocator: allocator_t): cstring {.
     cdecl, importc: "rcutils_to_native_path", header: "filesystem.h".}
   ##
                               ##  Return newly allocated string with all argument's "/" replaced by platform specific separator.
@@ -141,7 +133,7 @@ proc rcutils_to_native_path*(path: cstring; allocator: rcutils_allocator_t): cst
                               ##  \return `NULL` on failure
                               ##
 
-proc rcutils_expand_user*(path: cstring; allocator: rcutils_allocator_t): cstring {.
+proc rcutils_expand_user*(path: cstring; allocator: allocator_t): cstring {.
     cdecl, importc: "rcutils_expand_user", header: "filesystem.h".}
   ##
                               ##  Expand user directory in path.
@@ -181,8 +173,7 @@ proc rcutils_mkdir*(abs_path: cstring): bool {.cdecl, importc: "rcutils_mkdir",
                             ##
 
 proc rcutils_calculate_directory_size*(directory_path: cstring;
-                                       size: ptr uint64;
-                                       allocator: rcutils_allocator_t): rcutils_ret_t {.
+                                       size: ptr uint64; allocator: allocator_t): ret_t {.
     cdecl, importc: "rcutils_calculate_directory_size", header: "filesystem.h".}
   ##
                               ##  Calculate the size of the specified directory.
@@ -199,7 +190,7 @@ proc rcutils_calculate_directory_size*(directory_path: cstring;
                               ##
 
 proc rcutils_calculate_directory_size_with_recursion*(directory_path: cstring;
-    max_depth: csize_t; size: ptr uint64; allocator: rcutils_allocator_t): rcutils_ret_t {.
+    max_depth: csize_t; size: ptr uint64; allocator: allocator_t): ret_t {.
     cdecl, importc: "rcutils_calculate_directory_size_with_recursion",
     header: "filesystem.h".}
   ##  Calculate the size of the specified directory with recursion.
@@ -235,18 +226,17 @@ proc rcutils_get_file_size*(file_path: cstring): csize_t {.cdecl,
                               ##
 type
 
-  rcutils_dir_iter_t* {.importc: "rcutils_dir_iter_t", header: "filesystem.h",
-                        bycopy.} = object ##  An iterator used for enumerating directory contents
+  dir_iter_t* {.importc: "rcutils_dir_iter_t", header: "filesystem.h", bycopy.} = object ##
+                              ##  An iterator used for enumerating directory contents
     entry_name* {.importc: "entry_name".}: cstring ##
                               ##  The name of the enumerated file or directory
-    allocator* {.importc: "allocator".}: rcutils_allocator_t ##
+    allocator* {.importc: "allocator".}: allocator_t ##
                               ##  The allocator used internally by iteration functions
     state* {.importc: "state".}: pointer ##  The platform-specific iteration state
 
 
 
-proc rcutils_dir_iter_start*(directory_path: cstring;
-                             allocator: rcutils_allocator_t): ptr rcutils_dir_iter_t {.
+proc rcutils_dir_iter_start*(directory_path: cstring; allocator: allocator_t): ptr dir_iter_t {.
     cdecl, importc: "rcutils_dir_iter_start", header: "filesystem.h".}
   ##
                               ##  Begin iterating over the contents of the specified directory.
@@ -265,7 +255,7 @@ proc rcutils_dir_iter_start*(directory_path: cstring;
                               ##  \return NULL if an error occurred
                               ##
 
-proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.cdecl,
+proc rcutils_dir_iter_next*(iter: ptr dir_iter_t): bool {.cdecl,
     importc: "rcutils_dir_iter_next", header: "filesystem.h".}
   ##
                               ##  Continue iterating over the contents of a directory.
@@ -275,7 +265,7 @@ proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.cdecl,
                               ##  \return `false` if there are no more entries in the directory.
                               ##
 
-proc rcutils_dir_iter_end*(iter: ptr rcutils_dir_iter_t) {.cdecl,
+proc rcutils_dir_iter_end*(iter: ptr dir_iter_t) {.cdecl,
     importc: "rcutils_dir_iter_end", header: "filesystem.h".}
   ##
                               ##  Finish iterating over the contents of a directory.

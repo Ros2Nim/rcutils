@@ -1,11 +1,3 @@
-##  #pragma c2nim nep1
-
-##  #pragma c2nim reordertypes
-
-##  #pragma c2nim render nobody
-
-##  #pragma c2nim render nobody
-
 converter charToNum*(c: char): int = c.int
 
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.

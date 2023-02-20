@@ -1,11 +1,3 @@
-##  #pragma c2nim nep1
-
-##  #pragma c2nim reordertypes
-
-##  #pragma c2nim render nobody
-
-##  #pragma c2nim render nobody
-
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,18 +30,17 @@ import
 
 type
 
-  rcutils_string_array_t* {.importc: "rcutils_string_array_t",
-                            header: "string_array.h", bycopy.} = object ##
-                              ##  The structure holding the metadata for a string array.
+  string_array_t* {.importc: "rcutils_string_array_t", header: "string_array.h",
+                    bycopy.} = object ##  The structure holding the metadata for a string array.
     size* {.importc: "size".}: csize_t ##  The number of strings that can be stored in the string array.
     data* {.importc: "data".}: cstringArray ##  The allocated memory for the string array.
-    allocator* {.importc: "allocator".}: rcutils_allocator_t ##
+    allocator* {.importc: "allocator".}: allocator_t ##
                               ##  The allocator used to allocate and free memory for the string array.
 
 
 
-proc rcutils_get_zero_initialized_string_array*(): rcutils_string_array_t {.
-    cdecl, importc: "rcutils_get_zero_initialized_string_array",
+proc rcutils_get_zero_initialized_string_array*(): string_array_t {.cdecl,
+    importc: "rcutils_get_zero_initialized_string_array",
     header: "string_array.h".}
   ##  Return an empty string array struct.
                               ##
@@ -70,10 +61,9 @@ proc rcutils_get_zero_initialized_string_array*(): rcutils_string_array_t {.
                               ##  ```
                               ##
 
-proc rcutils_string_array_init*(string_array: ptr rcutils_string_array_t;
-                                size: csize_t;
-                                allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_array_init", header: "string_array.h".}
+proc rcutils_string_array_init*(string_array: ptr string_array_t; size: csize_t;
+                                allocator: ptr allocator_t): ret_t {.cdecl,
+    importc: "rcutils_string_array_init", header: "string_array.h".}
   ##
                               ##  Initialize a string array with a given size.
                               ##
@@ -105,7 +95,7 @@ proc rcutils_string_array_init*(string_array: ptr rcutils_string_array_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_array_fini*(string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
+proc rcutils_string_array_fini*(string_array: ptr string_array_t): ret_t {.
     cdecl, importc: "rcutils_string_array_fini", header: "string_array.h".}
   ##
                               ##  Finalize a string array, reclaiming all resources.
@@ -122,9 +112,9 @@ proc rcutils_string_array_fini*(string_array: ptr rcutils_string_array_t): rcuti
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_array_cmp*(lhs: ptr rcutils_string_array_t;
-                               rhs: ptr rcutils_string_array_t; res: ptr cint): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_array_cmp", header: "string_array.h".}
+proc rcutils_string_array_cmp*(lhs: ptr string_array_t; rhs: ptr string_array_t;
+                               res: ptr cint): ret_t {.cdecl,
+    importc: "rcutils_string_array_cmp", header: "string_array.h".}
   ##
                               ##  Compare two string arrays.
                               ##
@@ -141,8 +131,8 @@ proc rcutils_string_array_cmp*(lhs: ptr rcutils_string_array_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_array_resize*(string_array: ptr rcutils_string_array_t;
-                                  new_size: csize_t): rcutils_ret_t {.cdecl,
+proc rcutils_string_array_resize*(string_array: ptr string_array_t;
+                                  new_size: csize_t): ret_t {.cdecl,
     importc: "rcutils_string_array_resize", header: "string_array.h".}
   ##
                               ##  Resize a string array, reclaiming removed resources.
@@ -183,7 +173,7 @@ proc rcutils_string_array_sort_compare*(lhs: pointer; rhs: pointer): cint {.
                               ##  \return >0 if lhs is lexicographically higher.
                               ##
 
-proc rcutils_string_array_sort*(string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
+proc rcutils_string_array_sort*(string_array: ptr string_array_t): ret_t {.
     cdecl, importc: "rcutils_string_array_sort".}
   ##  Sort a string array according to lexicographical order.
                                                  ##

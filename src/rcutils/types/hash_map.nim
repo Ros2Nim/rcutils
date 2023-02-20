@@ -1,11 +1,3 @@
-##  #pragma c2nim nep1
-
-##  #pragma c2nim reordertypes
-
-##  #pragma c2nim render nobody
-
-##  #pragma c2nim render nobody
-
 import rcutils.allocator
 import rcutils.types.array_list
 
@@ -34,33 +26,32 @@ import
 
 type
 
-  rcutils_hash_map_impl_t* {.importc: "rcutils_hash_map_impl_t",
-                             header: "hash_map.h", bycopy.} = object
-    map* {.importc: "map".}: ptr rcutils_array_list_t ##
-                              ##  This is the array of buckets that will store the keypairs
+  hash_map_impl_t* {.importc: "rcutils_hash_map_impl_t", header: "hash_map.h",
+                     bycopy.} = object
+    map* {.importc: "map".}: ptr array_list_t ##  This is the array of buckets that will store the keypairs
     capacity* {.importc: "capacity".}: csize_t
     size* {.importc: "size".}: csize_t
     key_size* {.importc: "key_size".}: csize_t
     data_size* {.importc: "data_size".}: csize_t
-    key_hashing_func* {.importc: "key_hashing_func".}: rcutils_hash_map_key_hasher_t
-    key_cmp_func* {.importc: "key_cmp_func".}: rcutils_hash_map_key_cmp_t
-    allocator* {.importc: "allocator".}: rcutils_allocator_t
+    key_hashing_func* {.importc: "key_hashing_func".}: hash_map_key_hasher_t
+    key_cmp_func* {.importc: "key_cmp_func".}: hash_map_key_cmp_t
+    allocator* {.importc: "allocator".}: allocator_t
 
 
-  rcutils_hash_map_t* {.importc: "rcutils_hash_map_t", header: "hash_map.h",
-                        bycopy.} = object ##  The structure holding the metadata for a hash map.
-    impl* {.importc: "impl".}: ptr rcutils_hash_map_impl_t ##
+  hash_map_t* {.importc: "rcutils_hash_map_t", header: "hash_map.h", bycopy.} = object ##
+                              ##  The structure holding the metadata for a hash map.
+    impl* {.importc: "impl".}: ptr hash_map_impl_t ##
                               ##  A pointer to the PIMPL implementation type.
 
 
-  rcutils_hash_map_key_hasher_t* = proc (a1: pointer): csize_t {.cdecl.} ##
+  hash_map_key_hasher_t* = proc (a1: pointer): csize_t {.cdecl.} ##
                               ##  The function signature for a key hashing function.
                               ##
                               ##  \param[in] key The key that needs to be hashed
                               ##  \return A hash value for the provided string
                               ##
 
-  rcutils_hash_map_key_cmp_t* = proc (a1: pointer; a2: pointer): cint {.cdecl.} ##
+  hash_map_key_cmp_t* = proc (a1: pointer; a2: pointer): cint {.cdecl.} ##
                               ##  The function signature for a key comparison function.
                               ##
                               ##  \param[in] val1 The first value to compare
@@ -97,7 +88,7 @@ proc rcutils_hash_map_string_cmp_func*(val1: pointer; val2: pointer): cint {.
                               ##  Should be used when your key is just a pointer to a c-string
                               ##
 
-proc rcutils_get_zero_initialized_hash_map*(): rcutils_hash_map_t {.cdecl,
+proc rcutils_get_zero_initialized_hash_map*(): hash_map_t {.cdecl,
     importc: "rcutils_get_zero_initialized_hash_map", header: "hash_map.h".}
   ##
                               ##  Return an empty hash_map struct.
@@ -126,13 +117,12 @@ proc rcutils_get_zero_initialized_hash_map*(): rcutils_hash_map_t {.cdecl,
                               ##  ```
                               ##
 
-proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
-                            initial_capacity: csize_t; key_size: csize_t;
-                            data_size: csize_t;
-                            key_hashing_func: rcutils_hash_map_key_hasher_t;
-                            key_cmp_func: rcutils_hash_map_key_cmp_t;
-                            allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_init", header: "hash_map.h".}
+proc rcutils_hash_map_init*(hash_map: ptr hash_map_t; initial_capacity: csize_t;
+                            key_size: csize_t; data_size: csize_t;
+                            key_hashing_func: hash_map_key_hasher_t;
+                            key_cmp_func: hash_map_key_cmp_t;
+                            allocator: ptr allocator_t): ret_t {.cdecl,
+    importc: "rcutils_hash_map_init", header: "hash_map.h".}
   ##
                               ##  Initialize a rcutils_hash_map_t, allocating space for given capacity.
                               ##
@@ -182,8 +172,8 @@ proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_fini", header: "hash_map.h".}
+proc rcutils_hash_map_fini*(hash_map: ptr hash_map_t): ret_t {.cdecl,
+    importc: "rcutils_hash_map_fini", header: "hash_map.h".}
   ##
                               ##  Finalize the previously initialized hash_map struct.
                               ##
@@ -204,9 +194,9 @@ proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_get_capacity*(hash_map: ptr rcutils_hash_map_t;
-                                    capacity: ptr csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_get_capacity", header: "hash_map.h".}
+proc rcutils_hash_map_get_capacity*(hash_map: ptr hash_map_t;
+                                    capacity: ptr csize_t): ret_t {.cdecl,
+    importc: "rcutils_hash_map_get_capacity", header: "hash_map.h".}
   ##
                               ##  Get the current capacity of the hash_map.
                               ##
@@ -233,9 +223,8 @@ proc rcutils_hash_map_get_capacity*(hash_map: ptr rcutils_hash_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
-                                size: ptr csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_get_size", header: "hash_map.h".}
+proc rcutils_hash_map_get_size*(hash_map: ptr hash_map_t; size: ptr csize_t): ret_t {.
+    cdecl, importc: "rcutils_hash_map_get_size", header: "hash_map.h".}
   ##
                               ##  Get the current size of the hash_map.
                               ##
@@ -259,8 +248,8 @@ proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_set*(hash_map: ptr rcutils_hash_map_t; key: pointer;
-                           value: pointer): rcutils_ret_t {.cdecl,
+proc rcutils_hash_map_set*(hash_map: ptr hash_map_t; key: pointer;
+                           value: pointer): ret_t {.cdecl,
     importc: "rcutils_hash_map_set", header: "hash_map.h".}
   ##
                               ##  Set a key value pair in the hash_map, increasing capacity if necessary.
@@ -287,7 +276,7 @@ proc rcutils_hash_map_set*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rcutils_ret_t {.
+proc rcutils_hash_map_unset*(hash_map: ptr hash_map_t; key: pointer): ret_t {.
     cdecl, importc: "rcutils_hash_map_unset", header: "hash_map.h".}
   ##
                               ##  Unset a key value pair in the hash_map.
@@ -313,7 +302,7 @@ proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rc
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer): bool {.
+proc rcutils_hash_map_key_exists*(hash_map: ptr hash_map_t; key: pointer): bool {.
     cdecl, importc: "rcutils_hash_map_key_exists", header: "hash_map.h".}
   ##
                               ##  Get whether or not a key exists.
@@ -338,9 +327,8 @@ proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer
                               ##  \return `false` if the hash_map is invalid.
                               ##
 
-proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
-                           data: pointer): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_get", header: "hash_map.h".}
+proc rcutils_hash_map_get*(hash_map: ptr hash_map_t; key: pointer; data: pointer): ret_t {.
+    cdecl, importc: "rcutils_hash_map_get", header: "hash_map.h".}
   ##
                               ##  Get value given a key.
                               ##
@@ -366,8 +354,8 @@ proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_hash_map_get_next_key_and_data*(hash_map: ptr rcutils_hash_map_t;
-    previous_key: pointer; key: pointer; data: pointer): rcutils_ret_t {.cdecl,
+proc rcutils_hash_map_get_next_key_and_data*(hash_map: ptr hash_map_t;
+    previous_key: pointer; key: pointer; data: pointer): ret_t {.cdecl,
     importc: "rcutils_hash_map_get_next_key_and_data", header: "hash_map.h".}
   ##
                               ##  Get the next key in the hash_map, unless NULL is given, then get the first key.
