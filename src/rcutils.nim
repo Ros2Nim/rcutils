@@ -1,4 +1,11 @@
 import
+  rcutils/types/array_list,
+  rcutils/types/char_array,
+  rcutils/types/hash_map,
+  rcutils/types/rcutils_ret,
+  rcutils/types/string_array,
+  rcutils/types/string_map,
+  rcutils/types/uint8_array,
   rcutils/allocator,
   rcutils/cmdline_parser,
   rcutils/env,
@@ -50,4 +57,11 @@ export
   time,
   types,
   visibility_control,
-  visibility_control_macros
+  visibility_control_macros,
+  array_list,
+  char_array,
+  hash_map,
+  rcutils_ret,
+  string_array,
+  string_map,
+  uint8_array
