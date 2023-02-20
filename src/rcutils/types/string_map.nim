@@ -5,8 +5,8 @@ import ../types/array_list
 
 type
 
-  string_map_impl_t* {.importc: "rcutils_string_map_impl_t",
-                       header: "string_map.h", bycopy.} = object ##
+  rcutils_string_map_impl_t* {.importc: "rcutils_string_map_impl_t",
+                               header: "string_map.h", bycopy.} = object ##
                               ##  Copyright 2017 Open Source Robotics Foundation, Inc.
                               ##
                               ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,17 +25,18 @@ type
     values* {.importc: "values".}: cstringArray
     capacity* {.importc: "capacity".}: csize_t
     size* {.importc: "size".}: csize_t
-    allocator* {.importc: "allocator".}: allocator_t
+    allocator* {.importc: "allocator".}: rcutils_allocator_t
 
 
-  string_map_t* {.importc: "rcutils_string_map_t", header: "string_map.h",
-                  bycopy.} = object ##  The structure holding the metadata for a string map.
-    impl* {.importc: "impl".}: ptr string_map_impl_t ##
+  rcutils_string_map_t* {.importc: "rcutils_string_map_t",
+                          header: "string_map.h", bycopy.} = object ##
+                              ##  The structure holding the metadata for a string map.
+    impl* {.importc: "impl".}: ptr rcutils_string_map_impl_t ##
                               ##  A pointer to the PIMPL implementation type.
 
 
 
-proc rcutils_get_zero_initialized_string_map*(): string_map_t {.cdecl,
+proc rcutils_get_zero_initialized_string_map*(): rcutils_string_map_t {.cdecl,
     importc: "rcutils_get_zero_initialized_string_map", header: "string_map.h".}
   ##
                               ##  Return an empty string map struct.
@@ -55,8 +56,9 @@ proc rcutils_get_zero_initialized_string_map*(): string_map_t {.cdecl,
                               ##  ```
                               ##
 
-proc rcutils_string_map_init*(string_map: ptr string_map_t;
-                              initial_capacity: csize_t; allocator: allocator_t): ret_t {.
+proc rcutils_string_map_init*(string_map: ptr rcutils_string_map_t;
+                              initial_capacity: csize_t;
+                              allocator: rcutils_allocator_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_string_map_init", header: "string_map.h".}
   ##
                               ##  Initialize a rcutils_string_map_t, allocating space for given capacity.
@@ -95,8 +97,8 @@ proc rcutils_string_map_init*(string_map: ptr string_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_fini*(string_map: ptr string_map_t): ret_t {.cdecl,
-    importc: "rcutils_string_map_fini", header: "string_map.h".}
+proc rcutils_string_map_fini*(string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_string_map_fini", header: "string_map.h".}
   ##
                               ##  Finalize the previously initialized string map struct.
                               ##
@@ -109,9 +111,9 @@ proc rcutils_string_map_fini*(string_map: ptr string_map_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_get_capacity*(string_map: ptr string_map_t;
-                                      capacity: ptr csize_t): ret_t {.cdecl,
-    importc: "rcutils_string_map_get_capacity", header: "string_map.h".}
+proc rcutils_string_map_get_capacity*(string_map: ptr rcutils_string_map_t;
+                                      capacity: ptr csize_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_string_map_get_capacity", header: "string_map.h".}
   ##
                               ##  Get the current capacity of the string map.
                               ##
@@ -130,8 +132,8 @@ proc rcutils_string_map_get_capacity*(string_map: ptr string_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_get_size*(string_map: ptr string_map_t;
-                                  size: ptr csize_t): ret_t {.cdecl,
+proc rcutils_string_map_get_size*(string_map: ptr rcutils_string_map_t;
+                                  size: ptr csize_t): rcutils_ret_t {.cdecl,
     importc: "rcutils_string_map_get_size", header: "string_map.h".}
   ##
                               ##  Get the current size of the string map.
@@ -149,8 +151,9 @@ proc rcutils_string_map_get_size*(string_map: ptr string_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_reserve*(string_map: ptr string_map_t; capacity: csize_t): ret_t {.
-    cdecl, importc: "rcutils_string_map_reserve", header: "string_map.h".}
+proc rcutils_string_map_reserve*(string_map: ptr rcutils_string_map_t;
+                                 capacity: csize_t): rcutils_ret_t {.cdecl,
+    importc: "rcutils_string_map_reserve", header: "string_map.h".}
   ##
                               ##  Reserve a given amount of capacity in the map.
                               ##
@@ -176,8 +179,8 @@ proc rcutils_string_map_reserve*(string_map: ptr string_map_t; capacity: csize_t
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_clear*(string_map: ptr string_map_t): ret_t {.cdecl,
-    importc: "rcutils_string_map_clear", header: "string_map.h".}
+proc rcutils_string_map_clear*(string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_string_map_clear", header: "string_map.h".}
   ##
                               ##  Remove all key value pairs from the map.
                               ##
@@ -192,8 +195,8 @@ proc rcutils_string_map_clear*(string_map: ptr string_map_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_set*(string_map: ptr string_map_t; key: cstring;
-                             value: cstring): ret_t {.cdecl,
+proc rcutils_string_map_set*(string_map: ptr rcutils_string_map_t; key: cstring;
+                             value: cstring): rcutils_ret_t {.cdecl,
     importc: "rcutils_string_map_set", header: "string_map.h".}
   ##
                               ##  Set a key value pair in the map, increasing capacity if necessary.
@@ -213,8 +216,8 @@ proc rcutils_string_map_set*(string_map: ptr string_map_t; key: cstring;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_set_no_resize*(string_map: ptr string_map_t;
-                                       key: cstring; value: cstring): ret_t {.
+proc rcutils_string_map_set_no_resize*(string_map: ptr rcutils_string_map_t;
+                                       key: cstring; value: cstring): rcutils_ret_t {.
     cdecl, importc: "rcutils_string_map_set_no_resize", header: "string_map.h".}
   ##
                               ##  Set a key value pair in the map but only if the map has enough capacity.
@@ -246,8 +249,9 @@ proc rcutils_string_map_set_no_resize*(string_map: ptr string_map_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_unset*(string_map: ptr string_map_t; key: cstring): ret_t {.
-    cdecl, importc: "rcutils_string_map_unset", header: "string_map.h".}
+proc rcutils_string_map_unset*(string_map: ptr rcutils_string_map_t;
+                               key: cstring): rcutils_ret_t {.cdecl,
+    importc: "rcutils_string_map_unset", header: "string_map.h".}
   ##
                               ##  Unset a key value pair in the map.
                               ##
@@ -263,8 +267,9 @@ proc rcutils_string_map_unset*(string_map: ptr string_map_t; key: cstring): ret_
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_key_exists*(string_map: ptr string_map_t; key: cstring): bool {.
-    cdecl, importc: "rcutils_string_map_key_exists", header: "string_map.h".}
+proc rcutils_string_map_key_exists*(string_map: ptr rcutils_string_map_t;
+                                    key: cstring): bool {.cdecl,
+    importc: "rcutils_string_map_key_exists", header: "string_map.h".}
   ##
                               ##  Get whether or not a key exists.
                               ##
@@ -282,9 +287,9 @@ proc rcutils_string_map_key_exists*(string_map: ptr string_map_t; key: cstring):
                               ##  \return `false` if the string map is invalid.
                               ##
 
-proc rcutils_string_map_key_existsn*(string_map: ptr string_map_t; key: cstring;
-                                     key_length: csize_t): bool {.cdecl,
-    importc: "rcutils_string_map_key_existsn", header: "string_map.h".}
+proc rcutils_string_map_key_existsn*(string_map: ptr rcutils_string_map_t;
+                                     key: cstring; key_length: csize_t): bool {.
+    cdecl, importc: "rcutils_string_map_key_existsn", header: "string_map.h".}
   ##
                               ##  Get whether or not a key of known length exists.
                               ##
@@ -300,7 +305,7 @@ proc rcutils_string_map_key_existsn*(string_map: ptr string_map_t; key: cstring;
                               ##  \return `false` if the string map is invalid.
                               ##
 
-proc rcutils_string_map_get*(string_map: ptr string_map_t; key: cstring): cstring {.
+proc rcutils_string_map_get*(string_map: ptr rcutils_string_map_t; key: cstring): cstring {.
     cdecl, importc: "rcutils_string_map_get", header: "string_map.h".}
   ##
                               ##  Get value given a key.
@@ -327,9 +332,9 @@ proc rcutils_string_map_get*(string_map: ptr string_map_t; key: cstring): cstrin
                               ##  \return `NULL` if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_getn*(string_map: ptr string_map_t; key: cstring;
-                              key_length: csize_t): cstring {.cdecl,
-    importc: "rcutils_string_map_getn", header: "string_map.h".}
+proc rcutils_string_map_getn*(string_map: ptr rcutils_string_map_t;
+                              key: cstring; key_length: csize_t): cstring {.
+    cdecl, importc: "rcutils_string_map_getn", header: "string_map.h".}
   ##
                               ##  Get value given a key and key length.
                               ##
@@ -346,8 +351,9 @@ proc rcutils_string_map_getn*(string_map: ptr string_map_t; key: cstring;
                               ##  \return `NULL` if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_get_next_key*(string_map: ptr string_map_t; key: cstring): cstring {.
-    cdecl, importc: "rcutils_string_map_get_next_key", header: "string_map.h".}
+proc rcutils_string_map_get_next_key*(string_map: ptr rcutils_string_map_t;
+                                      key: cstring): cstring {.cdecl,
+    importc: "rcutils_string_map_get_next_key", header: "string_map.h".}
   ##
                               ##  Get the next key in the map, unless NULL is given, then get the first key.
                               ##
@@ -391,9 +397,9 @@ proc rcutils_string_map_get_next_key*(string_map: ptr string_map_t; key: cstring
                               ##  \return `NULL` if an unknown error occurs.
                               ##
 
-proc rcutils_string_map_copy*(src_string_map: ptr string_map_t;
-                              dst_string_map: ptr string_map_t): ret_t {.cdecl,
-    importc: "rcutils_string_map_copy", header: "string_map.h".}
+proc rcutils_string_map_copy*(src_string_map: ptr rcutils_string_map_t;
+                              dst_string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_string_map_copy", header: "string_map.h".}
   ##
                               ##  Copy all the key value pairs from one map into another, overwritting and resizing if needed.
                               ##

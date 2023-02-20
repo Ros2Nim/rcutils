@@ -19,7 +19,6 @@
 
 #pragma c2nim header
 
-#pragma c2nim mangle "^ 'rcutils_' @@ '_t' $" "$1_t"
 #pragma c2nim mangle "'rcutils_array_list_impl_s'" "array_list_impl_t"
 
 #pragma c2nim mangle "'va_list'" "varargs[pointer]"

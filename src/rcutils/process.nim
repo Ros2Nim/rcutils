@@ -32,8 +32,8 @@ proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
                               ##  \return The current process ID.
                               ##
 
-proc rcutils_get_executable_name*(allocator: allocator_t): cstring {.cdecl,
-    importc: "rcutils_get_executable_name", header: "process.h".}
+proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.
+    cdecl, importc: "rcutils_get_executable_name", header: "process.h".}
   ##
                               ##  Retrieve the current executable name.
                               ##

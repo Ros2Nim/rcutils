@@ -43,14 +43,14 @@ import
 
 type
 
-  time_point_value_t* = int64 ##  Convenience macro for rcutils_steady_time_now(rcutils_time_point_value_t *).
-                              ##  A single point in time, measured in nanoseconds since the Unix epoch.
+  rcutils_time_point_value_t* = int64 ##  Convenience macro for rcutils_steady_time_now(rcutils_time_point_value_t *).
+                                      ##  A single point in time, measured in nanoseconds since the Unix epoch.
 
-  duration_value_t* = int64  ##  A duration of time, measured in nanoseconds.
+  rcutils_duration_value_t* = int64 ##  A duration of time, measured in nanoseconds.
 
 
-proc rcutils_system_time_now*(now: ptr time_point_value_t): ret_t {.cdecl,
-    importc: "rcutils_system_time_now", header: "time.h".}
+proc rcutils_system_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_system_time_now", header: "time.h".}
   ##
                               ##
                               ##  This function returns the time from a system clock.
@@ -75,8 +75,8 @@ proc rcutils_system_time_now*(now: ptr time_point_value_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unspecified error occur.
                               ##
 
-proc rcutils_steady_time_now*(now: ptr time_point_value_t): ret_t {.cdecl,
-    importc: "rcutils_steady_time_now", header: "time.h".}
+proc rcutils_steady_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_steady_time_now", header: "time.h".}
   ##
                               ##  Retrieve the current time as a rcutils_time_point_value_t object.
                               ##
@@ -103,7 +103,7 @@ proc rcutils_steady_time_now*(now: ptr time_point_value_t): ret_t {.cdecl,
                               ##
 
 proc rcutils_time_point_value_as_nanoseconds_string*(
-    time_point: ptr time_point_value_t; str: cstring; str_size: csize_t): ret_t {.
+    time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_time_point_value_as_nanoseconds_string",
     header: "time.h".}
   ##  Return a time point as nanoseconds in a string.
@@ -139,7 +139,7 @@ proc rcutils_time_point_value_as_nanoseconds_string*(
                       ##
 
 proc rcutils_time_point_value_as_seconds_string*(
-    time_point: ptr time_point_value_t; str: cstring; str_size: csize_t): ret_t {.
+    time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_time_point_value_as_seconds_string",
     header: "time.h".}
   ##  Return a time point as floating point seconds in a string.

@@ -20,8 +20,8 @@ import
   ./visibility_control, ./allocator
 
 
-proc rcutils_strdup*(str: cstring; allocator: allocator_t): cstring {.cdecl,
-    importc: "rcutils_strdup", header: "strdup.h".}
+proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
+    cdecl, importc: "rcutils_strdup", header: "strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.
                               ##
@@ -37,8 +37,9 @@ proc rcutils_strdup*(str: cstring; allocator: allocator_t): cstring {.cdecl,
                               ##  \return `NULL` if there is an error.
                               ##
 
-proc rcutils_strndup*(str: cstring; max_length: csize_t; allocator: allocator_t): cstring {.
-    cdecl, importc: "rcutils_strndup", header: "strdup.h".}
+proc rcutils_strndup*(str: cstring; max_length: csize_t;
+                      allocator: rcutils_allocator_t): cstring {.cdecl,
+    importc: "rcutils_strndup", header: "strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.
                               ##

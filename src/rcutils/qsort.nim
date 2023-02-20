@@ -20,7 +20,7 @@ import
 
 
 proc rcutils_qsort*(`ptr`: pointer; count: csize_t; size: csize_t;
-                    comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): ret_t {.
+                    comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): rcutils_ret_t {.
     cdecl, importc: "rcutils_qsort", header: "qsort.h".}
   ##
                               ##  Interface to qsort with rcutils-style argument validation.

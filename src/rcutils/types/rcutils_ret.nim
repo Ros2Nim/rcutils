@@ -15,7 +15,7 @@
 
 type
 
-  ret_t* = cint              ##  The type that holds a return value for an rcutils operation.
+  rcutils_ret_t* = cint      ##  The type that holds a return value for an rcutils operation.
 
 const
   RCUTILS_RET_OK* = 0        ##  Successful operation.

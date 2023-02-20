@@ -21,20 +21,20 @@ import
 
 type
 
-  shared_library_t* {.importc: "rcutils_shared_library_t",
-                      header: "shared_library.h", bycopy.} = object ##
+  rcutils_shared_library_t* {.importc: "rcutils_shared_library_t",
+                              header: "shared_library.h", bycopy.} = object ##
                               ##  Handle to a loaded shared library.
     lib_pointer* {.importc: "lib_pointer".}: pointer ##
                               ##  The platform-specific pointer to the shared library
     library_path* {.importc: "library_path".}: cstring ##
                               ##  The path of the shared_library
-    allocator* {.importc: "allocator".}: allocator_t ##
+    allocator* {.importc: "allocator".}: rcutils_allocator_t ##
                               ##  allocator
 
 
 
-proc rcutils_get_zero_initialized_shared_library*(): shared_library_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_shared_library",
+proc rcutils_get_zero_initialized_shared_library*(): rcutils_shared_library_t {.
+    cdecl, importc: "rcutils_get_zero_initialized_shared_library",
     header: "shared_library.h".}
   ##  Return an empty shared library struct.
                                 ##
@@ -64,8 +64,9 @@ proc rcutils_get_zero_initialized_shared_library*(): shared_library_t {.cdecl,
                                 ##  ```
                                 ##
 
-proc rcutils_load_shared_library*(lib: ptr shared_library_t;
-                                  library_path: cstring; allocator: allocator_t): ret_t {.
+proc rcutils_load_shared_library*(lib: ptr rcutils_shared_library_t;
+                                  library_path: cstring;
+                                  allocator: rcutils_allocator_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_load_shared_library", header: "shared_library.h".}
   ##
                               ##  Return shared library pointer.
@@ -79,7 +80,7 @@ proc rcutils_load_shared_library*(lib: ptr shared_library_t;
                               ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments.
                               ##
 
-proc rcutils_get_symbol*(lib: ptr shared_library_t; symbol_name: cstring): pointer {.
+proc rcutils_get_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): pointer {.
     cdecl, importc: "rcutils_get_symbol", header: "shared_library.h".}
   ##
                               ##  Return shared library symbol pointer.
@@ -90,7 +91,7 @@ proc rcutils_get_symbol*(lib: ptr shared_library_t; symbol_name: cstring): point
                               ##  \return `NULL` if the symbol doesn't exist.
                               ##
 
-proc rcutils_has_symbol*(lib: ptr shared_library_t; symbol_name: cstring): bool {.
+proc rcutils_has_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): bool {.
     cdecl, importc: "rcutils_has_symbol", header: "shared_library.h".}
   ##
                               ##  Return true if the shared library contains a specific symbol name otherwise returns false.
@@ -101,8 +102,8 @@ proc rcutils_has_symbol*(lib: ptr shared_library_t; symbol_name: cstring): bool 
                               ##  \return `false` otherwise.
                               ##
 
-proc rcutils_unload_shared_library*(lib: ptr shared_library_t): ret_t {.cdecl,
-    importc: "rcutils_unload_shared_library", header: "shared_library.h".}
+proc rcutils_unload_shared_library*(lib: ptr rcutils_shared_library_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_unload_shared_library", header: "shared_library.h".}
   ##
                               ##  Unload the shared library.
                               ##
@@ -112,22 +113,22 @@ proc rcutils_unload_shared_library*(lib: ptr shared_library_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
                               ##
 
-proc rcutils_is_shared_library_loaded*(lib: ptr shared_library_t): bool {.cdecl,
-    importc: "rcutils_is_shared_library_loaded", header: "shared_library.h".}
-  ##
-                              ##  Check if the library is loaded.
-                              ##
-                              ##  This function only determines if "unload" has been called on the current shared library handle.
-                              ##  It could very well be that a second shared library handle is still open and therefore the library
-                              ##  being loaded.
-                              ##  \param[in] lib rcutils_shared_library_t  to check
-                              ##  \return `true` if library is loaded, or
-                              ##  \return `false` otherwise.
-                              ##
+proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): bool {.
+    cdecl, importc: "rcutils_is_shared_library_loaded",
+    header: "shared_library.h".}
+  ##  Check if the library is loaded.
+                                ##
+                                ##  This function only determines if "unload" has been called on the current shared library handle.
+                                ##  It could very well be that a second shared library handle is still open and therefore the library
+                                ##  being loaded.
+                                ##  \param[in] lib rcutils_shared_library_t  to check
+                                ##  \return `true` if library is loaded, or
+                                ##  \return `false` otherwise.
+                                ##
 
 proc rcutils_get_platform_library_name*(library_name: cstring;
                                         library_name_platform: cstring;
-                                        buffer_size: cuint; debug: bool): ret_t {.
+                                        buffer_size: cuint; debug: bool): rcutils_ret_t {.
     cdecl, importc: "rcutils_get_platform_library_name",
     header: "shared_library.h".}
   ##  Get the library name for the compiled platform

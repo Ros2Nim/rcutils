@@ -27,9 +27,9 @@ type array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_l
 discard "forward decl of rcutils_array_list_impl_t"
 type
 
-  array_list_t* {.importc: "rcutils_array_list_t", header: "array_list.h",
-                  bycopy.} = object
-    impl* {.importc: "impl".}: ptr array_list_impl_t ##
+  rcutils_array_list_t* {.importc: "rcutils_array_list_t",
+                          header: "array_list.h", bycopy.} = object
+    impl* {.importc: "impl".}: ptr rcutils_array_list_impl_t ##
                               ##  A pointer to the PIMPL implementation type.
 
 
@@ -41,7 +41,7 @@ type
 ##
 
 
-proc rcutils_get_zero_initialized_array_list*(): array_list_t {.cdecl,
+proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.cdecl,
     importc: "rcutils_get_zero_initialized_array_list", header: "array_list.h".}
   ##
                               ##  Return an empty array_list struct.
@@ -71,10 +71,10 @@ proc rcutils_get_zero_initialized_array_list*(): array_list_t {.cdecl,
                               ##  ```
                               ##
 
-proc rcutils_array_list_init*(array_list: ptr array_list_t;
+proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               initial_capacity: csize_t; data_size: csize_t;
-                              allocator: ptr allocator_t): ret_t {.cdecl,
-    importc: "rcutils_array_list_init", header: "array_list.h".}
+                              allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_array_list_init", header: "array_list.h".}
   ##
                               ##  Initialize an array list with a given initial capacity.
                               ##
@@ -117,8 +117,8 @@ proc rcutils_array_list_init*(array_list: ptr array_list_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_fini*(array_list: ptr array_list_t): ret_t {.cdecl,
-    importc: "rcutils_array_list_fini", header: "array_list.h".}
+proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_array_list_fini", header: "array_list.h".}
   ##
                               ##  Finalize an array list, reclaiming all resources.
                               ##
@@ -141,7 +141,7 @@ proc rcutils_array_list_fini*(array_list: ptr array_list_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_add*(array_list: ptr array_list_t; data: pointer): ret_t {.
+proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer): rcutils_ret_t {.
     cdecl, importc: "rcutils_array_list_add", header: "array_list.h".}
   ##
                               ##  Adds an entry to the list
@@ -166,9 +166,9 @@ proc rcutils_array_list_add*(array_list: ptr array_list_t; data: pointer): ret_t
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_set*(array_list: ptr array_list_t; index: csize_t;
-                             data: pointer): ret_t {.cdecl,
-    importc: "rcutils_array_list_set", header: "array_list.h".}
+proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
+                             index: csize_t; data: pointer): rcutils_ret_t {.
+    cdecl, importc: "rcutils_array_list_set", header: "array_list.h".}
   ##
                               ##  Sets an entry in the list to the provided data
                               ##
@@ -193,8 +193,9 @@ proc rcutils_array_list_set*(array_list: ptr array_list_t; index: csize_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_remove*(array_list: ptr array_list_t; index: csize_t): ret_t {.
-    cdecl, importc: "rcutils_array_list_remove", header: "array_list.h".}
+proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
+                                index: csize_t): rcutils_ret_t {.cdecl,
+    importc: "rcutils_array_list_remove", header: "array_list.h".}
   ##
                               ##  Removes an entry in the list at the provided index
                               ##
@@ -217,9 +218,9 @@ proc rcutils_array_list_remove*(array_list: ptr array_list_t; index: csize_t): r
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_get*(array_list: ptr array_list_t; index: csize_t;
-                             data: pointer): ret_t {.cdecl,
-    importc: "rcutils_array_list_get", header: "array_list.h".}
+proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
+                             index: csize_t; data: pointer): rcutils_ret_t {.
+    cdecl, importc: "rcutils_array_list_get", header: "array_list.h".}
   ##
                               ##  Retrieves an entry in the list at the provided index
                               ##
@@ -242,8 +243,8 @@ proc rcutils_array_list_get*(array_list: ptr array_list_t; index: csize_t;
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
 
-proc rcutils_array_list_get_size*(array_list: ptr array_list_t;
-                                  size: ptr csize_t): ret_t {.cdecl,
+proc rcutils_array_list_get_size*(array_list: ptr rcutils_array_list_t;
+                                  size: ptr csize_t): rcutils_ret_t {.cdecl,
     importc: "rcutils_array_list_get_size", header: "array_list.h".}
   ##
                               ##  Retrieves the size of the provided array_list

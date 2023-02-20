@@ -18,8 +18,9 @@ import ../allocator
 
 type
 
-  char_array_t* {.importc: "rcutils_char_array_t", header: "char_array.h",
-                  bycopy.} = object ##  The structure holding the metadata for a char array.
+  rcutils_char_array_t* {.importc: "rcutils_char_array_t",
+                          header: "char_array.h", bycopy.} = object ##
+                              ##  The structure holding the metadata for a char array.
     buffer* {.importc: "buffer".}: cstring ##  A pointer to the allocated memory for this char array.
     owns_buffer* {.importc: "owns_buffer".}: bool ##
                                                   ##  if this is true, we may safely free/realloc the buffer as needed;
@@ -30,12 +31,12 @@ type
                               ##  The length of the data stored in the buffer pointer.
     buffer_capacity* {.importc: "buffer_capacity".}: csize_t ##
                               ##  The maximum capacity of the buffer pointer.
-    allocator* {.importc: "allocator".}: allocator_t ##
+    allocator* {.importc: "allocator".}: rcutils_allocator_t ##
                               ##  The allocator used to allocate and free the data in the pointer.
 
 
 
-proc rcutils_get_zero_initialized_char_array*(): char_array_t {.cdecl,
+proc rcutils_get_zero_initialized_char_array*(): rcutils_char_array_t {.cdecl,
     importc: "rcutils_get_zero_initialized_char_array", header: "char_array.h".}
   ##
                               ##  Return a zero initialized char array struct.
@@ -43,10 +44,10 @@ proc rcutils_get_zero_initialized_char_array*(): char_array_t {.cdecl,
                               ##  \return rcutils_char_array_t a zero initialized char array struct
                               ##
 
-proc rcutils_char_array_init*(char_array: ptr char_array_t;
+proc rcutils_char_array_init*(char_array: ptr rcutils_char_array_t;
                               buffer_capacity: csize_t;
-                              allocator: ptr allocator_t): ret_t {.cdecl,
-    importc: "rcutils_char_array_init", header: "char_array.h".}
+                              allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_init", header: "char_array.h".}
   ##
                               ##  Initialize a zero initialized char array struct.
                               ##
@@ -64,8 +65,8 @@ proc rcutils_char_array_init*(char_array: ptr char_array_t;
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_fini*(char_array: ptr char_array_t): ret_t {.cdecl,
-    importc: "rcutils_char_array_fini", header: "char_array.h".}
+proc rcutils_char_array_fini*(char_array: ptr rcutils_char_array_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_fini", header: "char_array.h".}
   ##
                               ##  Finalize a char array struct.
                               ##
@@ -83,8 +84,9 @@ proc rcutils_char_array_fini*(char_array: ptr char_array_t): ret_t {.cdecl,
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_resize*(char_array: ptr char_array_t; new_size: csize_t): ret_t {.
-    cdecl, importc: "rcutils_char_array_resize", header: "char_array.h".}
+proc rcutils_char_array_resize*(char_array: ptr rcutils_char_array_t;
+                                new_size: csize_t): rcutils_ret_t {.cdecl,
+    importc: "rcutils_char_array_resize", header: "char_array.h".}
   ##
                               ##  Resize the internal buffer of the char array.
                               ##
@@ -107,10 +109,9 @@ proc rcutils_char_array_resize*(char_array: ptr char_array_t; new_size: csize_t)
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_expand_as_needed*(char_array: ptr char_array_t;
-    new_size: csize_t): ret_t {.cdecl,
-                                importc: "rcutils_char_array_expand_as_needed",
-                                header: "char_array.h".}
+proc rcutils_char_array_expand_as_needed*(char_array: ptr rcutils_char_array_t;
+    new_size: csize_t): rcutils_ret_t {.cdecl, importc: "rcutils_char_array_expand_as_needed",
+                                        header: "char_array.h".}
   ##
                               ##  Expand the internal buffer of the char array.
                               ##
@@ -126,9 +127,9 @@ proc rcutils_char_array_expand_as_needed*(char_array: ptr char_array_t;
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_vsprintf*(char_array: ptr char_array_t; format: cstring;
-                                  args: varargs[pointer]): ret_t {.cdecl,
-    importc: "rcutils_char_array_vsprintf", header: "char_array.h".}
+proc rcutils_char_array_vsprintf*(char_array: ptr rcutils_char_array_t;
+                                  format: cstring; args: varargs[pointer]): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_vsprintf", header: "char_array.h".}
   ##
                               ##  Produce output according to format and args.
                               ##
@@ -147,9 +148,9 @@ proc rcutils_char_array_vsprintf*(char_array: ptr char_array_t; format: cstring;
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_strncat*(char_array: ptr char_array_t; src: cstring;
-                                 n: csize_t): ret_t {.cdecl,
-    importc: "rcutils_char_array_strncat", header: "char_array.h".}
+proc rcutils_char_array_strncat*(char_array: ptr rcutils_char_array_t;
+                                 src: cstring; n: csize_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_strncat", header: "char_array.h".}
   ##
                               ##  Append a string (or part of it) to the string in buffer.
                               ##
@@ -166,8 +167,9 @@ proc rcutils_char_array_strncat*(char_array: ptr char_array_t; src: cstring;
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_strcat*(char_array: ptr char_array_t; src: cstring): ret_t {.
-    cdecl, importc: "rcutils_char_array_strcat", header: "char_array.h".}
+proc rcutils_char_array_strcat*(char_array: ptr rcutils_char_array_t;
+                                src: cstring): rcutils_ret_t {.cdecl,
+    importc: "rcutils_char_array_strcat", header: "char_array.h".}
   ##
                               ##  Append a string to the string in buffer.
                               ##
@@ -184,9 +186,9 @@ proc rcutils_char_array_strcat*(char_array: ptr char_array_t; src: cstring): ret
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_memcpy*(char_array: ptr char_array_t; src: cstring;
-                                n: csize_t): ret_t {.cdecl,
-    importc: "rcutils_char_array_memcpy", header: "char_array.h".}
+proc rcutils_char_array_memcpy*(char_array: ptr rcutils_char_array_t;
+                                src: cstring; n: csize_t): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_memcpy", header: "char_array.h".}
   ##
                               ##  Copy memory to buffer.
                               ##
@@ -201,8 +203,9 @@ proc rcutils_char_array_memcpy*(char_array: ptr char_array_t; src: cstring;
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_strcpy*(char_array: ptr char_array_t; src: cstring): ret_t {.
-    cdecl, importc: "rcutils_char_array_strcpy", header: "char_array.h".}
+proc rcutils_char_array_strcpy*(char_array: ptr rcutils_char_array_t;
+                                src: cstring): rcutils_ret_t {.cdecl,
+    importc: "rcutils_char_array_strcpy", header: "char_array.h".}
   ##
                               ##  Copy a string to buffer.
                               ##

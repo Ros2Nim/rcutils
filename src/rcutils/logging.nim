@@ -38,7 +38,7 @@ const
 var g_rcutils_logging_initialized* {.header: "logging.h".}: bool
 
 
-proc rcutils_logging_initialize_with_allocator*(allocator: allocator_t): ret_t {.
+proc rcutils_logging_initialize_with_allocator*(allocator: rcutils_allocator_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_logging_initialize_with_allocator",
     header: "logging.h".}
   ##  The flag if the logging system has been initialized.
@@ -99,7 +99,7 @@ proc rcutils_logging_initialize_with_allocator*(allocator: allocator_t): ret_t {
   ##    levels will not be configurable.
   ##
 
-proc rcutils_logging_initialize*(): ret_t {.cdecl,
+proc rcutils_logging_initialize*(): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_initialize", header: "logging.h".}
   ##
                               ##  Initialize the logging system.
@@ -124,7 +124,7 @@ proc rcutils_logging_initialize*(): ret_t {.cdecl,
                               ##    will not be configurable.
                               ##
 
-proc rcutils_logging_shutdown*(): ret_t {.cdecl,
+proc rcutils_logging_shutdown*(): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_shutdown", header: "logging.h".}
   ##
                               ##  Shutdown the logging system.
@@ -146,8 +146,9 @@ proc rcutils_logging_shutdown*(): ret_t {.cdecl,
                               ##
 type
 
-  log_location_t* {.importc: "rcutils_log_location_t", header: "logging.h",
-                    bycopy.} = object ##  The structure identifying the caller location in the source code.
+  rcutils_log_location_t* {.importc: "rcutils_log_location_t",
+                            header: "logging.h", bycopy.} = object ##
+                              ##  The structure identifying the caller location in the source code.
     function_name* {.importc: "function_name".}: cstring ##
                               ##  The name of the function containing the log call.
     file_name* {.importc: "file_name".}: cstring ##  The name of the source file containing the log call.
@@ -171,24 +172,23 @@ type
 
 
 proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
-    allocator: allocator_t; severity: ptr cint): ret_t {.cdecl,
+    allocator: rcutils_allocator_t; severity: ptr cint): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_severity_level_from_string", header: "logging.h".}
   ##
                               ##  The names of severity levels.
 type
 
-  logging_output_handler_t* = proc (a1: ptr log_location_t; a2: cint;
-                                    a3: cstring; a4: time_point_value_t;
-                                    a5: cstring; a6: varargs[pointer]) {.cdecl.} ##
-                              ##  The function signature to log messages.
-                              ##
-                              ##  \param[in] location The location information about where the log came from
-                              ##  \param[in] severity The severity of the log message expressed as an integer
-                              ##  \param[in] name The name of the logger that this message came from
-                              ##  \param[in] timestamp The time at which the log message was generated
-                              ##  \param[in] format The list of arguments to insert into the formatted log message
-                              ##  \param[in] args The variable argument list
-                              ##
+  rcutils_logging_output_handler_t* = proc (a1: ptr rcutils_log_location_t;
+      a2: cint; a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: varargs[pointer]) {.
+      cdecl.} ##  The function signature to log messages.
+              ##
+              ##  \param[in] location The location information about where the log came from
+              ##  \param[in] severity The severity of the log message expressed as an integer
+              ##  \param[in] name The name of the logger that this message came from
+              ##  \param[in] timestamp The time at which the log message was generated
+              ##  \param[in] format The list of arguments to insert into the formatted log message
+              ##  \param[in] args The variable argument list
+              ##
   ##  location
   ##  severity
   ##  name
@@ -197,8 +197,8 @@ type
   ##  args
 
 
-proc rcutils_logging_get_output_handler*(): logging_output_handler_t {.cdecl,
-    importc: "rcutils_logging_get_output_handler", header: "logging.h".}
+proc rcutils_logging_get_output_handler*(): rcutils_logging_output_handler_t {.
+    cdecl, importc: "rcutils_logging_get_output_handler", header: "logging.h".}
   ##
                               ##  Get the current output handler.
                               ##
@@ -213,8 +213,9 @@ proc rcutils_logging_get_output_handler*(): logging_output_handler_t {.cdecl,
                               ##  \return The function pointer of the current output handler.
                               ##
 
-proc rcutils_logging_set_output_handler*(function: logging_output_handler_t) {.
-    cdecl, importc: "rcutils_logging_set_output_handler", header: "logging.h".}
+proc rcutils_logging_set_output_handler*(
+    function: rcutils_logging_output_handler_t) {.cdecl,
+    importc: "rcutils_logging_set_output_handler", header: "logging.h".}
   ##
                               ##  Set the current output handler.
                               ##
@@ -229,11 +230,11 @@ proc rcutils_logging_set_output_handler*(function: logging_output_handler_t) {.
                               ##  \param[in] function The function pointer of the output handler to be used.
                               ##
 
-proc rcutils_logging_format_message*(location: ptr log_location_t;
+proc rcutils_logging_format_message*(location: ptr rcutils_log_location_t;
                                      severity: cint; name: cstring;
-                                     timestamp: time_point_value_t;
+                                     timestamp: rcutils_time_point_value_t;
                                      msg: cstring;
-                                     logging_output: ptr char_array_t): ret_t {.
+                                     logging_output: ptr rcutils_char_array_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_logging_format_message", header: "logging.h".}
   ##
                               ##  Formats a log message according to RCUTILS_CONSOLE_OUTPUT_FORMAT
@@ -330,7 +331,7 @@ proc rcutils_logging_get_logger_leveln*(name: cstring; name_length: csize_t): ci
                               ##  \return -1 if an error occurred
                               ##
 
-proc rcutils_logging_set_logger_level*(name: cstring; level: cint): ret_t {.
+proc rcutils_logging_set_logger_level*(name: cstring; level: cint): rcutils_ret_t {.
     cdecl, importc: "rcutils_logging_set_logger_level", header: "logging.h".}
   ##
                               ##  Set the severity level for a logger.
@@ -402,7 +403,7 @@ proc rcutils_logging_get_logger_effective_level*(name: cstring): cint {.cdecl,
                               ##  \return -1 if an error occurred.
                               ##
 
-proc rcutils_log_internal*(location: ptr log_location_t; severity: cint;
+proc rcutils_log_internal*(location: ptr rcutils_log_location_t; severity: cint;
                            name: cstring; format: cstring) {.varargs, cdecl,
     importc: "rcutils_log_internal", header: "logging.h".}
   ##
@@ -433,46 +434,46 @@ proc rcutils_log_internal*(location: ptr log_location_t; severity: cint;
                               ##
   ##  @cond Doxygen_Suppress
 
-proc rcutils_log*(location: ptr log_location_t; severity: cint; name: cstring;
-                  format: cstring) {.varargs, cdecl, importc: "rcutils_log",
-                                     header: "logging.h".}
-  ##
-                              ##  Log a message.
-                              ##
-                              ##  The attributes of this function are influenced by the currently set output handler.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No, for formatted outputs <= 1023 characters
-                              ##                     | Yes, for formatted outputs >= 1024 characters
-                              ##  Thread-Safe        | Yes, with itself [1]
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##  <i>[1] should be thread-safe with itself but not with other logging functions</i>
-                              ##
-                              ##  This should be thread-safe with itself, but is not thread-safe with other
-                              ##  logging functions that do things like set logger levels.
-                              ##
-                              ##  \todo There are no thread-safety gurantees between this function and other
-                              ##    logging functions in rcutils, even though it is likely users are calling
-                              ##    them concurrently today.
-                              ##    We need to revisit these functions with respect to this issue and make
-                              ##    guarantees where we can, and change functions higher in the stack to
-                              ##    provide the thread-safety where we cannot.
-                              ##
-                              ##  \param[in] location The pointer to the location struct or NULL
-                              ##  \param[in] severity The severity level
-                              ##  \param[in] name The name of the logger, must be null terminated c string or NULL
-                              ##  \param[in] format The format string
-                              ##  \param[in] ... The variable arguments
-                              ##
+proc rcutils_log*(location: ptr rcutils_log_location_t; severity: cint;
+                  name: cstring; format: cstring) {.varargs, cdecl,
+    importc: "rcutils_log", header: "logging.h".}
+  ##  Log a message.
+                                                 ##
+                                                 ##  The attributes of this function are influenced by the currently set output handler.
+                                                 ##
+                                                 ##  <hr>
+                                                 ##  Attribute          | Adherence
+                                                 ##  ------------------ | -------------
+                                                 ##  Allocates Memory   | No, for formatted outputs <= 1023 characters
+                                                 ##                     | Yes, for formatted outputs >= 1024 characters
+                                                 ##  Thread-Safe        | Yes, with itself [1]
+                                                 ##  Uses Atomics       | No
+                                                 ##  Lock-Free          | Yes
+                                                 ##  <i>[1] should be thread-safe with itself but not with other logging functions</i>
+                                                 ##
+                                                 ##  This should be thread-safe with itself, but is not thread-safe with other
+                                                 ##  logging functions that do things like set logger levels.
+                                                 ##
+                                                 ##  \todo There are no thread-safety gurantees between this function and other
+                                                 ##    logging functions in rcutils, even though it is likely users are calling
+                                                 ##    them concurrently today.
+                                                 ##    We need to revisit these functions with respect to this issue and make
+                                                 ##    guarantees where we can, and change functions higher in the stack to
+                                                 ##    provide the thread-safety where we cannot.
+                                                 ##
+                                                 ##  \param[in] location The pointer to the location struct or NULL
+                                                 ##  \param[in] severity The severity level
+                                                 ##  \param[in] name The name of the logger, must be null terminated c string or NULL
+                                                 ##  \param[in] format The format string
+                                                 ##  \param[in] ... The variable arguments
+                                                 ##
   ##  @cond Doxygen_Suppress
 
-proc rcutils_logging_console_output_handler*(location: ptr log_location_t;
-    severity: cint; name: cstring; timestamp: time_point_value_t;
-    format: cstring; args: varargs[pointer]) {.cdecl,
-    importc: "rcutils_logging_console_output_handler", header: "logging.h".}
+proc rcutils_logging_console_output_handler*(
+    location: ptr rcutils_log_location_t; severity: cint; name: cstring;
+    timestamp: rcutils_time_point_value_t; format: cstring;
+    args: varargs[pointer]) {.cdecl, importc: "rcutils_logging_console_output_handler",
+                              header: "logging.h".}
   ##
                               ##  The default output handler outputs log messages to the standard streams.
                               ##

@@ -20,22 +20,22 @@ import
 
 type
 
-  allocator_t* {.importc: "rcutils_allocator_t", header: "allocator.h", bycopy.} = object ##
-                              ##  Encapsulation of an allocator.
-                              ##
-                              ##  The default allocator uses malloc(), free(), calloc(), and realloc().
-                              ##  It can be obtained using rcutils_get_default_allocator().
-                              ##
-                              ##  The allocator should be trivially copyable.
-                              ##  Meaning that the struct should continue to work after being assignment
-                              ##  copied into a new struct.
-                              ##  Specifically the object pointed to by the state pointer should remain valid
-                              ##  until all uses of the allocator have been made.
-                              ##  Particular care should be taken when giving an allocator to functions like
-                              ##  rcutils_*_init() where it is stored within another object and used later.
-                              ##  Developers should note that, while the fields of a const-qualified allocator
-                              ##  struct cannot be modified, the state of the allocator can be modified.
-                              ##
+  rcutils_allocator_t* {.importc: "rcutils_allocator_t", header: "allocator.h",
+                         bycopy.} = object ##  Encapsulation of an allocator.
+                                            ##
+                                            ##  The default allocator uses malloc(), free(), calloc(), and realloc().
+                                            ##  It can be obtained using rcutils_get_default_allocator().
+                                            ##
+                                            ##  The allocator should be trivially copyable.
+                                            ##  Meaning that the struct should continue to work after being assignment
+                                            ##  copied into a new struct.
+                                            ##  Specifically the object pointed to by the state pointer should remain valid
+                                            ##  until all uses of the allocator have been made.
+                                            ##  Particular care should be taken when giving an allocator to functions like
+                                            ##  rcutils_*_init() where it is stored within another object and used later.
+                                            ##  Developers should note that, while the fields of a const-qualified allocator
+                                            ##  struct cannot be modified, the state of the allocator can be modified.
+                                            ##
     allocate* {.importc: "allocate".}: proc (size: csize_t; state: pointer): pointer {.
         cdecl.} ##  Allocate memory, given a size and the `state` pointer.
                 ##  An error should be indicated by returning `NULL`.
@@ -68,7 +68,7 @@ type
 
 
 
-proc rcutils_get_zero_initialized_allocator*(): allocator_t {.cdecl,
+proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.cdecl,
     importc: "rcutils_get_zero_initialized_allocator", header: "allocator.h".}
   ##
                               ##  Return a zero initialized allocator.
@@ -76,7 +76,7 @@ proc rcutils_get_zero_initialized_allocator*(): allocator_t {.cdecl,
                               ##  Note that this is an invalid allocator and should only be used as a placeholder.
                               ##
 
-proc rcutils_get_default_allocator*(): allocator_t {.cdecl,
+proc rcutils_get_default_allocator*(): rcutils_allocator_t {.cdecl,
     importc: "rcutils_get_default_allocator", header: "allocator.h".}
   ##
                               ##  Return a properly initialized rcutils_allocator_t with default values.
@@ -98,8 +98,8 @@ proc rcutils_get_default_allocator*(): allocator_t {.cdecl,
                               ##  Lock-Free          | Yes
                               ##
 
-proc rcutils_allocator_is_valid*(allocator: ptr allocator_t): bool {.cdecl,
-    importc: "rcutils_allocator_is_valid", header: "allocator.h".}
+proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
+    cdecl, importc: "rcutils_allocator_is_valid", header: "allocator.h".}
   ##
                               ##  Return true if the given allocator has non-null function pointers.
                               ##
@@ -112,7 +112,7 @@ proc rcutils_allocator_is_valid*(allocator: ptr allocator_t): bool {.cdecl,
 
 
 proc rcutils_reallocf*(pointer: pointer; size: csize_t;
-                       allocator: ptr allocator_t): pointer {.cdecl,
+                       allocator: ptr rcutils_allocator_t): pointer {.cdecl,
     importc: "rcutils_reallocf", header: "allocator.h".}
   ##
                               ##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
