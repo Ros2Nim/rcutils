@@ -23,20 +23,21 @@
 
 type
 
-  rcutils_ret_t* = cint         ##  The type that holds a return value for an rcutils operation.
+  rcutils_ret_t* = cint      ##  The type that holds a return value for an rcutils operation.
 
 const
-  RCUTILS_RET_OK* = 0           ##  Successful operation.
-  RCUTILS_RET_WARN* = 1         ##  Operation produced a warning.
-  RCUTILS_RET_ERROR* = 2        ##  Generic failure in operation.
-  RCUTILS_RET_BAD_ALLOC* = 10   ##  Failed to allocate memory return code.
+  RCUTILS_RET_OK* = 0        ##  Successful operation.
+  RCUTILS_RET_WARN* = 1      ##  Operation produced a warning.
+  RCUTILS_RET_ERROR* = 2     ##  Generic failure in operation.
+  RCUTILS_RET_BAD_ALLOC* = 10 ##  Failed to allocate memory return code.
   RCUTILS_RET_INVALID_ARGUMENT* = 11 ##  Invalid argument return code.
   RCUTILS_RET_NOT_ENOUGH_SPACE* = 12 ##  Not enough storage to do operation.
   RCUTILS_RET_NOT_INITIALIZED* = 13 ##  Resource is not initialized
-  RCUTILS_RET_NOT_FOUND* = 14   ##  Resource for request not found
+  RCUTILS_RET_NOT_FOUND* = 14 ##  Resource for request not found
   RCUTILS_RET_STRING_MAP_ALREADY_INIT* = 30 ##  Given string map was either already initialized or was not zero initialized.
   RCUTILS_RET_STRING_MAP_INVALID* = 31 ##  Given string map is invalid, perhaps not initialized yet.
   RCUTILS_RET_STRING_KEY_NOT_FOUND* = 32 ##  Given key not found in given string map.
   RCUTILS_RET_LOGGING_SEVERITY_MAP_INVALID* = 40 ##  Internal severity map for logger thresholds is invalid.
-  RCUTILS_RET_LOGGING_SEVERITY_STRING_INVALID* = 41 ##  String representation of a severity is invalid.
+  RCUTILS_RET_LOGGING_SEVERITY_STRING_INVALID* = 41 ##
+                              ##  String representation of a severity is invalid.
   RCUTILS_RET_HASH_MAP_NO_MORE_ENTRIES* = 50 ##  There are no more entires beyond the last one in the map

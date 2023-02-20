@@ -23,33 +23,37 @@
 
 import
   rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
-  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
-  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
-  rcutils.visibility_control, rcutils.allocator
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
+  rcutils.allocator, rcutils.types.rcutils_ret, rcutils.allocator,
+  rcutils.visibility_control, rcutils.visibility_control_macros,
+  rcutils.visibility_control_macros, rcutils.visibility_control,
+  rcutils.allocator
 
 
-proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid", header: "process.h".}
-  ##  Retrieve the current process ID.
+proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
+                                header: "process.h".}
   ##
-  ##  This function returns the current process ID, and is always successful.
-  ##
-  ##  This function is thread-safe.
-  ##
-  ##  \return The current process ID.
-  ##
+                              ##  Retrieve the current process ID.
+                              ##
+                              ##  This function returns the current process ID, and is always successful.
+                              ##
+                              ##  This function is thread-safe.
+                              ##
+                              ##  \return The current process ID.
+                              ##
 
-proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.cdecl,
-    importc: "rcutils_get_executable_name", header: "process.h".}
-  ##  Retrieve the current executable name.
+proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.
+    cdecl, importc: "rcutils_get_executable_name", header: "process.h".}
   ##
-  ##  This function portably retrieves the current program name and returns
-  ##  a copy of it.
-  ##  It is up to the caller to free the memory.
-  ##
-  ##  This function is thread-safe.
-  ##
-  ##  \param[in] allocator the allocator to use
-  ##  \return The program name on success, or
-  ##  \return NULL on failure.
-  ## 
+                              ##  Retrieve the current executable name.
+                              ##
+                              ##  This function portably retrieves the current program name and returns
+                              ##  a copy of it.
+                              ##  It is up to the caller to free the memory.
+                              ##
+                              ##  This function is thread-safe.
+                              ##
+                              ##  \param[in] allocator the allocator to use
+                              ##  \return The program name on success, or
+                              ##  \return NULL on failure.
+                              ## 

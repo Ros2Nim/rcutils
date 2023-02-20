@@ -22,44 +22,46 @@
 ##  \file
 
 import
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.visibility_control, rcutils.visibility_control_macros,
+  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
+  rcutils.macros, rcutils.visibility_control, rcutils.visibility_control_macros,
   rcutils.visibility_control_macros, rcutils.visibility_control
 
 
-proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.cdecl,
-    importc: "rcutils_strcasecmp", header: "strcasecmp.h".}
-  ##  Case insensitive string compare.
+proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
+    cdecl, importc: "rcutils_strcasecmp", header: "strcasecmp.h".}
   ##
-  ##  This function compares two strings ignoring case in a portable way.
-  ##  This performs a byte-by-byte comparison of the strings s1 and s2,
-  ##  ignoring the case of the characters.
-  ##
-  ##  \param[in] s1 Null terminated string to compare.
-  ##  \param[in] s2 Null terminated string to compare.
-  ##  \param[out] value Pointer to comparison result.
-  ##    An integer less than, equal to, or greater than zero if s1 is, after
-  ##    ignoring case, found to be less than, to match, or be greater than s2,
-  ##    respectively.
-  ##  \return 0 if method succeeded, or
-  ##  \return -1 if failed.
-  ##
+                              ##  Case insensitive string compare.
+                              ##
+                              ##  This function compares two strings ignoring case in a portable way.
+                              ##  This performs a byte-by-byte comparison of the strings s1 and s2,
+                              ##  ignoring the case of the characters.
+                              ##
+                              ##  \param[in] s1 Null terminated string to compare.
+                              ##  \param[in] s2 Null terminated string to compare.
+                              ##  \param[out] value Pointer to comparison result.
+                              ##    An integer less than, equal to, or greater than zero if s1 is, after
+                              ##    ignoring case, found to be less than, to match, or be greater than s2,
+                              ##    respectively.
+                              ##  \return 0 if method succeeded, or
+                              ##  \return -1 if failed.
+                              ##
 
 proc rcutils_strncasecmp*(s1: cstring; s2: cstring; n: csize_t; value: ptr cint): cint {.
     cdecl, importc: "rcutils_strncasecmp", header: "strcasecmp.h".}
-  ##  Case insensitive string compare up to count characters.
   ##
-  ##  This function compares two strings ignoring case in a portable way.
-  ##  This performs a byte-by-byte comparison of the strings s1 and s2 up to count
-  ##  characters of s1 and s2, ignoring the case of the characters.
-  ##
-  ##  \param[in] s1 First string to compare.
-  ##  \param[in] s2 Second string to compare.
-  ##  \param[in] n Count of characters to compare.
-  ##  \param[out] value Pointer to comparison result.
-  ##    An integer less than, equal to, or greater than zero if s1 is, after
-  ##    ignoring case, found to be less than, to match, or be greater than s2,
-  ##    respectively.
-  ##  \return 0 if method succeeded, or
-  ##  \return -1 if failed.
-  ## 
+                              ##  Case insensitive string compare up to count characters.
+                              ##
+                              ##  This function compares two strings ignoring case in a portable way.
+                              ##  This performs a byte-by-byte comparison of the strings s1 and s2 up to count
+                              ##  characters of s1 and s2, ignoring the case of the characters.
+                              ##
+                              ##  \param[in] s1 First string to compare.
+                              ##  \param[in] s2 Second string to compare.
+                              ##  \param[in] n Count of characters to compare.
+                              ##  \param[out] value Pointer to comparison result.
+                              ##    An integer less than, equal to, or greater than zero if s1 is, after
+                              ##    ignoring case, found to be less than, to match, or be greater than s2,
+                              ##    respectively.
+                              ##  \return 0 if method succeeded, or
+                              ##  \return -1 if failed.
+                              ## 

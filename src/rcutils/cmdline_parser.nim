@@ -27,25 +27,27 @@ import
 
 
 proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
-                              option: cstring): bool {.cdecl,
+                               option: cstring): bool {.cdecl,
     importc: "rcutils_cli_option_exist", header: "cmdline_parser.h".}
-  ##  Return `true` if the option is defined in the command line arguments or `false` otherwise.
   ##
-  ##  \param[in] begin first element to check in the array
-  ##  \param[in] end last element to check in the array
-  ##  \param[in] option string to find in the array of arguments
-  ##  \return `true` if the option exists, or
-  ##  \return `false` otherwise.
-  ##
+                              ##  Return `true` if the option is defined in the command line arguments or `false` otherwise.
+                              ##
+                              ##  \param[in] begin first element to check in the array
+                              ##  \param[in] end last element to check in the array
+                              ##  \param[in] option string to find in the array of arguments
+                              ##  \return `true` if the option exists, or
+                              ##  \return `false` otherwise.
+                              ##
 
 proc rcutils_cli_get_option*(begin: cstringArray; `end`: cstringArray;
-                            option: cstring): cstring {.cdecl,
+                             option: cstring): cstring {.cdecl,
     importc: "rcutils_cli_get_option", header: "cmdline_parser.h".}
-  ##  Return the value for a specific option of the command line arguments.
   ##
-  ##  \param[in] begin first element to check in the array
-  ##  \param[in] end last element to check in the array
-  ##  \param[in] option string to find in the array of arguments
-  ##  \return the value for a specific option of the command line arguments, or
-  ##  \return `NULL` if the option doesn't exist.
-  ## 
+                              ##  Return the value for a specific option of the command line arguments.
+                              ##
+                              ##  \param[in] begin first element to check in the array
+                              ##  \param[in] end last element to check in the array
+                              ##  \param[in] option string to find in the array of arguments
+                              ##  \return the value for a specific option of the command line arguments, or
+                              ##  \return `NULL` if the option doesn't exist.
+                              ## 

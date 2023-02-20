@@ -68,4 +68,4 @@
 ##
 
 const
-  RCUTILS_HAS_NONNULL* = 1      ##  Provide the compiler a hint about an argument being nonnull when possible.
+  RCUTILS_HAS_NONNULL* = 1   ##  Provide the compiler a hint about an argument being nonnull when possible.
