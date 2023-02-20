@@ -1,4 +1,6 @@
-import rcutils.allocator
+import rcutils_ret
+import ../allocator
+import ../allocator
 
 type array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_list.h"} = object
   size*: csize_t
@@ -22,15 +24,7 @@ type array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_l
 ##  limitations under the License.
 ##  \file
 
-import
-  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.allocator, rcutils.types.rcutils_ret, rcutils.allocator,
-  rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control,
-  rcutils.allocator
-
-discard "forward decl of rcutils_array_list_impl_s"
+discard "forward decl of rcutils_array_list_impl_t"
 type
 
   array_list_t* {.importc: "rcutils_array_list_t", header: "array_list.h",

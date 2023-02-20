@@ -16,7 +16,6 @@
 ##  TODO(christophebedard) remove this header completely in I-turtle
 
 import
-  rcutils.env, rcutils.env, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.env, rcutils.visibility_control,
-  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
-  rcutils.visibility_control, rcutils.env
+  ./env, ./env, ./macros, ./macros, ./macros, ./macros, ./macros, ./env,
+  ./visibility_control, ./visibility_control_macros,
+  ./visibility_control_macros, ./visibility_control, ./env

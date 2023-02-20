@@ -14,13 +14,12 @@
 ##  \file
 
 import
-  rcutils.allocator, rcutils.allocator, rcutils.macros, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.allocator,
-  rcutils.types.rcutils_ret, rcutils.allocator, rcutils.visibility_control,
-  rcutils.visibility_control_macros, rcutils.visibility_control_macros,
-  rcutils.visibility_control, rcutils.allocator, rcutils.snprintf,
-  rcutils.snprintf, rcutils.snprintf, rcutils.testing.fault_injection,
-  rcutils.testing.fault_injection, rcutils.testing.fault_injection
+  ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros, ./macros,
+  ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
+  ./visibility_control_macros, ./visibility_control_macros,
+  ./visibility_control, ./allocator, ./snprintf, ./snprintf, ./snprintf,
+  ./testing/fault_injection, ./testing/fault_injection,
+  ./testing/fault_injection
 
 ##  Write the given msg out to stderr.
 

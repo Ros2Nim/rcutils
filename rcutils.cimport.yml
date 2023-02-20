@@ -10,9 +10,6 @@ imports:
   - "rcutils/stdatomic_helper.h"
   includes:
   - "deps/rcutils/include"
-  defines: 
-  - inline=
-  - static=
   # removeModulePrefixes: "rcutils_$1_"
 
   cSourceModifications:
@@ -35,13 +32,24 @@ imports:
     c2NimConfigs:
     - fileContents: |
         #mangle "'_rcutils_fault_injection_maybe_fail'" "rcutils_fault_injection_maybe_fail"
+  - cSourceModification: "'rcutils/types/' !'rcutils_ret' .+"
+    c2NimConfigs:
+    - fileContents: |
+        #skipInclude
+      rawNims: |
+        import rcutils_ret
+        import ../allocator
+  - cSourceModification: "'rcutils/testing/fault_injection.h'"
+    c2NimConfigs:
+    - fileContents: |
+        #skipInclude
   - cSourceModification: "'rcutils/types/array_list.h'"
-    # substitutes:
-    # - peg: "'rcutils_array_list_impl_s'"
-    #   repl: "rcutils_array_list_impl_t"
+    substitutes:
+    - peg: "'rcutils_array_list_impl_s'"
+      repl: "rcutils_array_list_impl_t"
     c2NimConfigs:
     - rawNims: |
-        import rcutils.allocator
+        import ../allocator
 
         type array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_list.h"} = object
           size*: csize_t 
@@ -69,8 +77,7 @@ imports:
         } rcutils_hash_map_impl_t;
     c2NimConfigs:
     - rawNims: |
-        import rcutils.allocator
-        import rcutils.types.array_list
+        import array_list
   - cSourceModification: "'rcutils/types/string_map.h'"
     substitutes:
     - peg: "'rcutils_string_map_impl_s'"
@@ -87,8 +94,8 @@ imports:
         } rcutils_string_map_impl_t;
     c2NimConfigs:
     - rawNims: |
-        import rcutils.allocator
-        import rcutils.types.array_list
+        import ../allocator
+        import ../types/array_list
 
   - cSourceModification: "'rcutils/logging.h'"
     deletes:

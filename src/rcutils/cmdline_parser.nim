@@ -14,8 +14,8 @@
 ##  \file
 
 import
-  rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control
+  ./visibility_control, ./visibility_control_macros,
+  ./visibility_control_macros, ./visibility_control
 
 
 proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;

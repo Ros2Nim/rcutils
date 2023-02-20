@@ -24,12 +24,10 @@
 ##  \file
 
 import
-  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.allocator, rcutils.types.rcutils_ret, rcutils.allocator,
-  rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control,
-  rcutils.allocator
+  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
+  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
+  ./visibility_control_macros, ./visibility_control_macros,
+  ./visibility_control, ./allocator
 
 
 proc rcutils_repl_str*(str: cstring; `from`: cstring; to: cstring;

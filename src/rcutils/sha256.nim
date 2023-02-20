@@ -29,8 +29,8 @@
 ##
 
 import
-  rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control
+  ./visibility_control, ./visibility_control_macros,
+  ./visibility_control_macros, ./visibility_control
 
 const
   RCUTILS_SHA256_BLOCK_SIZE* = 32

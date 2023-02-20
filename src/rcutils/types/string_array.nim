@@ -1,3 +1,6 @@
+import rcutils_ret
+import ../allocator
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,21 +15,6 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 ##  \file
-
-import
-  rcutils.allocator, rcutils.allocator, rcutils.allocator, rcutils.macros,
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.allocator, rcutils.types.rcutils_ret, rcutils.allocator,
-  rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control,
-  rcutils.allocator, rcutils.error_handling, rcutils.error_handling,
-  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
-  rcutils.error_handling, rcutils.error_handling, rcutils.snprintf,
-  rcutils.snprintf, rcutils.snprintf, rcutils.error_handling,
-  rcutils.testing.fault_injection, rcutils.testing.fault_injection,
-  rcutils.testing.fault_injection, rcutils.error_handling,
-  rcutils.error_handling, rcutils.error_handling, rcutils.error_handling,
-  rcutils.qsort, rcutils.qsort
 
 type
 
@@ -174,15 +162,16 @@ proc rcutils_string_array_sort_compare*(lhs: pointer; rhs: pointer): cint {.
                               ##
 
 proc rcutils_string_array_sort*(string_array: ptr string_array_t): ret_t {.
-    cdecl, importc: "rcutils_string_array_sort".}
-  ##  Sort a string array according to lexicographical order.
-                                                 ##
-                                                 ##  This function changes the order of the entries in a string array so that
-                                                 ##  they are in lexicographically ascending order.
-                                                 ##  Empty entries are placed at the end of the array.
-                                                 ##
-                                                 ##  \param[inout] string_array object whose elements should be sorted.
-                                                 ##  \return #RCUTILS_RET_OK if successful, or
-                                                 ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                                 ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                                 ## 
+    inline, cdecl, importc: "rcutils_string_array_sort".}
+  ##
+                              ##  Sort a string array according to lexicographical order.
+                              ##
+                              ##  This function changes the order of the entries in a string array so that
+                              ##  they are in lexicographically ascending order.
+                              ##  Empty entries are placed at the end of the array.
+                              ##
+                              ##  \param[inout] string_array object whose elements should be sorted.
+                              ##  \return #RCUTILS_RET_OK if successful, or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                              ## 

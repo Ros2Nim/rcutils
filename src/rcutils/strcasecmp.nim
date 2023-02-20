@@ -14,9 +14,8 @@
 ##  \file
 
 import
-  rcutils.macros, rcutils.macros, rcutils.macros, rcutils.macros,
-  rcutils.macros, rcutils.visibility_control, rcutils.visibility_control_macros,
-  rcutils.visibility_control_macros, rcutils.visibility_control
+  ./macros, ./macros, ./macros, ./macros, ./macros, ./visibility_control,
+  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control
 
 
 proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
