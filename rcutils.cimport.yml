@@ -30,14 +30,14 @@ imports:
     deletes:
     - match: "'__STDC_WANT_LIB_EXT1__'"
   - cSourceModification: "'rcutils/testing/fault_injection.h'"
-    c2NimExtras:
+    c2NimConfigs:
     - fileContents: |
         #mangle "'_rcutils_fault_injection_maybe_fail'" "rcutils_fault_injection_maybe_fail"
   - cSourceModification: "'rcutils/types/array_list.h'"
     substitutes:
     - peg: "'rcutils_array_list_impl_s'"
       repl: "rcutils_array_list_impl_t"
-    c2NimExtras:
+    c2NimConfigs:
     - rawNims: |
         import rcutils.allocator
 
@@ -65,7 +65,7 @@ imports:
           rcutils_hash_map_key_cmp_t key_cmp_func;
           rcutils_allocator_t allocator;
         } rcutils_hash_map_impl_t;
-    c2NimExtras:
+    c2NimConfigs:
     - rawNims: |
         import rcutils.allocator
         import rcutils.types.array_list
@@ -83,7 +83,7 @@ imports:
           size_t size;
           rcutils_allocator_t allocator;
         } rcutils_string_map_impl_t;
-    c2NimExtras:
+    c2NimConfigs:
     - rawNims: |
         import rcutils.allocator
         import rcutils.types.array_list
@@ -93,12 +93,12 @@ imports:
     - match: "'RCUTILS_LOGGING_AUTOINIT'"
     - match: "'RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL'"
     - match: "'g_rcutils_log_severity_names'"
-    c2NimExtras:
+    c2NimConfigs:
     - rawNims: |
         import ./time
         proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: "rcutils/logging.h".}
   - cSourceModification: "'rcutils/isalnum_no_locale.h'"
-    c2NimExtras:
+    c2NimConfigs:
     - rawNims: |
         converter charToNum*(c: char): int = c.int 
 
