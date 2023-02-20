@@ -45,18 +45,19 @@ imports:
         #skipInclude
   - cSourceModification: "'rcutils/types/array_list.h'"
     substitutes:
+    - peg: "'struct rcutils_array_list_impl_s;'"
+      repl: |
+          typedef struct rcutils_array_list_impl_s
+          {
+            size_t size;
+            size_t capacity;
+            void * list;
+            size_t data_size;
+            rcutils_allocator_t allocator;
+          } rcutils_array_list_impl_t;
     - peg: "'rcutils_array_list_impl_s'"
       repl: "rcutils_array_list_impl_t"
-    c2NimConfigs:
-    - rawNims: |
-        import ../allocator
 
-        type array_list_impl_t* {.importc: "rcutils_array_list_impl_t", header: "array_list.h"} = object
-          size*: csize_t 
-          capacity*: csize_t 
-          list*: pointer
-          data_size*: csize_t 
-          allocator*: allocator_t 
   - cSourceModification: "'rcutils/types/hash_map.h'"
     substitutes:
     - peg: "'rcutils_hash_map_impl_s'"

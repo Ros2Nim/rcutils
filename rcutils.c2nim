@@ -19,8 +19,6 @@
 
 #pragma c2nim header
 
-#pragma c2nim mangle "'rcutils_array_list_impl_s'" "array_list_impl_t"
-
 #pragma c2nim mangle "'va_list'" "varargs[pointer]"
 #pragma c2nim mangle "'int_least64_t'" "int64"
 #pragma c2nim mangle "'_Bool'" "bool"
