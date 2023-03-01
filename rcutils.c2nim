@@ -7,9 +7,9 @@
 #pragma c2nim importc
 #pragma c2nim cdecl
 
-#pragma c2nim mergeblocks
+#pragma c2nim mergeblocks // test
 #pragma c2nim stdints
-#pragma c2nim cppSkipCallOp
+#pragma c2nim cppSkipCallOp // test
 #pragma c2nim cppSkipConverter
 #pragma c2nim cppskipconverter
 
@@ -19,7 +19,7 @@
 
 #pragma c2nim header
 
-#pragma c2nim mangle "'va_list'" "varargs[pointer]"
+#pragma c2nim mangle "'va_list'" "varargs[pointer]" // test
 #pragma c2nim mangle "'int_least64_t'" "int64"
 #pragma c2nim mangle "'_Bool'" "bool"
 #pragma c2nim delete "RCUTILS_ERROR_STATE_FILE_MAX_LENGTH"
