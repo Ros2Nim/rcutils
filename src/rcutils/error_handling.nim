@@ -1,3 +1,7 @@
+
+
+proc RCUTILS_SAFE_FWRITE_TO_STDERR*(msg: cstring) {.importc: "$1", header: "error_handling.h".}
+
 ##  Copyright 2014 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");

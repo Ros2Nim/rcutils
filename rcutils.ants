@@ -20,6 +20,7 @@ antExport ImporterConfig:
       - Replace:
         pattern: peg"^'string.' .+"
         repl: "rstring$1"
+
     sourceMods:list:
       - CSrcMods:
         fileMatch: peg"'rcutils/visibility_control.h'"
@@ -38,14 +39,12 @@ antExport ImporterConfig:
             match: peg"'make sure our math is right'"
             until: peg"'Maximum length calculations incorrect'"
             inclusive: true
+          - LineDelete:
+            match: peg"'__STDC_WANT_LIB_EXT1__'"
       - CSrcMods:
         fileMatch: peg"'rcutils/macros.h'"
         deletes:list:
           LineDelete(match: peg"'RCUTILS_THREAD_LOCAL'")
-      - CSrcMods:
-        fileMatch: peg"'rcutils/error_handling.h'"
-        deletes:list:
-          LineDelete(match: peg"'__STDC_WANT_LIB_EXT1__'")
       - CSrcMods:
         fileMatch: peg"'rcutils/types/array_list.h'"
         substitutes:list:
@@ -72,7 +71,15 @@ antExport ImporterConfig:
           - Replace:
             pattern: peg"'struct rcutils_hash_map_impl_s;'"
             repl: " struct rcutils_hash_map_impl_s {}; "
+
     c2NimCfgs:list:
+      - C2NimCfg:
+        fileMatch: peg"'rcutils/error_handling.h'"
+        rawNims: str"""
+
+
+          proc RCUTILS_SAFE_FWRITE_TO_STDERR*(msg: cstring) {.importc: "$1", header: "error_handling.h".}
+          """
       - C2NimCfg:
         fileMatch: peg"'rcutils/testing/fault_injection.h'"
         fileContents: str"""
