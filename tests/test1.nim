@@ -8,5 +8,7 @@
 import unittest
 
 import rcutils
+export rcutils
+
 test "can add":
   check 5 + 5 == 10
