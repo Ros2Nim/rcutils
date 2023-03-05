@@ -172,9 +172,6 @@ type
 
 ##  The names of severity levels.
 
-let g_rcutils_log_severity_names* {.header: "logging.h".}: array[
-    RCUTILS_LOG_SEVERITY_FATAL + 1, cstring]
-
 
 proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
     allocator: rcutils_allocator_t; severity: ptr cint): rcutils_ret_t {.cdecl,
