@@ -49,7 +49,7 @@ antExport ImporterConfig:
         fileMatch: peg"'rcutils/types/array_list.h'"
         substitutes:list:
           - Replace:
-            pattern: peg"'struct rcutils_array_list_impl_s;'"
+            pattern: peg"'typedef struct rcutils_array_list_impl_s;'"
             repl: str"""
                 typedef struct rcutils_array_list_impl_s
                 {
@@ -73,7 +73,7 @@ antExport ImporterConfig:
         fileMatch: peg"'rcutils/types/hash_map.h'"
         substitutes:list:
           - Replace:
-            pattern: peg"'rcutils_hash_map_entry_s'"
+            pattern: peg"'typedef struct rcutils_hash_map_entry_s'"
             repl: str"""
                 typedef struct rcutils_hash_map_entry_t
                 {
@@ -83,7 +83,7 @@ antExport ImporterConfig:
                 } rcutils_hash_map_entry_t;
                 """
           - Replace:
-            pattern: peg"'rcutils_hash_map_impl_s'"
+            pattern: peg"'typedef struct rcutils_hash_map_impl_s'"
             repl: str"""
                 typedef struct rcutils_hash_map_impl_t
                 {
