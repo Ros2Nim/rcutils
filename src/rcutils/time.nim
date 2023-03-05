@@ -41,10 +41,12 @@ import
 
 ##  Convenience macro to convert nanoseconds to microseconds.
 
+const
+  RCUTILS_STEADY_TIME* = rcutils_steady_time_now ##  Convenience macro for rcutils_steady_time_now(rcutils_time_point_value_t *).
+
 type
 
-  rcutils_time_point_value_t* = int64 ##  Convenience macro for rcutils_steady_time_now(rcutils_time_point_value_t *).
-                                      ##  A single point in time, measured in nanoseconds since the Unix epoch.
+  rcutils_time_point_value_t* = int64 ##  A single point in time, measured in nanoseconds since the Unix epoch.
 
   rcutils_duration_value_t* = int64 ##  A duration of time, measured in nanoseconds.
 

@@ -34,6 +34,11 @@ import
 
 const
   RCUTILS_LOGGING_SEPARATOR_STRING* = "." ##  The separator used when logging node names.
+  RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL* = RCUTILS_LOG_SEVERITY_INFO ##
+                              ##
+                              ##  \def RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL
+                              ##  \brief The default severity level of the default logger.
+                              ##
 
 var g_rcutils_logging_initialized* {.header: "logging.h".}: bool
 
@@ -170,16 +175,37 @@ type
     RCUTILS_LOG_SEVERITY_FATAL = 50 ## < The fatal log level
 
 
+##  The names of severity levels.
+
+let g_rcutils_log_severity_names* {.header: "logging.h".}: array[
+    RCUTILS_LOG_SEVERITY_FATAL + 1, cstring]
+
 
 proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
     allocator: rcutils_allocator_t; severity: ptr cint): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_severity_level_from_string", header: "logging.h".}
   ##
-                              ##  The names of severity levels.
+                              ##  Get a severity value from its string representation (e.g. DEBUG).
+                              ##
+                              ##  String representation must match one of the values in
+                              ##  `g_rcutils_log_severity_names`, but is not case-sensitive.
+                              ##  Examples: UNSET, DEBUG, INFO, WARN, Error, fatal.
+                              ##
+                              ##  \param[in] severity_string String representation of the severity, must be a
+                              ##    null terminated c string
+                              ##  \param[in] allocator rcutils_allocator_t to be used
+                              ##  \param[in,out] severity The severity level as a represented by the
+                              ##    `RCUTILS_LOG_SEVERITY` enum
+                              ##  \return #RCUTILS_RET_OK if successful, or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT on invalid arguments, or
+                              ##  \return #RCUTILS_RET_LOGGING_SEVERITY_STRING_INVALID if unable to match
+                              ##    string, or
+                              ##  \return #RCUTILS_RET_ERROR if an unspecified error occured.
+                              ##
 type
 
   rcutils_logging_output_handler_t* = proc (a1: ptr rcutils_log_location_t;
-      a2: cint; a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: varargs[pointer]) {.
+      a2: cint; a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: ptr varargs[pointer]) {.
       cdecl.} ##  The function signature to log messages.
               ##
               ##  \param[in] location The location information about where the log came from
@@ -280,6 +306,21 @@ proc rcutils_logging_set_default_logger_level*(level: cint) {.cdecl,
     importc: "rcutils_logging_set_default_logger_level", header: "logging.h".}
   ##
                               ##  Set the default severity level for loggers.
+                              ##
+                              ##  If the severity level requested is `RCUTILS_LOG_SEVERITY_UNSET`, the default
+                              ##  value for the default logger (`RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL`)
+                              ##  will be restored instead.
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No, provided logging system is already initialized
+                              ##  Thread-Safe        | No
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##
+                              ##  \param[in] level The level to be used.
+                              ##
 
 proc rcutils_logging_get_logger_level*(name: cstring): cint {.cdecl,
     importc: "rcutils_logging_get_logger_level", header: "logging.h".}
@@ -472,8 +513,8 @@ proc rcutils_log*(location: ptr rcutils_log_location_t; severity: cint;
 proc rcutils_logging_console_output_handler*(
     location: ptr rcutils_log_location_t; severity: cint; name: cstring;
     timestamp: rcutils_time_point_value_t; format: cstring;
-    args: varargs[pointer]) {.cdecl, importc: "rcutils_logging_console_output_handler",
-                              header: "logging.h".}
+    args: ptr varargs[pointer]) {.cdecl, importc: "rcutils_logging_console_output_handler",
+                                  header: "logging.h".}
   ##
                               ##  The default output handler outputs log messages to the standard streams.
                               ##

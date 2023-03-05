@@ -2,38 +2,27 @@ import rcutils_ret
 import ../allocator
 import array_list
 
+##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
+##
+##  Licensed under the Apache License, Version 2.0 (the "License");
+##  you may not use this file except in compliance with the License.
+##  You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+##  Unless required by applicable law or agreed to in writing, software
+##  distributed under the License is distributed on an "AS IS" BASIS,
+##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##  See the License for the specific language governing permissions and
+##  limitations under the License.
+##  \file
+
+discard "forward decl of rcutils_hash_map_impl_s"
 type
 
-  rcutils_hash_map_impl_t* {.importc: "rcutils_hash_map_impl_t",
-                             header: "hash_map.h", bycopy.} = object ##
-                              ##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
-                              ##
-                              ##  Licensed under the Apache License, Version 2.0 (the "License");
-                              ##  you may not use this file except in compliance with the License.
-                              ##  You may obtain a copy of the License at
-                              ##
-                              ##      http://www.apache.org/licenses/LICENSE-2.0
-                              ##
-                              ##  Unless required by applicable law or agreed to in writing, software
-                              ##  distributed under the License is distributed on an "AS IS" BASIS,
-                              ##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                              ##  See the License for the specific language governing permissions and
-                              ##  limitations under the License.
-                              ##  \file
-    map* {.importc: "map".}: ptr rcutils_array_list_t ##
-                              ##  This is the array of buckets that will store the keypairs
-    capacity* {.importc: "capacity".}: csize_t
-    size* {.importc: "size".}: csize_t
-    key_size* {.importc: "key_size".}: csize_t
-    data_size* {.importc: "data_size".}: csize_t
-    key_hashing_func* {.importc: "key_hashing_func".}: rcutils_hash_map_key_hasher_t
-    key_cmp_func* {.importc: "key_cmp_func".}: rcutils_hash_map_key_cmp_t
-    allocator* {.importc: "allocator".}: rcutils_allocator_t
-
-
   rcutils_hash_map_t* {.importc: "rcutils_hash_map_t", header: "hash_map.h",
-                        bycopy.} = object ##  The structure holding the metadata for a hash map.
-    impl* {.importc: "impl".}: ptr rcutils_hash_map_impl_t ##
+                        bycopy.} = object
+    impl* {.importc: "impl".}: ptr rcutils_hash_map_impl_s ##
                               ##  A pointer to the PIMPL implementation type.
 
 
