@@ -34,11 +34,6 @@ import
 
 const
   RCUTILS_LOGGING_SEPARATOR_STRING* = "." ##  The separator used when logging node names.
-  RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL* = RCUTILS_LOG_SEVERITY_INFO ##
-                              ##
-                              ##  \def RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL
-                              ##  \brief The default severity level of the default logger.
-                              ##
 
 var g_rcutils_logging_initialized* {.header: "logging.h".}: bool
 
@@ -306,21 +301,6 @@ proc rcutils_logging_set_default_logger_level*(level: cint) {.cdecl,
     importc: "rcutils_logging_set_default_logger_level", header: "logging.h".}
   ##
                               ##  Set the default severity level for loggers.
-                              ##
-                              ##  If the severity level requested is `RCUTILS_LOG_SEVERITY_UNSET`, the default
-                              ##  value for the default logger (`RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL`)
-                              ##  will be restored instead.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No, provided logging system is already initialized
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[in] level The level to be used.
-                              ##
 
 proc rcutils_logging_get_logger_level*(name: cstring): cint {.cdecl,
     importc: "rcutils_logging_get_logger_level", header: "logging.h".}

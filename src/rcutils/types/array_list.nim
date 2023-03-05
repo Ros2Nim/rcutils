@@ -1,27 +1,30 @@
 import rcutils_ret
 import ../allocator
 
-##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
-##
-##  Licensed under the Apache License, Version 2.0 (the "License");
-##  you may not use this file except in compliance with the License.
-##  You may obtain a copy of the License at
-##
-##      http://www.apache.org/licenses/LICENSE-2.0
-##
-##  Unless required by applicable law or agreed to in writing, software
-##  distributed under the License is distributed on an "AS IS" BASIS,
-##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-##  See the License for the specific language governing permissions and
-##  limitations under the License.
-##  \file
-
-discard "forward decl of rcutils_array_list_impl_t"
 type
 
+  rcutils_array_list_impl_s* {.importc: "rcutils_array_list_impl_s",
+                               header: "array_list.h", bycopy.} = object ##
+                              ##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
+                              ##
+                              ##  Licensed under the Apache License, Version 2.0 (the "License");
+                              ##  you may not use this file except in compliance with the License.
+                              ##  You may obtain a copy of the License at
+                              ##
+                              ##      http://www.apache.org/licenses/LICENSE-2.0
+                              ##
+                              ##  Unless required by applicable law or agreed to in writing, software
+                              ##  distributed under the License is distributed on an "AS IS" BASIS,
+                              ##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                              ##  See the License for the specific language governing permissions and
+                              ##  limitations under the License.
+                              ##  \file
+
+
   rcutils_array_list_t* {.importc: "rcutils_array_list_t",
-                          header: "array_list.h", bycopy.} = object
-    impl* {.importc: "impl".}: ptr rcutils_array_list_impl_t ##
+                          header: "array_list.h", bycopy.} = object ##
+                              ##  The structure holding the metadata for an array list.
+    impl* {.importc: "impl".}: ptr rcutils_array_list_impl_s ##
                               ##  A pointer to the PIMPL implementation type.
 
 
