@@ -32,7 +32,7 @@ import
 proc rcutils_split*(str: cstring; delimiter: char;
                     allocator: rcutils_allocator_t;
                     string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split", header: "split.h".}
+    cdecl, importc: "rcutils_split", header: "rcutils/split.h".}
   ##
                               ##  Split a given string with the specified delimiter
                               ##
@@ -49,7 +49,7 @@ proc rcutils_split*(str: cstring; delimiter: char;
 proc rcutils_split_last*(str: cstring; delimiter: char;
                          allocator: rcutils_allocator_t;
                          string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split_last", header: "split.h".}
+    cdecl, importc: "rcutils_split_last", header: "rcutils/split.h".}
   ##
                               ##  Split a given string on the last occurrence of the specified delimiter
                               ##

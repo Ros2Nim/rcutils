@@ -4,7 +4,7 @@ import ../allocator
 type
 
   rcutils_array_list_impl_s* {.importc: "rcutils_array_list_impl_s",
-                               header: "array_list.h", bycopy.} = object ##
+                               header: "rcutils/array_list.h", bycopy.} = object ##
                               ##  Copyright 2018-2019 Open Source Robotics Foundation, Inc.
                               ##
                               ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,7 @@ type
 
 
   rcutils_array_list_t* {.importc: "rcutils_array_list_t",
-                          header: "array_list.h", bycopy.} = object ##
+                          header: "rcutils/array_list.h", bycopy.} = object ##
                               ##  The structure holding the metadata for an array list.
     impl* {.importc: "impl".}: ptr rcutils_array_list_impl_s ##
                               ##  A pointer to the PIMPL implementation type.
@@ -37,39 +37,39 @@ type
 
 
 proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_array_list", header: "array_list.h".}
-  ##
-                              ##  Return an empty array_list struct.
-                              ##
-                              ##  This function returns an empty and zero initialized array_list struct.
-                              ##  Calling rcutils_array_list_fini() on any non-initialized instance leads
-                              ##  to undefined behavior.
-                              ##  Every instance of array_list_t has to either be zero_initialized with this
-                              ##  function or manually allocated.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No
-                              ##  Thread-Safe        | Yes
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  Example:
-                              ##
-                              ##  ```c
-                              ##  rcutils_array_list_t foo;
-                              ##  rcutils_array_list_fini(&foo); // undefined behavior!
-                              ##
-                              ##  rcutils_array_list_t bar = rcutils_get_zero_initialized_array_list();
-                              ##  rcutils_array_list_fini(&bar); // ok
-                              ##  ```
-                              ##
+    importc: "rcutils_get_zero_initialized_array_list",
+    header: "rcutils/array_list.h".}
+  ##  Return an empty array_list struct.
+                                    ##
+                                    ##  This function returns an empty and zero initialized array_list struct.
+                                    ##  Calling rcutils_array_list_fini() on any non-initialized instance leads
+                                    ##  to undefined behavior.
+                                    ##  Every instance of array_list_t has to either be zero_initialized with this
+                                    ##  function or manually allocated.
+                                    ##
+                                    ##  <hr>
+                                    ##  Attribute          | Adherence
+                                    ##  ------------------ | -------------
+                                    ##  Allocates Memory   | No
+                                    ##  Thread-Safe        | Yes
+                                    ##  Uses Atomics       | No
+                                    ##  Lock-Free          | Yes
+                                    ##
+                                    ##  Example:
+                                    ##
+                                    ##  ```c
+                                    ##  rcutils_array_list_t foo;
+                                    ##  rcutils_array_list_fini(&foo); // undefined behavior!
+                                    ##
+                                    ##  rcutils_array_list_t bar = rcutils_get_zero_initialized_array_list();
+                                    ##  rcutils_array_list_fini(&bar); // ok
+                                    ##  ```
+                                    ##
 
 proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               initial_capacity: csize_t; data_size: csize_t;
                               allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_init", header: "array_list.h".}
+    cdecl, importc: "rcutils_array_list_init", header: "rcutils/array_list.h".}
   ##
                               ##  Initialize an array list with a given initial capacity.
                               ##
@@ -113,7 +113,7 @@ proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               ##
 
 proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_fini", header: "array_list.h".}
+    cdecl, importc: "rcutils_array_list_fini", header: "rcutils/array_list.h".}
   ##
                               ##  Finalize an array list, reclaiming all resources.
                               ##
@@ -137,7 +137,7 @@ proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret
                               ##
 
 proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_add", header: "array_list.h".}
+    cdecl, importc: "rcutils_array_list_add", header: "rcutils/array_list.h".}
   ##
                               ##  Adds an entry to the list
                               ##
@@ -163,7 +163,7 @@ proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer
 
 proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_set", header: "array_list.h".}
+    cdecl, importc: "rcutils_array_list_set", header: "rcutils/array_list.h".}
   ##
                               ##  Sets an entry in the list to the provided data
                               ##
@@ -190,7 +190,7 @@ proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
                                 index: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_array_list_remove", header: "array_list.h".}
+    importc: "rcutils_array_list_remove", header: "rcutils/array_list.h".}
   ##
                               ##  Removes an entry in the list at the provided index
                               ##
@@ -215,7 +215,7 @@ proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_get", header: "array_list.h".}
+    cdecl, importc: "rcutils_array_list_get", header: "rcutils/array_list.h".}
   ##
                               ##  Retrieves an entry in the list at the provided index
                               ##
@@ -240,7 +240,7 @@ proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_get_size*(array_list: ptr rcutils_array_list_t;
                                   size: ptr csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_array_list_get_size", header: "array_list.h".}
+    importc: "rcutils_array_list_get_size", header: "rcutils/array_list.h".}
   ##
                               ##  Retrieves the size of the provided array_list
                               ##

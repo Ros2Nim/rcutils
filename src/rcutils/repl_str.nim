@@ -32,7 +32,7 @@ import
 
 proc rcutils_repl_str*(str: cstring; `from`: cstring; to: cstring;
                        allocator: ptr rcutils_allocator_t): cstring {.cdecl,
-    importc: "rcutils_repl_str", header: "repl_str.h".}
+    importc: "rcutils_repl_str", header: "rcutils/repl_str.h".}
   ##
                               ##  Replace all the occurrences of one string for another in the given string.
                               ##

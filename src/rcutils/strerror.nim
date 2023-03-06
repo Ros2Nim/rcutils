@@ -19,7 +19,7 @@ import
 
 
 proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.cdecl,
-    importc: "rcutils_strerror", header: "strerror.h".}
+    importc: "rcutils_strerror", header: "rcutils/strerror.h".}
   ##
                               ##  Retrieve the string corresponding to the last system error.
                               ##

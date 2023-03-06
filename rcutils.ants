@@ -7,6 +7,7 @@ antExport ImporterConfig:
     name: "rcutils"
     sources: "deps/rcutils/include"
     globs: ["**/*.h"]
+    headerPrefix: "rcutils/"
     skipFiles:list:
       "rcutils/stdatomic_helper/win32/stdatomic.h"
       "rcutils/stdatomic_helper/gcc/stdatomic.h"

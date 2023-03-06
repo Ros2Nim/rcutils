@@ -19,7 +19,7 @@ import ../allocator
 type
 
   rcutils_uint8_array_t* {.importc: "rcutils_uint8_array_t",
-                           header: "uint8_array.h", bycopy.} = object ##
+                           header: "rcutils/uint8_array.h", bycopy.} = object ##
                               ##  The structure holding the metadata for a uint8 array.
     buffer* {.importc: "buffer".}: ptr uint8 ##  The allocated memory for the uint8 array.
     buffer_length* {.importc: "buffer_length".}: csize_t ##
@@ -32,17 +32,17 @@ type
 
 
 proc rcutils_get_zero_initialized_uint8_array*(): rcutils_uint8_array_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_uint8_array", header: "uint8_array.h".}
-  ##
-                              ##  Return a zero initialized uint8 array struct.
-                              ##
-                              ##  \return rcutils_uint8_array_t a zero initialized uint8 array struct
-                              ##
+    importc: "rcutils_get_zero_initialized_uint8_array",
+    header: "rcutils/uint8_array.h".}
+  ##  Return a zero initialized uint8 array struct.
+                                     ##
+                                     ##  \return rcutils_uint8_array_t a zero initialized uint8 array struct
+                                     ##
 
 proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                                buffer_capacity: csize_t;
                                allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_init", header: "uint8_array.h".}
+    cdecl, importc: "rcutils_uint8_array_init", header: "rcutils/uint8_array.h".}
   ##
                               ##  Initialize a zero initialized uint8 array struct.
                               ##
@@ -60,7 +60,7 @@ proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                               ##
 
 proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_fini", header: "uint8_array.h".}
+    cdecl, importc: "rcutils_uint8_array_fini", header: "rcutils/uint8_array.h".}
   ##
                               ##  Finalize a uint8 array struct.
                               ##
@@ -78,7 +78,7 @@ proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_
 
 proc rcutils_uint8_array_resize*(uint8_array: ptr rcutils_uint8_array_t;
                                  new_size: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_uint8_array_resize", header: "uint8_array.h".}
+    importc: "rcutils_uint8_array_resize", header: "rcutils/uint8_array.h".}
   ##
                               ##  Resize the internal buffer of the uint8 array.
                               ##

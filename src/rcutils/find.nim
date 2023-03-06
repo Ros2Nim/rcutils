@@ -31,20 +31,21 @@ import
 
 
 proc rcutils_find*(str: cstring; delimiter: char): csize_t {.cdecl,
-    importc: "rcutils_find", header: "find.h".}
-  ##  Return the first index of a character in a string.
-                                               ##
-                                               ##  Search in a string for the first occurence of a delimiter.
-                                               ##
-                                               ##  \param[in] str null terminated c string to search
-                                               ##  \param[in] delimiter the character to search for
-                                               ##  \return the index of the first occurence of the delimiter if found, or
-                                               ##  \return `SIZE_MAX` for invalid arguments, or
-                                               ##  \return `SIZE_MAX` if the delimiter is not found.
-                                               ##
+    importc: "rcutils_find", header: "rcutils/find.h".}
+  ##
+                              ##  Return the first index of a character in a string.
+                              ##
+                              ##  Search in a string for the first occurence of a delimiter.
+                              ##
+                              ##  \param[in] str null terminated c string to search
+                              ##  \param[in] delimiter the character to search for
+                              ##  \return the index of the first occurence of the delimiter if found, or
+                              ##  \return `SIZE_MAX` for invalid arguments, or
+                              ##  \return `SIZE_MAX` if the delimiter is not found.
+                              ##
 
 proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    cdecl, importc: "rcutils_findn", header: "find.h".}
+    cdecl, importc: "rcutils_findn", header: "rcutils/find.h".}
   ##
                               ##  Return the first index of a character in a string of specified length.
                               ##
@@ -60,7 +61,7 @@ proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csiz
                               ##
 
 proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
-    importc: "rcutils_find_last", header: "find.h".}
+    importc: "rcutils_find_last", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string.
                               ##
@@ -74,7 +75,7 @@ proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
                               ##
 
 proc rcutils_find_lastn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    cdecl, importc: "rcutils_find_lastn", header: "find.h".}
+    cdecl, importc: "rcutils_find_lastn", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string of specifed length.
                               ##

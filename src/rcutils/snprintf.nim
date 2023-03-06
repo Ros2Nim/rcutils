@@ -19,7 +19,7 @@ import
 
 
 proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): cint {.
-    varargs, cdecl, importc: "rcutils_snprintf", header: "snprintf.h".}
+    varargs, cdecl, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string.
                               ##
@@ -50,6 +50,6 @@ proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): 
 
 proc rcutils_vsnprintf*(buffer: cstring; buffer_size: csize_t; format: cstring;
                         args: varargs[pointer]): cint {.cdecl,
-    importc: "rcutils_vsnprintf", header: "snprintf.h".}
+    importc: "rcutils_vsnprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string with va_list for arguments, see rcutils_snprintf().

@@ -19,7 +19,7 @@ import ../allocator
 type
 
   rcutils_char_array_t* {.importc: "rcutils_char_array_t",
-                          header: "char_array.h", bycopy.} = object ##
+                          header: "rcutils/char_array.h", bycopy.} = object ##
                               ##  The structure holding the metadata for a char array.
     buffer* {.importc: "buffer".}: cstring ##  A pointer to the allocated memory for this char array.
     owns_buffer* {.importc: "owns_buffer".}: bool ##
@@ -37,17 +37,17 @@ type
 
 
 proc rcutils_get_zero_initialized_char_array*(): rcutils_char_array_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_char_array", header: "char_array.h".}
-  ##
-                              ##  Return a zero initialized char array struct.
-                              ##
-                              ##  \return rcutils_char_array_t a zero initialized char array struct
-                              ##
+    importc: "rcutils_get_zero_initialized_char_array",
+    header: "rcutils/char_array.h".}
+  ##  Return a zero initialized char array struct.
+                                    ##
+                                    ##  \return rcutils_char_array_t a zero initialized char array struct
+                                    ##
 
 proc rcutils_char_array_init*(char_array: ptr rcutils_char_array_t;
                               buffer_capacity: csize_t;
                               allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_init", header: "char_array.h".}
+    cdecl, importc: "rcutils_char_array_init", header: "rcutils/char_array.h".}
   ##
                               ##  Initialize a zero initialized char array struct.
                               ##
@@ -66,7 +66,7 @@ proc rcutils_char_array_init*(char_array: ptr rcutils_char_array_t;
                               ##
 
 proc rcutils_char_array_fini*(char_array: ptr rcutils_char_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_fini", header: "char_array.h".}
+    cdecl, importc: "rcutils_char_array_fini", header: "rcutils/char_array.h".}
   ##
                               ##  Finalize a char array struct.
                               ##
@@ -86,7 +86,7 @@ proc rcutils_char_array_fini*(char_array: ptr rcutils_char_array_t): rcutils_ret
 
 proc rcutils_char_array_resize*(char_array: ptr rcutils_char_array_t;
                                 new_size: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_resize", header: "char_array.h".}
+    importc: "rcutils_char_array_resize", header: "rcutils/char_array.h".}
   ##
                               ##  Resize the internal buffer of the char array.
                               ##
@@ -111,7 +111,7 @@ proc rcutils_char_array_resize*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_expand_as_needed*(char_array: ptr rcutils_char_array_t;
     new_size: csize_t): rcutils_ret_t {.cdecl, importc: "rcutils_char_array_expand_as_needed",
-                                        header: "char_array.h".}
+                                        header: "rcutils/char_array.h".}
   ##
                               ##  Expand the internal buffer of the char array.
                               ##
@@ -129,28 +129,28 @@ proc rcutils_char_array_expand_as_needed*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_vsprintf*(char_array: ptr rcutils_char_array_t;
                                   format: cstring; args: varargs[pointer]): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_vsprintf", header: "char_array.h".}
-  ##
-                              ##  Produce output according to format and args.
-                              ##
-                              ##  This function is equivalent to `vsprintf(char_array->buffer, format, args)`
-                              ##  except that the buffer grows as needed so a user doesn't have to deal with
-                              ##  memory management.
-                              ##  The `va_list args` will be cloned before being used, so a user can safely
-                              ##  use it again after calling this function.
-                              ##
-                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
-                              ##  written to
-                              ##  \param[in] format the format string used by the underlying `vsnprintf`
-                              ##  \param[in] args the `va_list` used by the underlying `vsnprintf`
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                              ##
+    cdecl, importc: "rcutils_char_array_vsprintf",
+    header: "rcutils/char_array.h".}
+  ##  Produce output according to format and args.
+                                    ##
+                                    ##  This function is equivalent to `vsprintf(char_array->buffer, format, args)`
+                                    ##  except that the buffer grows as needed so a user doesn't have to deal with
+                                    ##  memory management.
+                                    ##  The `va_list args` will be cloned before being used, so a user can safely
+                                    ##  use it again after calling this function.
+                                    ##
+                                    ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
+                                    ##  written to
+                                    ##  \param[in] format the format string used by the underlying `vsnprintf`
+                                    ##  \param[in] args the `va_list` used by the underlying `vsnprintf`
+                                    ##  \return #RCUTILS_RET_OK if successful, or
+                                    ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                    ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                    ##
 
 proc rcutils_char_array_strncat*(char_array: ptr rcutils_char_array_t;
                                  src: cstring; n: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_strncat", header: "char_array.h".}
+    cdecl, importc: "rcutils_char_array_strncat", header: "rcutils/char_array.h".}
   ##
                               ##  Append a string (or part of it) to the string in buffer.
                               ##
@@ -169,7 +169,7 @@ proc rcutils_char_array_strncat*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_strcat*(char_array: ptr rcutils_char_array_t;
                                 src: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_strcat", header: "char_array.h".}
+    importc: "rcutils_char_array_strcat", header: "rcutils/char_array.h".}
   ##
                               ##  Append a string to the string in buffer.
                               ##
@@ -188,7 +188,7 @@ proc rcutils_char_array_strcat*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_memcpy*(char_array: ptr rcutils_char_array_t;
                                 src: cstring; n: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_memcpy", header: "char_array.h".}
+    cdecl, importc: "rcutils_char_array_memcpy", header: "rcutils/char_array.h".}
   ##
                               ##  Copy memory to buffer.
                               ##
@@ -205,7 +205,7 @@ proc rcutils_char_array_memcpy*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_strcpy*(char_array: ptr rcutils_char_array_t;
                                 src: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_strcpy", header: "char_array.h".}
+    importc: "rcutils_char_array_strcpy", header: "rcutils/char_array.h".}
   ##
                               ##  Copy a string to buffer.
                               ##

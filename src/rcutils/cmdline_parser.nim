@@ -20,7 +20,7 @@ import
 
 proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
                                option: cstring): bool {.cdecl,
-    importc: "rcutils_cli_option_exist", header: "cmdline_parser.h".}
+    importc: "rcutils_cli_option_exist", header: "rcutils/cmdline_parser.h".}
   ##
                               ##  Return `true` if the option is defined in the command line arguments or `false` otherwise.
                               ##
@@ -33,7 +33,7 @@ proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
 
 proc rcutils_cli_get_option*(begin: cstringArray; `end`: cstringArray;
                              option: cstring): cstring {.cdecl,
-    importc: "rcutils_cli_get_option", header: "cmdline_parser.h".}
+    importc: "rcutils_cli_get_option", header: "rcutils/cmdline_parser.h".}
   ##
                               ##  Return the value for a specific option of the command line arguments.
                               ##

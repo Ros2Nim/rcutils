@@ -51,13 +51,13 @@ const
 type
 
   rcutils_error_string_t* {.importc: "rcutils_error_string_t",
-                            header: "error_handling.h", bycopy.} = object ##
+                            header: "rcutils/error_handling.h", bycopy.} = object ##
                               ##  Struct wrapping a fixed-size c string used for returning the formatted error string.
     str* {.importc: "str".}: array[1024, char] ##  The fixed-size C string used for returning the formatted error string.
 
 
   rcutils_error_state_t* {.importc: "rcutils_error_state_t",
-                           header: "error_handling.h", bycopy.} = object ##
+                           header: "rcutils/error_handling.h", bycopy.} = object ##
                               ##  Struct which encapsulates the error state set by RCUTILS_SET_ERROR_MSG().
     message* {.importc: "message".}: array[768, char] ##
                               ##  User message storage, limited to RCUTILS_ERROR_STATE_MESSAGE_MAX_LENGTH characters.
@@ -72,49 +72,49 @@ type
 proc rcutils_initialize_error_handling_thread_local_storage*(
     allocator: rcutils_allocator_t): rcutils_ret_t {.cdecl,
     importc: "rcutils_initialize_error_handling_thread_local_storage",
-    header: "error_handling.h".}
+    header: "rcutils/error_handling.h".}
   ##  Forces initialization of thread-local storage if called in a newly created thread.
-                                ##
-                                ##  If this function is not called beforehand, then the first time the error
-                                ##  state is set or the first time the error message is retrieved, the default
-                                ##  allocator will be used to allocate thread-local storage.
-                                ##
-                                ##  This function may or may not allocate memory.
-                                ##  The system's thread-local storage implementation may need to allocate
-                                ##  memory, since it usually has no way of knowing how much storage is needed
-                                ##  without knowing how many threads will be created.
-                                ##  Most implementations (e.g. C11, C++11, and pthread) do not have ways to
-                                ##  specify how this memory is allocated, but if the implementation allows, the
-                                ##  given allocator to this function will be used, but is otherwise unused.
-                                ##  This only occurs when creating and destroying threads, which can be avoided
-                                ##  in the "steady" state by reusing pools of threads.
-                                ##
-                                ##  It is worth considering that repeated thread creation and destruction will
-                                ##  result in repeated memory allocations and could result in memory
-                                ##  fragmentation.
-                                ##  This is typically avoided anyways by using pools of threads.
-                                ##
-                                ##  In case an error is indicated by the return code, no error message will have
-                                ##  been set.
-                                ##
-                                ##  If called more than once in a thread, or after implicitly initialized by
-                                ##  setting the error state, it will still return `RCUTILS_RET_OK`, even
-                                ##  if the given allocator is invalid.
-                                ##  Essentially this function does nothing if thread-local storage has already
-                                ##  been called.
-                                ##  If already initialized, the given allocator is ignored, even if it does not
-                                ##  match the allocator used originally to initialize the thread-local storage.
-                                ##
-                                ##  \param[in] allocator to be used to allocate and deallocate memory
-                                ##  \return #RCUTILS_RET_OK if successful, or
-                                ##  \return #RCUTILS_RET_INVALID_ARGUMENT if the allocator is invalid, or
-                                ##  \return #RCUTILS_RET_BAD_ALLOC if allocating memory fails, or
-                                ##  \return #RCUTILS_RET_ERROR if an unspecified error occurs.
-                                ##
+                                        ##
+                                        ##  If this function is not called beforehand, then the first time the error
+                                        ##  state is set or the first time the error message is retrieved, the default
+                                        ##  allocator will be used to allocate thread-local storage.
+                                        ##
+                                        ##  This function may or may not allocate memory.
+                                        ##  The system's thread-local storage implementation may need to allocate
+                                        ##  memory, since it usually has no way of knowing how much storage is needed
+                                        ##  without knowing how many threads will be created.
+                                        ##  Most implementations (e.g. C11, C++11, and pthread) do not have ways to
+                                        ##  specify how this memory is allocated, but if the implementation allows, the
+                                        ##  given allocator to this function will be used, but is otherwise unused.
+                                        ##  This only occurs when creating and destroying threads, which can be avoided
+                                        ##  in the "steady" state by reusing pools of threads.
+                                        ##
+                                        ##  It is worth considering that repeated thread creation and destruction will
+                                        ##  result in repeated memory allocations and could result in memory
+                                        ##  fragmentation.
+                                        ##  This is typically avoided anyways by using pools of threads.
+                                        ##
+                                        ##  In case an error is indicated by the return code, no error message will have
+                                        ##  been set.
+                                        ##
+                                        ##  If called more than once in a thread, or after implicitly initialized by
+                                        ##  setting the error state, it will still return `RCUTILS_RET_OK`, even
+                                        ##  if the given allocator is invalid.
+                                        ##  Essentially this function does nothing if thread-local storage has already
+                                        ##  been called.
+                                        ##  If already initialized, the given allocator is ignored, even if it does not
+                                        ##  match the allocator used originally to initialize the thread-local storage.
+                                        ##
+                                        ##  \param[in] allocator to be used to allocate and deallocate memory
+                                        ##  \return #RCUTILS_RET_OK if successful, or
+                                        ##  \return #RCUTILS_RET_INVALID_ARGUMENT if the allocator is invalid, or
+                                        ##  \return #RCUTILS_RET_BAD_ALLOC if allocating memory fails, or
+                                        ##  \return #RCUTILS_RET_ERROR if an unspecified error occurs.
+                                        ##
 
 proc rcutils_set_error_state*(error_string: cstring; file: cstring;
                               line_number: csize_t) {.cdecl,
-    importc: "rcutils_set_error_state", header: "error_handling.h".}
+    importc: "rcutils_set_error_state", header: "rcutils/error_handling.h".}
   ##
                               ##  Set the error message, as well as the file and line on which it occurred.
                               ##
@@ -184,12 +184,12 @@ proc rcutils_set_error_state*(error_string: cstring; file: cstring;
 
 
 proc rcutils_error_is_set*(): bool {.cdecl, importc: "rcutils_error_is_set",
-                                     header: "error_handling.h".}
+                                     header: "rcutils/error_handling.h".}
   ##
                               ##  Return `true` if the error is set, otherwise `false`.
 
 proc rcutils_get_error_state*(): ptr rcutils_error_state_t {.cdecl,
-    importc: "rcutils_get_error_state", header: "error_handling.h".}
+    importc: "rcutils_get_error_state", header: "rcutils/error_handling.h".}
   ##
                               ##  Return an rcutils_error_state_t which was set with rcutils_set_error_state().
                               ##
@@ -202,7 +202,7 @@ proc rcutils_get_error_state*(): ptr rcutils_error_state_t {.cdecl,
                               ##
 
 proc rcutils_get_error_string*(): rcutils_error_string_t {.cdecl,
-    importc: "rcutils_get_error_string", header: "error_handling.h".}
+    importc: "rcutils_get_error_string", header: "rcutils/error_handling.h".}
   ##
                               ##  Return the error message followed by `, at <file>:<line>` if set, else "error not set".
                               ##
@@ -216,6 +216,6 @@ proc rcutils_get_error_string*(): rcutils_error_string_t {.cdecl,
                               ##
 
 proc rcutils_reset_error*() {.cdecl, importc: "rcutils_reset_error",
-                              header: "error_handling.h".}
+                              header: "rcutils/error_handling.h".}
   ##
                               ##  Reset the error state by clearing any previously set error state.

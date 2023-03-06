@@ -19,7 +19,7 @@ import ../allocator
 type
 
   rcutils_string_array_t* {.importc: "rcutils_string_array_t",
-                            header: "string_array.h", bycopy.} = object ##
+                            header: "rcutils/string_array.h", bycopy.} = object ##
                               ##  The structure holding the metadata for a string array.
     size* {.importc: "size".}: csize_t ##  The number of strings that can be stored in the string array.
     data* {.importc: "data".}: cstringArray ##  The allocated memory for the string array.
@@ -30,81 +30,81 @@ type
 
 proc rcutils_get_zero_initialized_string_array*(): rcutils_string_array_t {.
     cdecl, importc: "rcutils_get_zero_initialized_string_array",
-    header: "string_array.h".}
+    header: "rcutils/string_array.h".}
   ##  Return an empty string array struct.
-                              ##
-                              ##  This function returns an empty and zero initialized string array struct.
-                              ##  Calling rcutils_string_array_fini() on any non-initialized instance leads
-                              ##  to undefined behavior.
-                              ##  Every instance of string_array_t has to either be zero_initialized with this
-                              ##  function or manually allocated.
-                              ##
-                              ##  Example:
-                              ##
-                              ##  ```c
-                              ##  rcutils_string_array_t foo;
-                              ##  rcutils_string_array_fini(&foo); // undefined behavior!
-                              ##
-                              ##  rcutils_string_array_t bar = rcutils_get_zero_initialized_string_array();
-                              ##  rcutils_string_array_fini(&bar); // ok
-                              ##  ```
-                              ##
+                                      ##
+                                      ##  This function returns an empty and zero initialized string array struct.
+                                      ##  Calling rcutils_string_array_fini() on any non-initialized instance leads
+                                      ##  to undefined behavior.
+                                      ##  Every instance of string_array_t has to either be zero_initialized with this
+                                      ##  function or manually allocated.
+                                      ##
+                                      ##  Example:
+                                      ##
+                                      ##  ```c
+                                      ##  rcutils_string_array_t foo;
+                                      ##  rcutils_string_array_fini(&foo); // undefined behavior!
+                                      ##
+                                      ##  rcutils_string_array_t bar = rcutils_get_zero_initialized_string_array();
+                                      ##  rcutils_string_array_fini(&bar); // ok
+                                      ##  ```
+                                      ##
 
 proc rcutils_string_array_init*(string_array: ptr rcutils_string_array_t;
                                 size: csize_t;
                                 allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_array_init", header: "string_array.h".}
-  ##
-                              ##  Initialize a string array with a given size.
-                              ##
-                              ##  This function will initialize a given, zero initialized, string array to
-                              ##  a given size.
-                              ##
-                              ##  Note that putting a string into the array gives owenship to the array.
-                              ##
-                              ##  Example:
-                              ##
-                              ##  ```c
-                              ##  rcutils_allocator_t allocator = rcutils_get_default_allocator();
-                              ##  rcutils_string_array_t string_array = rcutils_get_zero_initialized_string_array();
-                              ##  rcutils_ret_t ret = rcutils_string_array_init(&string_array, 2, &allocator);
-                              ##  if (ret != RCUTILS_RET_OK) {
-                              ##    // ... error handling
-                              ##  }
-                              ##  string_array.data[0] = rcutils_strdup("Hello", &allocator);
-                              ##  string_array.data[1] = rcutils_strdup("World", &allocator);
-                              ##  ret = rcutils_string_array_fini(&string_array);
-                              ##  ```
-                              ##
-                              ##  \param[inout] string_array object to be initialized
-                              ##  \param[in] size the size the array should be
-                              ##  \param[in] allocator to be used to allocate and deallocate memory
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    cdecl, importc: "rcutils_string_array_init",
+    header: "rcutils/string_array.h".}
+  ##  Initialize a string array with a given size.
+                                      ##
+                                      ##  This function will initialize a given, zero initialized, string array to
+                                      ##  a given size.
+                                      ##
+                                      ##  Note that putting a string into the array gives owenship to the array.
+                                      ##
+                                      ##  Example:
+                                      ##
+                                      ##  ```c
+                                      ##  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+                                      ##  rcutils_string_array_t string_array = rcutils_get_zero_initialized_string_array();
+                                      ##  rcutils_ret_t ret = rcutils_string_array_init(&string_array, 2, &allocator);
+                                      ##  if (ret != RCUTILS_RET_OK) {
+                                      ##    // ... error handling
+                                      ##  }
+                                      ##  string_array.data[0] = rcutils_strdup("Hello", &allocator);
+                                      ##  string_array.data[1] = rcutils_strdup("World", &allocator);
+                                      ##  ret = rcutils_string_array_fini(&string_array);
+                                      ##  ```
+                                      ##
+                                      ##  \param[inout] string_array object to be initialized
+                                      ##  \param[in] size the size the array should be
+                                      ##  \param[in] allocator to be used to allocate and deallocate memory
+                                      ##  \return #RCUTILS_RET_OK if successful, or
+                                      ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                      ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                      ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                      ##
 
 proc rcutils_string_array_fini*(string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_array_fini", header: "string_array.h".}
-  ##
-                              ##  Finalize a string array, reclaiming all resources.
-                              ##
-                              ##  This function reclaims any memory owned by the string array, including the
-                              ##  strings it references.
-                              ##
-                              ##  The allocator used to initialize the string array is used to deallocate each
-                              ##  string in the array and the array of strings itself.
-                              ##
-                              ##  \param[inout] string_array object to be finalized
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    cdecl, importc: "rcutils_string_array_fini",
+    header: "rcutils/string_array.h".}
+  ##  Finalize a string array, reclaiming all resources.
+                                      ##
+                                      ##  This function reclaims any memory owned by the string array, including the
+                                      ##  strings it references.
+                                      ##
+                                      ##  The allocator used to initialize the string array is used to deallocate each
+                                      ##  string in the array and the array of strings itself.
+                                      ##
+                                      ##  \param[inout] string_array object to be finalized
+                                      ##  \return #RCUTILS_RET_OK if successful, or
+                                      ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                      ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                      ##
 
 proc rcutils_string_array_cmp*(lhs: ptr rcutils_string_array_t;
                                rhs: ptr rcutils_string_array_t; res: ptr cint): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_array_cmp", header: "string_array.h".}
+    cdecl, importc: "rcutils_string_array_cmp", header: "rcutils/string_array.h".}
   ##
                               ##  Compare two string arrays.
                               ##
@@ -123,7 +123,7 @@ proc rcutils_string_array_cmp*(lhs: ptr rcutils_string_array_t;
 
 proc rcutils_string_array_resize*(string_array: ptr rcutils_string_array_t;
                                   new_size: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_string_array_resize", header: "string_array.h".}
+    importc: "rcutils_string_array_resize", header: "rcutils/string_array.h".}
   ##
                               ##  Resize a string array, reclaiming removed resources.
                               ##
@@ -150,18 +150,18 @@ proc rcutils_string_array_resize*(string_array: ptr rcutils_string_array_t;
 
 proc rcutils_string_array_sort_compare*(lhs: pointer; rhs: pointer): cint {.
     cdecl, importc: "rcutils_string_array_sort_compare",
-    header: "string_array.h".}
+    header: "rcutils/string_array.h".}
   ##  Lexicographic comparer for pointers to string pointers.
-                              ##
-                              ##  This functions compares pointers to string pointers lexicographically
-                              ##  ascending.
-                              ##
-                              ##  \param[in] lhs pointer to the first string pointer.
-                              ##  \param[in] rhs pointer to the second string pointer.
-                              ##  \return <0 if lhs is lexicographically lower, or
-                              ##  \return 0 if the strings are the same, or
-                              ##  \return >0 if lhs is lexicographically higher.
-                              ##
+                                      ##
+                                      ##  This functions compares pointers to string pointers lexicographically
+                                      ##  ascending.
+                                      ##
+                                      ##  \param[in] lhs pointer to the first string pointer.
+                                      ##  \param[in] rhs pointer to the second string pointer.
+                                      ##  \return <0 if lhs is lexicographically lower, or
+                                      ##  \return 0 if the strings are the same, or
+                                      ##  \return >0 if lhs is lexicographically higher.
+                                      ##
 
 proc rcutils_string_array_sort*(string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
     inline, cdecl, importc: "rcutils_string_array_sort".}

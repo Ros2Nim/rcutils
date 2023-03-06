@@ -50,7 +50,7 @@ type
 
 
 proc rcutils_system_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_system_time_now", header: "time.h".}
+    cdecl, importc: "rcutils_system_time_now", header: "rcutils/time.h".}
   ##
                               ##
                               ##  This function returns the time from a system clock.
@@ -76,7 +76,7 @@ proc rcutils_system_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_
                               ##
 
 proc rcutils_steady_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_steady_time_now", header: "time.h".}
+    cdecl, importc: "rcutils_steady_time_now", header: "rcutils/time.h".}
   ##
                               ##  Retrieve the current time as a rcutils_time_point_value_t object.
                               ##
@@ -105,71 +105,71 @@ proc rcutils_steady_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_
 proc rcutils_time_point_value_as_nanoseconds_string*(
     time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_time_point_value_as_nanoseconds_string",
-    header: "time.h".}
+    header: "rcutils/time.h".}
   ##  Return a time point as nanoseconds in a string.
-                      ##
-                      ##  The number is always fixed width, with left padding zeros up to the maximum
-                      ##  number of digits the time point can represent.
-                      ##  Right now that is 19 digits (so 19 characters) for a signed 64-bit integer.
-                      ##  Negative values will have a leading `-`, so they will be one character
-                      ##  longer than the positive values.
-                      ##
-                      ##  The recommended minimum size of the input string is 32 characters, but
-                      ##  21 (` ` or `-` for sign, 19 digits, null terminator) should be sufficiently
-                      ##  large for both positive and negative values.
-                      ##  If the given string is not large enough, the result will be truncated.
-                      ##  If you need a string with variable width, using `snprintf()` directly is
-                      ##  recommended.
-                      ##
-                      ##  <hr>
-                      ##  Attribute          | Adherence
-                      ##  ------------------ | -------------
-                      ##  Allocates Memory   | No [1]
-                      ##  Thread-Safe        | Yes
-                      ##  Uses Atomics       | No
-                      ##  Lock-Free          | Yes
-                      ##  <i>[1] if `snprintf()` does not allocate additional memory internally</i>
-                      ##
-                      ##  \param[in] time_point the time to be made into a string
-                      ##  \param[out] str the output string in which it is stored
-                      ##  \param[in] str_size the size of the output string
-                      ##  \return #RCUTILS_RET_OK if successful (even if truncated), or
-                      ##  \return #RCUTILS_RET_INVALID_ARGUMENT if any arguments are invalid, or
-                      ##  \return #RCUTILS_RET_ERROR if an unspecified error occur.
-                      ##
+                              ##
+                              ##  The number is always fixed width, with left padding zeros up to the maximum
+                              ##  number of digits the time point can represent.
+                              ##  Right now that is 19 digits (so 19 characters) for a signed 64-bit integer.
+                              ##  Negative values will have a leading `-`, so they will be one character
+                              ##  longer than the positive values.
+                              ##
+                              ##  The recommended minimum size of the input string is 32 characters, but
+                              ##  21 (` ` or `-` for sign, 19 digits, null terminator) should be sufficiently
+                              ##  large for both positive and negative values.
+                              ##  If the given string is not large enough, the result will be truncated.
+                              ##  If you need a string with variable width, using `snprintf()` directly is
+                              ##  recommended.
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No [1]
+                              ##  Thread-Safe        | Yes
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##  <i>[1] if `snprintf()` does not allocate additional memory internally</i>
+                              ##
+                              ##  \param[in] time_point the time to be made into a string
+                              ##  \param[out] str the output string in which it is stored
+                              ##  \param[in] str_size the size of the output string
+                              ##  \return #RCUTILS_RET_OK if successful (even if truncated), or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT if any arguments are invalid, or
+                              ##  \return #RCUTILS_RET_ERROR if an unspecified error occur.
+                              ##
 
 proc rcutils_time_point_value_as_seconds_string*(
     time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
     cdecl, importc: "rcutils_time_point_value_as_seconds_string",
-    header: "time.h".}
+    header: "rcutils/time.h".}
   ##  Return a time point as floating point seconds in a string.
-                      ##
-                      ##  The number is always fixed width, with left padding zeros up to the maximum
-                      ##  number of digits for the mantissa that the time point can represent and a
-                      ##  characteristic (fractional-part) with a fixed width of 9 digits.
-                      ##  Right now that means the mantissa is always 10 digits to add up to 19 total
-                      ##  for the signed 64-bit time point type.
-                      ##  Negative values will have a leading `-`, so they will be one character
-                      ##  longer then positive values.
-                      ##
-                      ##  The recommended minimum size of the input string is 32 characters, but
-                      ##  22 (` ` or `-` for sign, 19 digits, decimal point, null terminator) should
-                      ##  be sufficient for now.
-                      ##  If the given string is not large enough, the result will be truncated.
-                      ##
-                      ##  <hr>
-                      ##  Attribute          | Adherence
-                      ##  ------------------ | -------------
-                      ##  Allocates Memory   | No [1]
-                      ##  Thread-Safe        | Yes
-                      ##  Uses Atomics       | No
-                      ##  Lock-Free          | Yes
-                      ##  <i>[1] if `snprintf()` does not allocate additional memory internally</i>
-                      ##
-                      ##  \param[in] time_point the time to be made into a string
-                      ##  \param[out] str the output string in which it is stored
-                      ##  \param[in] str_size the size of the output string
-                      ##  \return #RCUTILS_RET_OK if successful (even if truncated), or
-                      ##  \return #RCUTILS_RET_INVALID_ARGUMENT if any arguments are invalid, or
-                      ##  \return #RCUTILS_RET_ERROR if an unspecified error occur.
-                      ## 
+                              ##
+                              ##  The number is always fixed width, with left padding zeros up to the maximum
+                              ##  number of digits for the mantissa that the time point can represent and a
+                              ##  characteristic (fractional-part) with a fixed width of 9 digits.
+                              ##  Right now that means the mantissa is always 10 digits to add up to 19 total
+                              ##  for the signed 64-bit time point type.
+                              ##  Negative values will have a leading `-`, so they will be one character
+                              ##  longer then positive values.
+                              ##
+                              ##  The recommended minimum size of the input string is 32 characters, but
+                              ##  22 (` ` or `-` for sign, 19 digits, decimal point, null terminator) should
+                              ##  be sufficient for now.
+                              ##  If the given string is not large enough, the result will be truncated.
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No [1]
+                              ##  Thread-Safe        | Yes
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##  <i>[1] if `snprintf()` does not allocate additional memory internally</i>
+                              ##
+                              ##  \param[in] time_point the time to be made into a string
+                              ##  \param[out] str the output string in which it is stored
+                              ##  \param[in] str_size the size of the output string
+                              ##  \return #RCUTILS_RET_OK if successful (even if truncated), or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT if any arguments are invalid, or
+                              ##  \return #RCUTILS_RET_ERROR if an unspecified error occur.
+                              ## 

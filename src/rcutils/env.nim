@@ -19,33 +19,34 @@ import
 
 
 proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.cdecl,
-    importc: "rcutils_set_env", header: "env.h".}
-  ##  Set or un-set a process-scoped environment variable.
-                                                 ##
-                                                 ##  This function modifies the environment variables for the current process by
-                                                 ##  copying given string values into the process' global environment variable
-                                                 ##  store.
-                                                 ##
-                                                 ##  \par Thread Safety:
-                                                 ##  This function is not thread-safe. Take care not to modify the environment variables while
-                                                 ##  another thread might be reading or writing environment variables.
-                                                 ##
-                                                 ##  \par Platform Consistency:
-                                                 ##  The behavior when setting a variable to an empty string (`""`) differs
-                                                 ##  between platforms. On Windows, the variable is un-set (as if \p env_value was
-                                                 ##  `NULL`), while on other platforms the variable is set to an empty string as
-                                                 ##  expected.
-                                                 ##
-                                                 ##  \param[in] env_name Name of the environment variable to modify.
-                                                 ##  \param[in] env_value Value to set the environment variable to, or `NULL` to
-                                                 ##    un-set.
-                                                 ##  \return `true` if success, or
-                                                 ##  \return `false` if env_name is invalid or NULL, or
-                                                 ##  \return `false` on failure.
-                                                 ##
+    importc: "rcutils_set_env", header: "rcutils/env.h".}
+  ##
+                              ##  Set or un-set a process-scoped environment variable.
+                              ##
+                              ##  This function modifies the environment variables for the current process by
+                              ##  copying given string values into the process' global environment variable
+                              ##  store.
+                              ##
+                              ##  \par Thread Safety:
+                              ##  This function is not thread-safe. Take care not to modify the environment variables while
+                              ##  another thread might be reading or writing environment variables.
+                              ##
+                              ##  \par Platform Consistency:
+                              ##  The behavior when setting a variable to an empty string (`""`) differs
+                              ##  between platforms. On Windows, the variable is un-set (as if \p env_value was
+                              ##  `NULL`), while on other platforms the variable is set to an empty string as
+                              ##  expected.
+                              ##
+                              ##  \param[in] env_name Name of the environment variable to modify.
+                              ##  \param[in] env_value Value to set the environment variable to, or `NULL` to
+                              ##    un-set.
+                              ##  \return `true` if success, or
+                              ##  \return `false` if env_name is invalid or NULL, or
+                              ##  \return `false` on failure.
+                              ##
 
 proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
-    cdecl, importc: "rcutils_get_env", header: "env.h".}
+    cdecl, importc: "rcutils_get_env", header: "rcutils/env.h".}
   ##
                               ##  Retrieve the value of the given environment variable if it exists, or "".
                               ##  The c-string which is returned in the env_value output parameter is only
@@ -81,7 +82,7 @@ proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
                               ##
 
 proc rcutils_get_home_dir*(): cstring {.cdecl, importc: "rcutils_get_home_dir",
-                                        header: "env.h".}
+                                        header: "rcutils/env.h".}
   ##
                               ##  Retrieve the full path to the home directory.
                               ##
