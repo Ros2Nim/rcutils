@@ -1,3 +1,3 @@
 
 switch("warning","UnusedImport:off")
-switch("warning","DuplicateModuleImport:off")
+switch("hint","DuplicateModuleImport:off")
