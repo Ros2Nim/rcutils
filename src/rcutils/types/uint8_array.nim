@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 import rcutils_ret
 import ../allocator
 
@@ -16,6 +18,7 @@ import ../allocator
 ##  limitations under the License.
 ##  \file
 
+
 type
 
   rcutils_uint8_array_t* {.importc: "rcutils_uint8_array_t",
@@ -31,7 +34,8 @@ type
 
 
 
-proc rcutils_get_zero_initialized_uint8_array*(): rcutils_uint8_array_t {.cdecl,
+
+proc rcutils_get_zero_initialized_uint8_array*(): rcutils_uint8_array_t {.
     importc: "rcutils_get_zero_initialized_uint8_array",
     header: "rcutils/uint8_array.h".}
   ##  Return a zero initialized uint8 array struct.
@@ -42,7 +46,7 @@ proc rcutils_get_zero_initialized_uint8_array*(): rcutils_uint8_array_t {.cdecl,
 proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                                buffer_capacity: csize_t;
                                allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_init", header: "rcutils/uint8_array.h".}
+    importc: "rcutils_uint8_array_init", header: "rcutils/uint8_array.h".}
   ##
                               ##  Initialize a zero initialized uint8 array struct.
                               ##
@@ -60,7 +64,7 @@ proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                               ##
 
 proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_fini", header: "rcutils/uint8_array.h".}
+    importc: "rcutils_uint8_array_fini", header: "rcutils/uint8_array.h".}
   ##
                               ##  Finalize a uint8 array struct.
                               ##
@@ -77,7 +81,7 @@ proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_
                               ##
 
 proc rcutils_uint8_array_resize*(uint8_array: ptr rcutils_uint8_array_t;
-                                 new_size: csize_t): rcutils_ret_t {.cdecl,
+                                 new_size: csize_t): rcutils_ret_t {.
     importc: "rcutils_uint8_array_resize", header: "rcutils/uint8_array.h".}
   ##
                               ##  Resize the internal buffer of the uint8 array.

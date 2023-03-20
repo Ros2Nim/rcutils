@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +15,8 @@
 ##  limitations under the License.
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros
 
 ##  Return a newly allocated string, created with a format string.
 ##
@@ -28,7 +28,7 @@ import
 
 proc rcutils_format_string_limit*(allocator: rcutils_allocator_t;
                                   limit: csize_t; format_string: cstring): cstring {.
-    varargs, cdecl, importc: "rcutils_format_string_limit",
+    varargs, importc: "rcutils_format_string_limit",
     header: "rcutils/format_string.h".}
   ##  Return a newly allocated string, created with a format string up to a limit.
                                        ##

@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +16,10 @@
 ##  \file
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control
+  ./macros, ./visibility_control, ./visibility_control_macros
 
 
-proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.cdecl,
+proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.
     importc: "rcutils_set_env", header: "rcutils/env.h".}
   ##
                               ##  Set or un-set a process-scoped environment variable.
@@ -46,7 +47,7 @@ proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.cdecl,
                               ##
 
 proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
-    cdecl, importc: "rcutils_get_env", header: "rcutils/env.h".}
+    importc: "rcutils_get_env", header: "rcutils/env.h".}
   ##
                               ##  Retrieve the value of the given environment variable if it exists, or "".
                               ##  The c-string which is returned in the env_value output parameter is only
@@ -81,7 +82,7 @@ proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
                               ##  \return an error string on failure.
                               ##
 
-proc rcutils_get_home_dir*(): cstring {.cdecl, importc: "rcutils_get_home_dir",
+proc rcutils_get_home_dir*(): cstring {.importc: "rcutils_get_home_dir",
                                         header: "rcutils/env.h".}
   ##
                               ##  Retrieve the full path to the home directory.

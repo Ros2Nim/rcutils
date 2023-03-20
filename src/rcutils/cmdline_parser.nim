@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +16,11 @@
 ##  \file
 
 import
-  ./visibility_control, ./visibility_control_macros,
-  ./visibility_control_macros, ./visibility_control
+  ./visibility_control, ./visibility_control_macros
 
 
 proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
-                               option: cstring): bool {.cdecl,
+                               option: cstring): bool {.
     importc: "rcutils_cli_option_exist", header: "rcutils/cmdline_parser.h".}
   ##
                               ##  Return `true` if the option is defined in the command line arguments or `false` otherwise.
@@ -32,7 +33,7 @@ proc rcutils_cli_option_exist*(begin: cstringArray; `end`: cstringArray;
                               ##
 
 proc rcutils_cli_get_option*(begin: cstringArray; `end`: cstringArray;
-                             option: cstring): cstring {.cdecl,
+                             option: cstring): cstring {.
     importc: "rcutils_cli_get_option", header: "rcutils/cmdline_parser.h".}
   ##
                               ##  Return the value for a specific option of the command line arguments.

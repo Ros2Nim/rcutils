@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,16 +15,7 @@
 ##  limitations under the License.
 
 import
-  ./types/array_list, ./types/array_list, ./allocator, ./allocator, ./allocator,
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./allocator,
-  ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator, ./types/array_list, ./types/char_array,
-  ./types/char_array, ./types/hash_map, ./types/hash_map, ./types/string_array,
-  ./types/string_array, ./error_handling, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./error_handling,
-  ./snprintf, ./snprintf, ./error_handling, ./testing/fault_injection,
-  ./testing/fault_injection, ./testing/fault_injection, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./types/string_array,
-  ./qsort, ./qsort, ./types/string_array, ./types/string_map,
-  ./types/string_map, ./types/uint8_array, ./types/uint8_array
+  ./types/array_list, ./allocator, ./macros, ./types/rcutils_ret,
+  ./visibility_control, ./visibility_control_macros, ./types/char_array,
+  ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
+  ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array

@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +16,11 @@
 ##  \file
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control
+  ./macros, ./visibility_control, ./visibility_control_macros
 
 
 proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): cint {.
-    varargs, cdecl, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
+    varargs, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string.
                               ##
@@ -49,7 +50,7 @@ proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): 
   ##  @cond Doxygen_Suppress
 
 proc rcutils_vsnprintf*(buffer: cstring; buffer_size: csize_t; format: cstring;
-                        args: varargs[pointer]): cint {.cdecl,
+                        args: varargs[pointer]): cint {.
     importc: "rcutils_vsnprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string with va_list for arguments, see rcutils_snprintf().

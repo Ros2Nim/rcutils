@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +18,4 @@
 ##  TODO(christophebedard) remove this header completely in I-turtle
 
 import
-  ./env, ./env, ./macros, ./macros, ./macros, ./macros, ./macros, ./env,
-  ./visibility_control, ./visibility_control_macros,
-  ./visibility_control_macros, ./visibility_control, ./env
+  ./env, ./macros, ./visibility_control, ./visibility_control_macros

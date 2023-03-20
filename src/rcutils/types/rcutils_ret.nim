@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +14,6 @@
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 ##  \file
-
-type
-
-  rcutils_ret_t* = cint      ##  The type that holds a return value for an rcutils operation.
 
 const
   RCUTILS_RET_OK* = 0        ##  Successful operation.
@@ -33,3 +31,8 @@ const
   RCUTILS_RET_LOGGING_SEVERITY_STRING_INVALID* = 41 ##
                               ##  String representation of a severity is invalid.
   RCUTILS_RET_HASH_MAP_NO_MORE_ENTRIES* = 50 ##  There are no more entires beyond the last one in the map
+
+type
+
+  rcutils_ret_t* = cint      ##  The type that holds a return value for an rcutils operation.
+

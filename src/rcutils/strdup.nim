@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +16,12 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros
 
 
 proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
-    cdecl, importc: "rcutils_strdup", header: "rcutils/strdup.h".}
+    importc: "rcutils_strdup", header: "rcutils/strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.
                               ##
@@ -38,7 +38,7 @@ proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
                               ##
 
 proc rcutils_strndup*(str: cstring; max_length: csize_t;
-                      allocator: rcutils_allocator_t): cstring {.cdecl,
+                      allocator: rcutils_allocator_t): cstring {.
     importc: "rcutils_strndup", header: "rcutils/strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.

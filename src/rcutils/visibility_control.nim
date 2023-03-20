@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2015 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,4 +15,4 @@
 ##  limitations under the License.
 
 import
-  ./visibility_control_macros, ./visibility_control_macros
+  ./visibility_control_macros

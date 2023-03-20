@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2019 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +16,11 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros
 
 
-proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
+proc rcutils_get_pid*(): cint {.importc: "rcutils_get_pid",
                                 header: "rcutils/process.h".}
   ##
                               ##  Retrieve the current process ID.
@@ -33,7 +33,7 @@ proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
                               ##
 
 proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.
-    cdecl, importc: "rcutils_get_executable_name", header: "rcutils/process.h".}
+    importc: "rcutils_get_executable_name", header: "rcutils/process.h".}
   ##
                               ##  Retrieve the current executable name.
                               ##

@@ -1,6 +1,9 @@
+##  #pragma c2nim cdecl
+
 import rcutils_ret
 import ../allocator
 import array_list
+
 
 type
 
@@ -29,14 +32,14 @@ type
                               ##  A pointer to the PIMPL implementation type.
 
 
-  rcutils_hash_map_key_hasher_t* = proc (a1: pointer): csize_t {.cdecl.} ##
+  rcutils_hash_map_key_hasher_t* = proc (a1: pointer): csize_t ##
                               ##  The function signature for a key hashing function.
                               ##
                               ##  \param[in] key The key that needs to be hashed
                               ##  \return A hash value for the provided string
                               ##
 
-  rcutils_hash_map_key_cmp_t* = proc (a1: pointer; a2: pointer): cint {.cdecl.} ##
+  rcutils_hash_map_key_cmp_t* = proc (a1: pointer; a2: pointer): cint ##
                               ##  The function signature for a key comparison function.
                               ##
                               ##  \param[in] val1 The first value to compare
@@ -47,6 +50,7 @@ type
                               ##
   ##  val1
 
+
 ##
 ##  Validates that an rcutils_hash_map_t* points to a valid hash map.
 ##  \param[in] map A pointer to an rcutils_hash_map_t
@@ -55,7 +59,7 @@ type
 ##
 
 
-proc rcutils_hash_map_string_hash_func*(key_str: pointer): csize_t {.cdecl,
+proc rcutils_hash_map_string_hash_func*(key_str: pointer): csize_t {.
     importc: "rcutils_hash_map_string_hash_func", header: "rcutils/hash_map.h".}
   ##
                               ##  A hashing function for a null terminated c string.
@@ -65,15 +69,15 @@ proc rcutils_hash_map_string_hash_func*(key_str: pointer): csize_t {.cdecl,
                               ##
 
 proc rcutils_hash_map_string_cmp_func*(val1: pointer; val2: pointer): cint {.
-    cdecl, importc: "rcutils_hash_map_string_cmp_func",
-    header: "rcutils/hash_map.h".}
-  ##  A comparison function for a null terminated c string.
-                                  ##
-                                  ##  A comparison function for a null terminated c string.
-                                  ##  Should be used when your key is just a pointer to a c-string
-                                  ##
+    importc: "rcutils_hash_map_string_cmp_func", header: "rcutils/hash_map.h".}
+  ##
+                              ##  A comparison function for a null terminated c string.
+                              ##
+                              ##  A comparison function for a null terminated c string.
+                              ##  Should be used when your key is just a pointer to a c-string
+                              ##
 
-proc rcutils_get_zero_initialized_hash_map*(): rcutils_hash_map_t {.cdecl,
+proc rcutils_get_zero_initialized_hash_map*(): rcutils_hash_map_t {.
     importc: "rcutils_get_zero_initialized_hash_map",
     header: "rcutils/hash_map.h".}
   ##  Return an empty hash_map struct.
@@ -108,7 +112,7 @@ proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                             key_hashing_func: rcutils_hash_map_key_hasher_t;
                             key_cmp_func: rcutils_hash_map_key_cmp_t;
                             allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_init", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_init", header: "rcutils/hash_map.h".}
   ##
                               ##  Initialize a rcutils_hash_map_t, allocating space for given capacity.
                               ##
@@ -159,7 +163,7 @@ proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                               ##
 
 proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_fini", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_fini", header: "rcutils/hash_map.h".}
   ##
                               ##  Finalize the previously initialized hash_map struct.
                               ##
@@ -182,35 +186,35 @@ proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
 
 proc rcutils_hash_map_get_capacity*(hash_map: ptr rcutils_hash_map_t;
                                     capacity: ptr csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_get_capacity",
-    header: "rcutils/hash_map.h".}
-  ##  Get the current capacity of the hash_map.
-                                  ##
-                                  ##  This function will return the internal capacity of the hash_map, which is the
-                                  ##  number of buckets the hash_map uses to sort the keys.
-                                  ##  The capacity does not indicate how many key value pairs are stored in the
-                                  ##  hash_map, the rcutils_hash_map_get_size() function can provide that, nor the
-                                  ##  maximum number that can be stored without increasing the capacity.
-                                  ##  The capacity can be set initially with rcutils_hash_map_init().
-                                  ##
-                                  ##  <hr>
-                                  ##  Attribute          | Adherence
-                                  ##  ------------------ | -------------
-                                  ##  Allocates Memory   | No
-                                  ##  Thread-Safe        | No
-                                  ##  Uses Atomics       | No
-                                  ##  Lock-Free          | Yes
-                                  ##
-                                  ##  \param[in] hash_map rcutils_hash_map_t to be queried
-                                  ##  \param[out] capacity capacity of the hash_map
-                                  ##  \return #RCUTILS_RET_OK if successful, or
-                                  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                  ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
-                                  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                  ##
+    importc: "rcutils_hash_map_get_capacity", header: "rcutils/hash_map.h".}
+  ##
+                              ##  Get the current capacity of the hash_map.
+                              ##
+                              ##  This function will return the internal capacity of the hash_map, which is the
+                              ##  number of buckets the hash_map uses to sort the keys.
+                              ##  The capacity does not indicate how many key value pairs are stored in the
+                              ##  hash_map, the rcutils_hash_map_get_size() function can provide that, nor the
+                              ##  maximum number that can be stored without increasing the capacity.
+                              ##  The capacity can be set initially with rcutils_hash_map_init().
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No
+                              ##  Thread-Safe        | No
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##
+                              ##  \param[in] hash_map rcutils_hash_map_t to be queried
+                              ##  \param[out] capacity capacity of the hash_map
+                              ##  \return #RCUTILS_RET_OK if successful, or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                              ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
+                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                              ##
 
 proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
-                                size: ptr csize_t): rcutils_ret_t {.cdecl,
+                                size: ptr csize_t): rcutils_ret_t {.
     importc: "rcutils_hash_map_get_size", header: "rcutils/hash_map.h".}
   ##
                               ##  Get the current size of the hash_map.
@@ -236,7 +240,7 @@ proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
                               ##
 
 proc rcutils_hash_map_set*(hash_map: ptr rcutils_hash_map_t; key: pointer;
-                           value: pointer): rcutils_ret_t {.cdecl,
+                           value: pointer): rcutils_ret_t {.
     importc: "rcutils_hash_map_set", header: "rcutils/hash_map.h".}
   ##
                               ##  Set a key value pair in the hash_map, increasing capacity if necessary.
@@ -264,7 +268,7 @@ proc rcutils_hash_map_set*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                               ##
 
 proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_unset", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_unset", header: "rcutils/hash_map.h".}
   ##
                               ##  Unset a key value pair in the hash_map.
                               ##
@@ -290,7 +294,7 @@ proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rc
                               ##
 
 proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer): bool {.
-    cdecl, importc: "rcutils_hash_map_key_exists", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_key_exists", header: "rcutils/hash_map.h".}
   ##
                               ##  Get whether or not a key exists.
                               ##
@@ -315,7 +319,7 @@ proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer
                               ##
 
 proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
-                           data: pointer): rcutils_ret_t {.cdecl,
+                           data: pointer): rcutils_ret_t {.
     importc: "rcutils_hash_map_get", header: "rcutils/hash_map.h".}
   ##
                               ##  Get value given a key.
@@ -343,7 +347,7 @@ proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                               ##
 
 proc rcutils_hash_map_get_next_key_and_data*(hash_map: ptr rcutils_hash_map_t;
-    previous_key: pointer; key: pointer; data: pointer): rcutils_ret_t {.cdecl,
+    previous_key: pointer; key: pointer; data: pointer): rcutils_ret_t {.
     importc: "rcutils_hash_map_get_next_key_and_data",
     header: "rcutils/hash_map.h".}
   ##  Get the next key in the hash_map, unless NULL is given, then get the first key.

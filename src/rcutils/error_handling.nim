@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 
 
 proc RCUTILS_SAFE_FWRITE_TO_STDERR*(msg: cstring) {.importc: "$1", header: "error_handling.h".}
@@ -18,12 +20,8 @@ proc RCUTILS_SAFE_FWRITE_TO_STDERR*(msg: cstring) {.importc: "$1", header: "erro
 ##  \file
 
 import
-  ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros, ./macros,
-  ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator, ./snprintf, ./snprintf, ./snprintf,
-  ./testing/fault_injection, ./testing/fault_injection,
-  ./testing/fault_injection
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros, ./snprintf, ./testing/fault_injection
 
 ##  Write the given msg out to stderr.
 
@@ -69,8 +67,9 @@ type
 
 
 
+
 proc rcutils_initialize_error_handling_thread_local_storage*(
-    allocator: rcutils_allocator_t): rcutils_ret_t {.cdecl,
+    allocator: rcutils_allocator_t): rcutils_ret_t {.
     importc: "rcutils_initialize_error_handling_thread_local_storage",
     header: "rcutils/error_handling.h".}
   ##  Forces initialization of thread-local storage if called in a newly created thread.
@@ -113,7 +112,7 @@ proc rcutils_initialize_error_handling_thread_local_storage*(
                                         ##
 
 proc rcutils_set_error_state*(error_string: cstring; file: cstring;
-                              line_number: csize_t) {.cdecl,
+                              line_number: csize_t) {.
     importc: "rcutils_set_error_state", header: "rcutils/error_handling.h".}
   ##
                               ##  Set the error message, as well as the file and line on which it occurred.
@@ -183,12 +182,12 @@ proc rcutils_set_error_state*(error_string: cstring; file: cstring;
 ##
 
 
-proc rcutils_error_is_set*(): bool {.cdecl, importc: "rcutils_error_is_set",
+proc rcutils_error_is_set*(): bool {.importc: "rcutils_error_is_set",
                                      header: "rcutils/error_handling.h".}
   ##
                               ##  Return `true` if the error is set, otherwise `false`.
 
-proc rcutils_get_error_state*(): ptr rcutils_error_state_t {.cdecl,
+proc rcutils_get_error_state*(): ptr rcutils_error_state_t {.
     importc: "rcutils_get_error_state", header: "rcutils/error_handling.h".}
   ##
                               ##  Return an rcutils_error_state_t which was set with rcutils_set_error_state().
@@ -201,7 +200,7 @@ proc rcutils_get_error_state*(): ptr rcutils_error_state_t {.cdecl,
                               ##  \return A pointer to the current error state struct.
                               ##
 
-proc rcutils_get_error_string*(): rcutils_error_string_t {.cdecl,
+proc rcutils_get_error_string*(): rcutils_error_string_t {.
     importc: "rcutils_get_error_string", header: "rcutils/error_handling.h".}
   ##
                               ##  Return the error message followed by `, at <file>:<line>` if set, else "error not set".
@@ -215,7 +214,7 @@ proc rcutils_get_error_string*(): rcutils_error_string_t {.cdecl,
                               ##  \return The current error string, with file and line number, or "error not set" if not set.
                               ##
 
-proc rcutils_reset_error*() {.cdecl, importc: "rcutils_reset_error",
+proc rcutils_reset_error*() {.importc: "rcutils_reset_error",
                               header: "rcutils/error_handling.h".}
   ##
                               ##  Reset the error state by clearing any previously set error state.

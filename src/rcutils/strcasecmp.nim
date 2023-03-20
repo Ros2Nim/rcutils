@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +16,11 @@
 ##  \file
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros, ./visibility_control
+  ./macros, ./visibility_control, ./visibility_control_macros
 
 
 proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
-    cdecl, importc: "rcutils_strcasecmp", header: "rcutils/strcasecmp.h".}
+    importc: "rcutils_strcasecmp", header: "rcutils/strcasecmp.h".}
   ##
                               ##  Case insensitive string compare.
                               ##
@@ -38,7 +39,7 @@ proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
                               ##
 
 proc rcutils_strncasecmp*(s1: cstring; s2: cstring; n: csize_t; value: ptr cint): cint {.
-    cdecl, importc: "rcutils_strncasecmp", header: "rcutils/strcasecmp.h".}
+    importc: "rcutils_strncasecmp", header: "rcutils/strcasecmp.h".}
   ##
                               ##  Case insensitive string compare up to count characters.
                               ##

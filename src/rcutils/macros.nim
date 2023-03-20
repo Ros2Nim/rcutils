@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,6 +60,3 @@
 ##  \def RCUTILS_UNLIKELY
 ##  Instruct the compiler to optimize for the case where the argument equals 0.
 ##
-
-const
-  RCUTILS_HAS_NONNULL* = 1   ##  Provide the compiler a hint about an argument being nonnull when possible.

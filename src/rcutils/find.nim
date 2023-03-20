@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +16,13 @@
 ##  \file
 
 import
-  ./types, ./types/array_list, ./types/array_list, ./allocator, ./allocator,
-  ./allocator, ./macros, ./macros, ./macros, ./macros, ./macros, ./allocator,
-  ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator, ./types/array_list, ./types,
-  ./types/char_array, ./types/char_array, ./types, ./types/hash_map,
-  ./types/hash_map, ./types, ./types/string_array, ./types/string_array,
-  ./error_handling, ./error_handling, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./snprintf, ./snprintf,
-  ./error_handling, ./testing/fault_injection, ./testing/fault_injection,
-  ./testing/fault_injection, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./types/string_array, ./qsort, ./qsort,
-  ./types/string_array, ./types, ./types/string_map, ./types/string_map,
-  ./types, ./types/uint8_array, ./types/uint8_array, ./types
+  ./types, ./types/array_list, ./allocator, ./macros, ./types/rcutils_ret,
+  ./visibility_control, ./visibility_control_macros, ./types/char_array,
+  ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
+  ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array
 
 
-proc rcutils_find*(str: cstring; delimiter: char): csize_t {.cdecl,
+proc rcutils_find*(str: cstring; delimiter: char): csize_t {.
     importc: "rcutils_find", header: "rcutils/find.h".}
   ##
                               ##  Return the first index of a character in a string.
@@ -45,7 +37,7 @@ proc rcutils_find*(str: cstring; delimiter: char): csize_t {.cdecl,
                               ##
 
 proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    cdecl, importc: "rcutils_findn", header: "rcutils/find.h".}
+    importc: "rcutils_findn", header: "rcutils/find.h".}
   ##
                               ##  Return the first index of a character in a string of specified length.
                               ##
@@ -60,7 +52,7 @@ proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csiz
                               ##  \return `SIZE_MAX` if the delimiter is not found.
                               ##
 
-proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
+proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.
     importc: "rcutils_find_last", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string.
@@ -75,7 +67,7 @@ proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
                               ##
 
 proc rcutils_find_lastn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    cdecl, importc: "rcutils_find_lastn", header: "rcutils/find.h".}
+    importc: "rcutils_find_lastn", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string of specifed length.
                               ##

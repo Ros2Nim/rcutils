@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2015-2016 Laird Shaw
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
@@ -24,14 +26,12 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros
 
 
 proc rcutils_repl_str*(str: cstring; `from`: cstring; to: cstring;
-                       allocator: ptr rcutils_allocator_t): cstring {.cdecl,
+                       allocator: ptr rcutils_allocator_t): cstring {.
     importc: "rcutils_repl_str", header: "rcutils/repl_str.h".}
   ##
                               ##  Replace all the occurrences of one string for another in the given string.

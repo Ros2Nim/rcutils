@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +16,16 @@
 ##  \file
 
 import
-  ./allocator, ./allocator, ./allocator, ./macros, ./macros, ./macros, ./macros,
-  ./macros, ./allocator, ./types/rcutils_ret, ./allocator, ./visibility_control,
-  ./visibility_control_macros, ./visibility_control_macros,
-  ./visibility_control, ./allocator, ./types, ./types/array_list,
-  ./types/array_list, ./types, ./types/char_array, ./types/char_array, ./types,
-  ./types/hash_map, ./types/hash_map, ./types, ./types/string_array,
-  ./types/string_array, ./error_handling, ./error_handling, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./error_handling,
-  ./snprintf, ./snprintf, ./error_handling, ./testing/fault_injection,
-  ./testing/fault_injection, ./testing/fault_injection, ./error_handling,
-  ./error_handling, ./error_handling, ./error_handling, ./types/string_array,
-  ./qsort, ./qsort, ./types/string_array, ./types, ./types/string_map,
-  ./types/string_map, ./types, ./types/uint8_array, ./types/uint8_array, ./types
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros, ./types, ./types/array_list, ./types/char_array,
+  ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
+  ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array
 
 
 proc rcutils_split*(str: cstring; delimiter: char;
                     allocator: rcutils_allocator_t;
                     string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split", header: "rcutils/split.h".}
+    importc: "rcutils_split", header: "rcutils/split.h".}
   ##
                               ##  Split a given string with the specified delimiter
                               ##
@@ -49,7 +42,7 @@ proc rcutils_split*(str: cstring; delimiter: char;
 proc rcutils_split_last*(str: cstring; delimiter: char;
                          allocator: rcutils_allocator_t;
                          string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split_last", header: "rcutils/split.h".}
+    importc: "rcutils_split_last", header: "rcutils/split.h".}
   ##
                               ##  Split a given string on the last occurrence of the specified delimiter
                               ##

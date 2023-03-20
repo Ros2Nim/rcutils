@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +16,10 @@
 ##  \file
 
 import
-  ./visibility_control, ./visibility_control_macros,
-  ./visibility_control_macros, ./visibility_control
+  ./visibility_control, ./visibility_control_macros
 
 
-proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.cdecl,
+proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.
     importc: "rcutils_strerror", header: "rcutils/strerror.h".}
   ##
                               ##  Retrieve the string corresponding to the last system error.

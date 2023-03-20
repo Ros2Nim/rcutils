@@ -1,3 +1,5 @@
+##  #pragma c2nim cdecl
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +16,13 @@
 ##  \file
 
 import
-  ./macros, ./macros, ./macros, ./macros, ./macros, ./types/rcutils_ret,
-  ./visibility_control, ./visibility_control_macros,
-  ./visibility_control_macros, ./visibility_control
+  ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros
 
 
 proc rcutils_qsort*(`ptr`: pointer; count: csize_t; size: csize_t;
-                    comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): rcutils_ret_t {.
-    cdecl, importc: "rcutils_qsort", header: "rcutils/qsort.h".}
+                    comp: proc (a1: pointer; a2: pointer): cint): rcutils_ret_t {.
+    importc: "rcutils_qsort", header: "rcutils/qsort.h".}
   ##
                               ##  Interface to qsort with rcutils-style argument validation.
                               ##

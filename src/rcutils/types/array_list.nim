@@ -1,5 +1,8 @@
+##  #pragma c2nim cdecl
+
 import rcutils_ret
 import ../allocator
+
 
 type
 
@@ -28,6 +31,7 @@ type
                               ##  A pointer to the PIMPL implementation type.
 
 
+
 ##
 ##  Validates that an rcutils_array_list_t* points to a valid array list.
 ##  \param[in] array_list A pointer to an rcutils_array_list_t
@@ -36,7 +40,7 @@ type
 ##
 
 
-proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.cdecl,
+proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.
     importc: "rcutils_get_zero_initialized_array_list",
     header: "rcutils/array_list.h".}
   ##  Return an empty array_list struct.
@@ -69,7 +73,7 @@ proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.cdecl,
 proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               initial_capacity: csize_t; data_size: csize_t;
                               allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_init", header: "rcutils/array_list.h".}
+    importc: "rcutils_array_list_init", header: "rcutils/array_list.h".}
   ##
                               ##  Initialize an array list with a given initial capacity.
                               ##
@@ -113,7 +117,7 @@ proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               ##
 
 proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_fini", header: "rcutils/array_list.h".}
+    importc: "rcutils_array_list_fini", header: "rcutils/array_list.h".}
   ##
                               ##  Finalize an array list, reclaiming all resources.
                               ##
@@ -137,7 +141,7 @@ proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret
                               ##
 
 proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_add", header: "rcutils/array_list.h".}
+    importc: "rcutils_array_list_add", header: "rcutils/array_list.h".}
   ##
                               ##  Adds an entry to the list
                               ##
@@ -163,7 +167,7 @@ proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer
 
 proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_set", header: "rcutils/array_list.h".}
+    importc: "rcutils_array_list_set", header: "rcutils/array_list.h".}
   ##
                               ##  Sets an entry in the list to the provided data
                               ##
@@ -189,7 +193,7 @@ proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
                               ##
 
 proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
-                                index: csize_t): rcutils_ret_t {.cdecl,
+                                index: csize_t): rcutils_ret_t {.
     importc: "rcutils_array_list_remove", header: "rcutils/array_list.h".}
   ##
                               ##  Removes an entry in the list at the provided index
@@ -215,7 +219,7 @@ proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_get", header: "rcutils/array_list.h".}
+    importc: "rcutils_array_list_get", header: "rcutils/array_list.h".}
   ##
                               ##  Retrieves an entry in the list at the provided index
                               ##
@@ -239,7 +243,7 @@ proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
                               ##
 
 proc rcutils_array_list_get_size*(array_list: ptr rcutils_array_list_t;
-                                  size: ptr csize_t): rcutils_ret_t {.cdecl,
+                                  size: ptr csize_t): rcutils_ret_t {.
     importc: "rcutils_array_list_get_size", header: "rcutils/array_list.h".}
   ##
                               ##  Retrieves the size of the provided array_list
