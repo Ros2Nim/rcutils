@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 import rcutils_ret
 import ../allocator
 import ../allocator

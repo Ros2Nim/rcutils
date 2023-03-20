@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 import ./time
 proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: "rcutils/logging.h".}
 

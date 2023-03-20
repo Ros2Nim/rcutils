@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 const
   RCUTILS_FAULT_INJECTION_NEVER_FAIL* = -1 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
                                            ##

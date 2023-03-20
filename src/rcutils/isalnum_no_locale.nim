@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 converter charToNum*(c: char): int = c.int
 
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.

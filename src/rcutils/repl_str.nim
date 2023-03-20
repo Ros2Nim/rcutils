@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 ##  Copyright 2015-2016 Laird Shaw
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##

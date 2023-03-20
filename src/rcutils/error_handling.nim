@@ -1,5 +1,3 @@
-##  #pragma c2nim cdecl
-
 
 
 proc RCUTILS_SAFE_FWRITE_TO_STDERR*(msg: cstring) {.importc: "$1", header: "error_handling.h".}
