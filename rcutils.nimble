@@ -1,14 +1,12 @@
 # Package
 
-version       = "0.2.3"
+version       = "0.3.0"
 author        = "Jaremy Creechley"
 description   = "Rcutils wrapper for Nim"
 license       = "MIT"
 
 srcDir        = "src"
-skipDirs      = @["doc"]
-installExt = @["nim"]
-# bin = @["rcutils"]
+skipDirs      = @["deps"]
 
 
 # Dependencies
