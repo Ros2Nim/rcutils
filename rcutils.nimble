@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.2.0"
+version       = "0.2.1"
 author        = "Jaremy Creechley"
 description   = "Rcutils wrapper for Nim"
 license       = "MIT"
@@ -12,13 +12,12 @@ installExt = @["nim"]
 
 
 # Dependencies
-
 requires "nim >= 1.6.0"
 
-before install:
-  let cmakes = getEnv("NIMBLE_CMAKES").split(",")
-  echo "BEFORE INSTALL: ", cmakes 
-  if "rcutils" in cmakes:
-    echo "INSTALL CLIB"
-  else:
-    echo "DON'T INSTALL CLIB"
+# before install:
+#   let cmakes = getEnv("NIMBLE_CMAKES").split(",")
+#   echo "BEFORE INSTALL: ", cmakes 
+#   if "rcutils" in cmakes:
+#     echo "INSTALL CLIB"
+#   else:
+#     echo "DON'T INSTALL CLIB"
