@@ -65,3 +65,5 @@ export
   string_array,
   string_map,
   uint8_array
+
+const RosDir* {.strdefine.} = "/opt/ros/humble"
