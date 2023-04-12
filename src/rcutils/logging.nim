@@ -17,17 +17,18 @@ proc RCUTILS_LOGGING_AUTOINIT*() {.importc: "RCUTILS_LOGGING_AUTOINIT", header: 
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
-  ./visibility_control_macros, ./error_handling, ./snprintf,
-  ./testing/fault_injection, ./time, ./types, ./types/array_list,
-  ./types/char_array, ./types/hash_map, ./types/string_array, ./qsort,
-  ./types/string_map, ./types/uint8_array
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros, ./error_handling, ##  clang -E -dI
+  ./snprintf, ./testing/fault_injection, ./time, ##  clang -E -dI
+  ./types, ./types/array_list, ./types/char_array, ./types/hash_map,
+  ./types/string_array, ./qsort, ./types/string_map, ./types/uint8_array
 
 var g_rcutils_logging_initialized* {.header: "rcutils/logging.h".}: bool
 
 
 proc rcutils_logging_initialize_with_allocator*(allocator: rcutils_allocator_t): rcutils_ret_t {.
-    importc: "rcutils_logging_initialize_with_allocator",
+    cdecl, importc: "rcutils_logging_initialize_with_allocator",
     header: "rcutils/logging.h".}
   ##  The flag if the logging system has been initialized.
   ##  Initialize the logging system using the specified allocator.
@@ -87,7 +88,7 @@ proc rcutils_logging_initialize_with_allocator*(allocator: rcutils_allocator_t):
   ##    levels will not be configurable.
   ##
 
-proc rcutils_logging_initialize*(): rcutils_ret_t {.
+proc rcutils_logging_initialize*(): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_initialize", header: "rcutils/logging.h".}
   ##
                               ##  Initialize the logging system.
@@ -112,7 +113,7 @@ proc rcutils_logging_initialize*(): rcutils_ret_t {.
                               ##    will not be configurable.
                               ##
 
-proc rcutils_logging_shutdown*(): rcutils_ret_t {.
+proc rcutils_logging_shutdown*(): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_shutdown", header: "rcutils/logging.h".}
   ##
                               ##  Shutdown the logging system.
@@ -161,16 +162,16 @@ type
     RCUTILS_LOG_SEVERITY_FATAL = 50 ## < The fatal log level
 
   rcutils_logging_output_handler_t* = proc (a1: ptr rcutils_log_location_t;
-      a2: cint; a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: ptr varargs[pointer]) ##
-                              ##  The function signature to log messages.
-                              ##
-                              ##  \param[in] location The location information about where the log came from
-                              ##  \param[in] severity The severity of the log message expressed as an integer
-                              ##  \param[in] name The name of the logger that this message came from
-                              ##  \param[in] timestamp The time at which the log message was generated
-                              ##  \param[in] format The list of arguments to insert into the formatted log message
-                              ##  \param[in] args The variable argument list
-                              ##
+      a2: cint; a3: cstring; a4: rcutils_time_point_value_t; a5: cstring; a6: ptr varargs[pointer]) {.
+      cdecl.} ##  The function signature to log messages.
+              ##
+              ##  \param[in] location The location information about where the log came from
+              ##  \param[in] severity The severity of the log message expressed as an integer
+              ##  \param[in] name The name of the logger that this message came from
+              ##  \param[in] timestamp The time at which the log message was generated
+              ##  \param[in] format The list of arguments to insert into the formatted log message
+              ##  \param[in] args The variable argument list
+              ##
   ##  location
   ##  severity
   ##  name
@@ -183,7 +184,7 @@ type
 
 
 proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
-    allocator: rcutils_allocator_t; severity: ptr cint): rcutils_ret_t {.
+    allocator: rcutils_allocator_t; severity: ptr cint): rcutils_ret_t {.cdecl,
     importc: "rcutils_logging_severity_level_from_string",
     header: "rcutils/logging.h".}
   ##  Get a severity value from its string representation (e.g. DEBUG).
@@ -205,23 +206,23 @@ proc rcutils_logging_severity_level_from_string*(severity_string: cstring;
                                  ##
 
 proc rcutils_logging_get_output_handler*(): rcutils_logging_output_handler_t {.
-    importc: "rcutils_logging_get_output_handler", header: "rcutils/logging.h".}
-  ##
-                              ##  Get the current output handler.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No, provided logging system is already initialized
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \return The function pointer of the current output handler.
-                              ##
+    cdecl, importc: "rcutils_logging_get_output_handler",
+    header: "rcutils/logging.h".}
+  ##  Get the current output handler.
+                                 ##
+                                 ##  <hr>
+                                 ##  Attribute          | Adherence
+                                 ##  ------------------ | -------------
+                                 ##  Allocates Memory   | No, provided logging system is already initialized
+                                 ##  Thread-Safe        | No
+                                 ##  Uses Atomics       | No
+                                 ##  Lock-Free          | Yes
+                                 ##
+                                 ##  \return The function pointer of the current output handler.
+                                 ##
 
 proc rcutils_logging_set_output_handler*(
-    function: rcutils_logging_output_handler_t) {.
+    function: rcutils_logging_output_handler_t) {.cdecl,
     importc: "rcutils_logging_set_output_handler", header: "rcutils/logging.h".}
   ##
                               ##  Set the current output handler.
@@ -242,32 +243,32 @@ proc rcutils_logging_format_message*(location: ptr rcutils_log_location_t;
                                      timestamp: rcutils_time_point_value_t;
                                      msg: cstring;
                                      logging_output: ptr rcutils_char_array_t): rcutils_ret_t {.
-    importc: "rcutils_logging_format_message", header: "rcutils/logging.h".}
-  ##
-                              ##  Formats a log message according to RCUTILS_CONSOLE_OUTPUT_FORMAT
-                              ##
-                              ##  A formatter that is meant to be used by an output handler to format a log message to the match
-                              ##  the format specified in RCUTILS_CONSOLE_OUTPUT_FORMAT by performing token replacement.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | Yes
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[in] location The location information about where the log came from
-                              ##  \param[in] severity The severity of the log message expressed as an integer
-                              ##  \param[in] name The name of the logger that this message came from
-                              ##  \param[in] timestamp The time at which the log message was generated
-                              ##  \param[in] msg The message being logged
-                              ##  \param[out] logging_output An output buffer for the formatted message
-                              ##  \return #RCUTILS_RET_OK if successful.
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation error occured
-                              ##
+    cdecl, importc: "rcutils_logging_format_message",
+    header: "rcutils/logging.h".}
+  ##  Formats a log message according to RCUTILS_CONSOLE_OUTPUT_FORMAT
+                                 ##
+                                 ##  A formatter that is meant to be used by an output handler to format a log message to the match
+                                 ##  the format specified in RCUTILS_CONSOLE_OUTPUT_FORMAT by performing token replacement.
+                                 ##
+                                 ##  <hr>
+                                 ##  Attribute          | Adherence
+                                 ##  ------------------ | -------------
+                                 ##  Allocates Memory   | Yes
+                                 ##  Thread-Safe        | No
+                                 ##  Uses Atomics       | No
+                                 ##  Lock-Free          | Yes
+                                 ##
+                                 ##  \param[in] location The location information about where the log came from
+                                 ##  \param[in] severity The severity of the log message expressed as an integer
+                                 ##  \param[in] name The name of the logger that this message came from
+                                 ##  \param[in] timestamp The time at which the log message was generated
+                                 ##  \param[in] msg The message being logged
+                                 ##  \param[out] logging_output An output buffer for the formatted message
+                                 ##  \return #RCUTILS_RET_OK if successful.
+                                 ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation error occured
+                                 ##
 
-proc rcutils_logging_get_default_logger_level*(): cint {.
+proc rcutils_logging_get_default_logger_level*(): cint {.cdecl,
     importc: "rcutils_logging_get_default_logger_level",
     header: "rcutils/logging.h".}
   ##  Get the default level for loggers.
@@ -283,12 +284,12 @@ proc rcutils_logging_get_default_logger_level*(): cint {.
                                  ##  \return The level.
                                  ##
 
-proc rcutils_logging_set_default_logger_level*(level: cint) {.
+proc rcutils_logging_set_default_logger_level*(level: cint) {.cdecl,
     importc: "rcutils_logging_set_default_logger_level",
     header: "rcutils/logging.h".}
   ##  Set the default severity level for loggers.
 
-proc rcutils_logging_get_logger_level*(name: cstring): cint {.
+proc rcutils_logging_get_logger_level*(name: cstring): cint {.cdecl,
     importc: "rcutils_logging_get_logger_level", header: "rcutils/logging.h".}
   ##
                               ##  Get the severity level for a logger.
@@ -314,55 +315,55 @@ proc rcutils_logging_get_logger_level*(name: cstring): cint {.
                               ##
 
 proc rcutils_logging_get_logger_leveln*(name: cstring; name_length: csize_t): cint {.
-    importc: "rcutils_logging_get_logger_leveln", header: "rcutils/logging.h".}
-  ##
-                              ##  Get the level for a logger and its name length.
-                              ##
-                              ##  Identical to rcutils_logging_get_logger_level() but without
-                              ##  relying on the logger name to be a null terminated c string.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No, provided logging system is already initialized
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[in] name The name of the logger
-                              ##  \param[in] name_length Logger name length
-                              ##  \return The level of the logger if it has been set, or
-                              ##  \return `RCUTILS_LOG_SEVERITY_UNSET` if unset, or
-                              ##  \return the default logger level for an empty name, or
-                              ##  \return -1 on invalid arguments, or
-                              ##  \return -1 if an error occurred
-                              ##
+    cdecl, importc: "rcutils_logging_get_logger_leveln",
+    header: "rcutils/logging.h".}
+  ##  Get the level for a logger and its name length.
+                                 ##
+                                 ##  Identical to rcutils_logging_get_logger_level() but without
+                                 ##  relying on the logger name to be a null terminated c string.
+                                 ##
+                                 ##  <hr>
+                                 ##  Attribute          | Adherence
+                                 ##  ------------------ | -------------
+                                 ##  Allocates Memory   | No, provided logging system is already initialized
+                                 ##  Thread-Safe        | No
+                                 ##  Uses Atomics       | No
+                                 ##  Lock-Free          | Yes
+                                 ##
+                                 ##  \param[in] name The name of the logger
+                                 ##  \param[in] name_length Logger name length
+                                 ##  \return The level of the logger if it has been set, or
+                                 ##  \return `RCUTILS_LOG_SEVERITY_UNSET` if unset, or
+                                 ##  \return the default logger level for an empty name, or
+                                 ##  \return -1 on invalid arguments, or
+                                 ##  \return -1 if an error occurred
+                                 ##
 
 proc rcutils_logging_set_logger_level*(name: cstring; level: cint): rcutils_ret_t {.
-    importc: "rcutils_logging_set_logger_level", header: "rcutils/logging.h".}
-  ##
-                              ##  Set the severity level for a logger.
-                              ##
-                              ##  If an empty string is specified as the name, the default logger level will be set.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | Yes
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[in] name The name of the logger, must be null terminated c string.
-                              ##  \param[in] level The level to be used.
-                              ##  \return `RCUTILS_RET_OK` if successful, or
-                              ##  \return `RCUTILS_RET_INVALID_ARGUMENT` on invalid arguments, or
-                              ##  \return `RCUTILS_RET_LOGGING_SEVERITY_MAP_INVALID` if severity map invalid, or
-                              ##  \return `RCUTILS_RET_ERROR` if an unspecified error occured
-                              ##
+    cdecl, importc: "rcutils_logging_set_logger_level",
+    header: "rcutils/logging.h".}
+  ##  Set the severity level for a logger.
+                                 ##
+                                 ##  If an empty string is specified as the name, the default logger level will be set.
+                                 ##
+                                 ##  <hr>
+                                 ##  Attribute          | Adherence
+                                 ##  ------------------ | -------------
+                                 ##  Allocates Memory   | Yes
+                                 ##  Thread-Safe        | No
+                                 ##  Uses Atomics       | No
+                                 ##  Lock-Free          | Yes
+                                 ##
+                                 ##  \param[in] name The name of the logger, must be null terminated c string.
+                                 ##  \param[in] level The level to be used.
+                                 ##  \return `RCUTILS_RET_OK` if successful, or
+                                 ##  \return `RCUTILS_RET_INVALID_ARGUMENT` on invalid arguments, or
+                                 ##  \return `RCUTILS_RET_LOGGING_SEVERITY_MAP_INVALID` if severity map invalid, or
+                                 ##  \return `RCUTILS_RET_ERROR` if an unspecified error occured
+                                 ##
 
 proc rcutils_logging_logger_is_enabled_for*(name: cstring; severity: cint): bool {.
-    importc: "rcutils_logging_logger_is_enabled_for",
+    cdecl, importc: "rcutils_logging_logger_is_enabled_for",
     header: "rcutils/logging.h".}
   ##  Determine if a logger is enabled for a severity level.
                                  ##
@@ -381,7 +382,7 @@ proc rcutils_logging_logger_is_enabled_for*(name: cstring; severity: cint): bool
                                  ##  \return `false` otherwise.
                                  ##
 
-proc rcutils_logging_get_logger_effective_level*(name: cstring): cint {.
+proc rcutils_logging_get_logger_effective_level*(name: cstring): cint {.cdecl,
     importc: "rcutils_logging_get_logger_effective_level",
     header: "rcutils/logging.h".}
   ##  Determine the effective level for a logger.
@@ -411,7 +412,7 @@ proc rcutils_logging_get_logger_effective_level*(name: cstring): cint {.
                                  ##
 
 proc rcutils_log_internal*(location: ptr rcutils_log_location_t; severity: cint;
-                           name: cstring; format: cstring) {.varargs,
+                           name: cstring; format: cstring) {.varargs, cdecl,
     importc: "rcutils_log_internal", header: "rcutils/logging.h".}
   ##
                               ##  Internal call to log a message.
@@ -442,7 +443,7 @@ proc rcutils_log_internal*(location: ptr rcutils_log_location_t; severity: cint;
   ##  @cond Doxygen_Suppress
 
 proc rcutils_log*(location: ptr rcutils_log_location_t; severity: cint;
-                  name: cstring; format: cstring) {.varargs,
+                  name: cstring; format: cstring) {.varargs, cdecl,
     importc: "rcutils_log", header: "rcutils/logging.h".}
   ##
                               ##  Log a message.
@@ -480,7 +481,7 @@ proc rcutils_log*(location: ptr rcutils_log_location_t; severity: cint;
 proc rcutils_logging_console_output_handler*(
     location: ptr rcutils_log_location_t; severity: cint; name: cstring;
     timestamp: rcutils_time_point_value_t; format: cstring;
-    args: ptr varargs[pointer]) {.importc: "rcutils_logging_console_output_handler",
+    args: ptr varargs[pointer]) {.cdecl, importc: "rcutils_logging_console_output_handler",
                                   header: "rcutils/logging.h".}
   ##
                               ##  The default output handler outputs log messages to the standard streams.

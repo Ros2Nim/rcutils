@@ -38,9 +38,8 @@ suite "compiles":
                             "logging".cstring,
                             "testing".cstring)
     
-
-  # test "allocator":
-  #   check 5 + 5 == 10
-  #   var ac = rcutils_get_default_allocator()
-  #   check rcutils_allocator_is_valid(addr ac) == true
+  test "allocator":
+    var ac = rcutils_get_default_allocator()
+    check rcutils_allocator_is_valid(addr ac) == true
+    check rcutils_allocator_is_valid(addr ac) == true
 

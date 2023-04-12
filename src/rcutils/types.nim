@@ -13,7 +13,14 @@
 ##  limitations under the License.
 
 import
-  ./types/array_list, ./allocator, ./macros, ./types/rcutils_ret,
-  ./visibility_control, ./visibility_control_macros, ./types/char_array,
-  ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
-  ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array
+  ./types/array_list,       ##  clang -E -dI
+  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros, ./types/char_array, ##
+                              ##  clang -E -dI
+  ./types/hash_map,         ##  clang -E -dI
+  ./types/string_array,     ##  clang -E -dI
+  ./error_handling, ./snprintf, ./testing/fault_injection, ./qsort, ./types/string_map, ##
+                              ##  clang -E -dI
+  ./types/uint8_array
+
+##  clang -E -dI

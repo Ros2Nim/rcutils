@@ -14,7 +14,9 @@
 ##  \file
 
 import
-  ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./macros,                 ##  clang -E -dI
+  ./types/rcutils_ret,      ##  clang -E -dI
+  ./visibility_control,     ##  clang -E -dI
   ./visibility_control_macros
 
 
@@ -37,28 +39,29 @@ type
                               ##  Developers should note that, while the fields of a const-qualified allocator
                               ##  struct cannot be modified, the state of the allocator can be modified.
                               ##
-    allocate* {.importc: "allocate".}: proc (size: csize_t; state: pointer): pointer ##
-                              ##  Allocate memory, given a size and the `state` pointer.
-                              ##  An error should be indicated by returning `NULL`.
+    allocate* {.importc: "allocate".}: proc (size: csize_t; state: pointer): pointer {.
+        cdecl.} ##  Allocate memory, given a size and the `state` pointer.
+                ##  An error should be indicated by returning `NULL`.
     ##  Deallocate previously allocated memory, mimicking free().
     deallocate* {.importc: "deallocate".}: proc (pointer: pointer;
-        state: pointer)      ##  Also takes the `state` pointer.
+        state: pointer) {.cdecl.} ##  Also takes the `state` pointer.
     ##  Reallocate if possible, otherwise it deallocates and allocates.
     reallocate* {.importc: "reallocate".}: proc (pointer: pointer;
-        size: csize_t; state: pointer): pointer ##
-                                                ##  Also takes the `state` pointer.
-                                                ##
-                                                ##  If unsupported then do deallocate and then allocate.
-                                                ##  This should behave as realloc() does, as opposed to posix's
-                                                ##  [reallocf](https://linux.die.net/man/3/reallocf), i.e. the memory given
-                                                ##  by pointer will not be free'd automatically if realloc() fails.
-                                                ##  For reallocf-like behavior use rcutils_reallocf().
-                                                ##  This function must be able to take an input pointer of `NULL` and succeed.
-                                                ##
+        size: csize_t; state: pointer): pointer {.cdecl.} ##
+                              ##
+                              ##  Also takes the `state` pointer.
+                              ##
+                              ##  If unsupported then do deallocate and then allocate.
+                              ##  This should behave as realloc() does, as opposed to posix's
+                              ##  [reallocf](https://linux.die.net/man/3/reallocf), i.e. the memory given
+                              ##  by pointer will not be free'd automatically if realloc() fails.
+                              ##  For reallocf-like behavior use rcutils_reallocf().
+                              ##  This function must be able to take an input pointer of `NULL` and succeed.
+                              ##
     ##  Allocate memory with all elements set to zero, given a number of elements and their size.
     zero_allocate* {.importc: "zero_allocate".}: proc (
-        number_of_elements: csize_t; size_of_element: csize_t; state: pointer): pointer ##
-                              ##  An error should be indicated by returning `NULL`.
+        number_of_elements: csize_t; size_of_element: csize_t; state: pointer): pointer {.
+        cdecl.}              ##  An error should be indicated by returning `NULL`.
     ##  Implementation defined state storage.
     state* {.importc: "state".}: pointer ##
                                          ##  This is passed as the final parameter to other allocator functions.
@@ -69,7 +72,7 @@ type
 
 
 
-proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.
+proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.cdecl,
     importc: "rcutils_get_zero_initialized_allocator",
     header: "rcutils/allocator.h".}
   ##  Return a zero initialized allocator.
@@ -77,7 +80,7 @@ proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.
                                    ##  Note that this is an invalid allocator and should only be used as a placeholder.
                                    ##
 
-proc rcutils_get_default_allocator*(): rcutils_allocator_t {.
+proc rcutils_get_default_allocator*(): rcutils_allocator_t {.cdecl,
     importc: "rcutils_get_default_allocator", header: "rcutils/allocator.h".}
   ##
                               ##  Return a properly initialized rcutils_allocator_t with default values.
@@ -100,7 +103,7 @@ proc rcutils_get_default_allocator*(): rcutils_allocator_t {.
                               ##
 
 proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
-    importc: "rcutils_allocator_is_valid", header: "rcutils/allocator.h".}
+    cdecl, importc: "rcutils_allocator_is_valid", header: "rcutils/allocator.h".}
   ##
                               ##  Return true if the given allocator has non-null function pointers.
                               ##
@@ -113,7 +116,7 @@ proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
 
 
 proc rcutils_reallocf*(pointer: pointer; size: csize_t;
-                       allocator: ptr rcutils_allocator_t): pointer {.
+                       allocator: ptr rcutils_allocator_t): pointer {.cdecl,
     importc: "rcutils_reallocf", header: "rcutils/allocator.h".}
   ##
                               ##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).

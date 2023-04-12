@@ -14,7 +14,8 @@
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
   ./visibility_control_macros
 
 
@@ -34,7 +35,7 @@ type
 
 
 proc rcutils_get_zero_initialized_shared_library*(): rcutils_shared_library_t {.
-    importc: "rcutils_get_zero_initialized_shared_library",
+    cdecl, importc: "rcutils_get_zero_initialized_shared_library",
     header: "rcutils/shared_library.h".}
   ##  Return an empty shared library struct.
                                         ##
@@ -67,21 +68,21 @@ proc rcutils_get_zero_initialized_shared_library*(): rcutils_shared_library_t {.
 proc rcutils_load_shared_library*(lib: ptr rcutils_shared_library_t;
                                   library_path: cstring;
                                   allocator: rcutils_allocator_t): rcutils_ret_t {.
-    importc: "rcutils_load_shared_library", header: "rcutils/shared_library.h".}
-  ##
-                              ##  Return shared library pointer.
-                              ##
-                              ##  \param[inout] lib struct with the shared library pointer and shared library path name
-                              ##  \param[in] library_path string with the path of the library
-                              ##  \param[in] allocator to be used to allocate and deallocate memory
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments.
-                              ##
+    cdecl, importc: "rcutils_load_shared_library",
+    header: "rcutils/shared_library.h".}
+  ##  Return shared library pointer.
+                                        ##
+                                        ##  \param[inout] lib struct with the shared library pointer and shared library path name
+                                        ##  \param[in] library_path string with the path of the library
+                                        ##  \param[in] allocator to be used to allocate and deallocate memory
+                                        ##  \return #RCUTILS_RET_OK if successful, or
+                                        ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                        ##  \return #RCUTILS_RET_ERROR if an unknown error occurs, or
+                                        ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments.
+                                        ##
 
 proc rcutils_get_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): pointer {.
-    importc: "rcutils_get_symbol", header: "rcutils/shared_library.h".}
+    cdecl, importc: "rcutils_get_symbol", header: "rcutils/shared_library.h".}
   ##
                               ##  Return shared library symbol pointer.
                               ##
@@ -92,7 +93,7 @@ proc rcutils_get_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring
                               ##
 
 proc rcutils_has_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring): bool {.
-    importc: "rcutils_has_symbol", header: "rcutils/shared_library.h".}
+    cdecl, importc: "rcutils_has_symbol", header: "rcutils/shared_library.h".}
   ##
                               ##  Return true if the shared library contains a specific symbol name otherwise returns false.
                               ##
@@ -103,18 +104,18 @@ proc rcutils_has_symbol*(lib: ptr rcutils_shared_library_t; symbol_name: cstring
                               ##
 
 proc rcutils_unload_shared_library*(lib: ptr rcutils_shared_library_t): rcutils_ret_t {.
-    importc: "rcutils_unload_shared_library", header: "rcutils/shared_library.h".}
-  ##
-                              ##  Unload the shared library.
-                              ##
-                              ##  \param[in] lib rcutils_shared_library_t to be finalized
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
-                              ##
+    cdecl, importc: "rcutils_unload_shared_library",
+    header: "rcutils/shared_library.h".}
+  ##  Unload the shared library.
+                                        ##
+                                        ##  \param[in] lib rcutils_shared_library_t to be finalized
+                                        ##  \return #RCUTILS_RET_OK if successful, or
+                                        ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                        ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
+                                        ##
 
 proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): bool {.
-    importc: "rcutils_is_shared_library_loaded",
+    cdecl, importc: "rcutils_is_shared_library_loaded",
     header: "rcutils/shared_library.h".}
   ##  Check if the library is loaded.
                                         ##
@@ -129,7 +130,7 @@ proc rcutils_is_shared_library_loaded*(lib: ptr rcutils_shared_library_t): bool 
 proc rcutils_get_platform_library_name*(library_name: cstring;
                                         library_name_platform: cstring;
                                         buffer_size: cuint; debug: bool): rcutils_ret_t {.
-    importc: "rcutils_get_platform_library_name",
+    cdecl, importc: "rcutils_get_platform_library_name",
     header: "rcutils/shared_library.h".}
   ##  Get the library name for the compiled platform
                                         ##

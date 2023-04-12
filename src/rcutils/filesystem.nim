@@ -14,11 +14,12 @@
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
   ./visibility_control_macros
 
 
-proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): bool {.
+proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): bool {.cdecl,
     importc: "rcutils_get_cwd", header: "rcutils/filesystem.h".}
   ##
                               ##  Return current working directory.
@@ -30,7 +31,7 @@ proc rcutils_get_cwd*(buffer: cstring; max_length: csize_t): bool {.
                               ##  \return `false` on failure.
                               ##
 
-proc rcutils_is_directory*(abs_path: cstring): bool {.
+proc rcutils_is_directory*(abs_path: cstring): bool {.cdecl,
     importc: "rcutils_is_directory", header: "rcutils/filesystem.h".}
   ##
                               ##  Check if the provided path points to a directory.
@@ -41,27 +42,29 @@ proc rcutils_is_directory*(abs_path: cstring): bool {.
                               ##  \return `false` on failure.
                               ##
 
-proc rcutils_is_file*(abs_path: cstring): bool {.importc: "rcutils_is_file",
-    header: "rcutils/filesystem.h".}
-  ##  Check if the provided path points to a file.
-                                    ##
-                                    ##  \param[in] abs_path Absolute path to check.
-                                    ##  \return `true` if provided path is a file, or
-                                    ##  \return `false` if abs_path is NULL, or
-                                    ##  \return `false` on failure.
-                                    ##
+proc rcutils_is_file*(abs_path: cstring): bool {.cdecl,
+    importc: "rcutils_is_file", header: "rcutils/filesystem.h".}
+  ##
+                              ##  Check if the provided path points to a file.
+                              ##
+                              ##  \param[in] abs_path Absolute path to check.
+                              ##  \return `true` if provided path is a file, or
+                              ##  \return `false` if abs_path is NULL, or
+                              ##  \return `false` on failure.
+                              ##
 
-proc rcutils_exists*(abs_path: cstring): bool {.importc: "rcutils_exists",
-    header: "rcutils/filesystem.h".}
-  ##  Check if the provided path points to an existing file/folder.
-                                    ##
-                                    ##  \param[in] abs_path Absolute path to check.
-                                    ##  \return `true` if the path exists, or
-                                    ##  \return `false` if abs_path is NULL, or
-                                    ##  \return `false` on failure.
-                                    ##
+proc rcutils_exists*(abs_path: cstring): bool {.cdecl,
+    importc: "rcutils_exists", header: "rcutils/filesystem.h".}
+  ##
+                              ##  Check if the provided path points to an existing file/folder.
+                              ##
+                              ##  \param[in] abs_path Absolute path to check.
+                              ##  \return `true` if the path exists, or
+                              ##  \return `false` if abs_path is NULL, or
+                              ##  \return `false` on failure.
+                              ##
 
-proc rcutils_is_readable*(abs_path: cstring): bool {.
+proc rcutils_is_readable*(abs_path: cstring): bool {.cdecl,
     importc: "rcutils_is_readable", header: "rcutils/filesystem.h".}
   ##
                               ##  Check if the provided path points to a file/folder readable by current user.
@@ -72,7 +75,7 @@ proc rcutils_is_readable*(abs_path: cstring): bool {.
                               ##  \return `false` on failure.
                               ##
 
-proc rcutils_is_writable*(abs_path: cstring): bool {.
+proc rcutils_is_writable*(abs_path: cstring): bool {.cdecl,
     importc: "rcutils_is_writable", header: "rcutils/filesystem.h".}
   ##
                               ##  Check if the provided path points to a file/folder writable by current user.
@@ -83,7 +86,7 @@ proc rcutils_is_writable*(abs_path: cstring): bool {.
                               ##  \return `false` on failure.
                               ##
 
-proc rcutils_is_readable_and_writable*(abs_path: cstring): bool {.
+proc rcutils_is_readable_and_writable*(abs_path: cstring): bool {.cdecl,
     importc: "rcutils_is_readable_and_writable", header: "rcutils/filesystem.h".}
   ##
                               ##  Check if the provided path points to a file/folder both readable and writable by current user.
@@ -95,7 +98,7 @@ proc rcutils_is_readable_and_writable*(abs_path: cstring): bool {.
                               ##
 
 proc rcutils_join_path*(left_hand_path: cstring; right_hand_path: cstring;
-                        allocator: rcutils_allocator_t): cstring {.
+                        allocator: rcutils_allocator_t): cstring {.cdecl,
     importc: "rcutils_join_path", header: "rcutils/filesystem.h".}
   ##
                               ##  Return newly allocated string with arguments separated by correct delimiter for the platform.
@@ -113,7 +116,7 @@ proc rcutils_join_path*(left_hand_path: cstring; right_hand_path: cstring;
                               ##
 
 proc rcutils_to_native_path*(path: cstring; allocator: rcutils_allocator_t): cstring {.
-    importc: "rcutils_to_native_path", header: "rcutils/filesystem.h".}
+    cdecl, importc: "rcutils_to_native_path", header: "rcutils/filesystem.h".}
   ##
                               ##  Return newly allocated string with all argument's "/" replaced by platform specific separator.
                               ##
@@ -129,7 +132,7 @@ proc rcutils_to_native_path*(path: cstring; allocator: rcutils_allocator_t): cst
                               ##
 
 proc rcutils_expand_user*(path: cstring; allocator: rcutils_allocator_t): cstring {.
-    importc: "rcutils_expand_user", header: "rcutils/filesystem.h".}
+    cdecl, importc: "rcutils_expand_user", header: "rcutils/filesystem.h".}
   ##
                               ##  Expand user directory in path.
                               ##
@@ -146,7 +149,7 @@ proc rcutils_expand_user*(path: cstring; allocator: rcutils_allocator_t): cstrin
                               ##  \return `NULL` on failure.
                               ##
 
-proc rcutils_mkdir*(abs_path: cstring): bool {.importc: "rcutils_mkdir",
+proc rcutils_mkdir*(abs_path: cstring): bool {.cdecl, importc: "rcutils_mkdir",
     header: "rcutils/filesystem.h".}
   ##  Create the specified directory.
                                     ##
@@ -170,24 +173,24 @@ proc rcutils_mkdir*(abs_path: cstring): bool {.importc: "rcutils_mkdir",
 proc rcutils_calculate_directory_size*(directory_path: cstring;
                                        size: ptr uint64;
                                        allocator: rcutils_allocator_t): rcutils_ret_t {.
-    importc: "rcutils_calculate_directory_size", header: "rcutils/filesystem.h".}
-  ##
-                              ##  Calculate the size of the specified directory.
-                              ##
-                              ##  Calculates the size of a directory by summarizing the file size of all files.
-                              ##  \note This operation is not recursive.
-                              ##  \param[in] directory_path The directory path to calculate the size of.
-                              ##  \param[out] size The size of the directory in bytes on success.
-                              ##  \param[in] allocator Allocator being used for internal file path composition.
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails
-                              ##  \return #RCUTILS_RET_ERROR if other error occurs
-                              ##
+    cdecl, importc: "rcutils_calculate_directory_size",
+    header: "rcutils/filesystem.h".}
+  ##  Calculate the size of the specified directory.
+                                    ##
+                                    ##  Calculates the size of a directory by summarizing the file size of all files.
+                                    ##  \note This operation is not recursive.
+                                    ##  \param[in] directory_path The directory path to calculate the size of.
+                                    ##  \param[out] size The size of the directory in bytes on success.
+                                    ##  \param[in] allocator Allocator being used for internal file path composition.
+                                    ##  \return #RCUTILS_RET_OK if successful, or
+                                    ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                    ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails
+                                    ##  \return #RCUTILS_RET_ERROR if other error occurs
+                                    ##
 
 proc rcutils_calculate_directory_size_with_recursion*(directory_path: cstring;
     max_depth: csize_t; size: ptr uint64; allocator: rcutils_allocator_t): rcutils_ret_t {.
-    importc: "rcutils_calculate_directory_size_with_recursion",
+    cdecl, importc: "rcutils_calculate_directory_size_with_recursion",
     header: "rcutils/filesystem.h".}
   ##  Calculate the size of the specified directory with recursion.
                                     ##
@@ -212,7 +215,7 @@ proc rcutils_calculate_directory_size_with_recursion*(directory_path: cstring;
                                     ##  \return #RCUTILS_RET_ERROR if other error occurs
                                     ##
 
-proc rcutils_get_file_size*(file_path: cstring): csize_t {.
+proc rcutils_get_file_size*(file_path: cstring): csize_t {.cdecl,
     importc: "rcutils_get_file_size", header: "rcutils/filesystem.h".}
   ##
                               ##  Calculate the size of the specifed file.
@@ -237,7 +240,7 @@ type
 
 proc rcutils_dir_iter_start*(directory_path: cstring;
                              allocator: rcutils_allocator_t): ptr rcutils_dir_iter_t {.
-    importc: "rcutils_dir_iter_start", header: "rcutils/filesystem.h".}
+    cdecl, importc: "rcutils_dir_iter_start", header: "rcutils/filesystem.h".}
   ##
                               ##  Begin iterating over the contents of the specified directory.
                               ##
@@ -255,7 +258,7 @@ proc rcutils_dir_iter_start*(directory_path: cstring;
                               ##  \return NULL if an error occurred
                               ##
 
-proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.
+proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.cdecl,
     importc: "rcutils_dir_iter_next", header: "rcutils/filesystem.h".}
   ##
                               ##  Continue iterating over the contents of a directory.
@@ -265,7 +268,7 @@ proc rcutils_dir_iter_next*(iter: ptr rcutils_dir_iter_t): bool {.
                               ##  \return `false` if there are no more entries in the directory.
                               ##
 
-proc rcutils_dir_iter_end*(iter: ptr rcutils_dir_iter_t) {.
+proc rcutils_dir_iter_end*(iter: ptr rcutils_dir_iter_t) {.cdecl,
     importc: "rcutils_dir_iter_end", header: "rcutils/filesystem.h".}
   ##
                               ##  Finish iterating over the contents of a directory.

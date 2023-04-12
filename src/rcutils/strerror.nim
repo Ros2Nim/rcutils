@@ -14,10 +14,11 @@
 ##  \file
 
 import
-  ./visibility_control, ./visibility_control_macros
+  ./visibility_control,     ##  clang -E -dI
+  ./visibility_control_macros
 
 
-proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.
+proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.cdecl,
     importc: "rcutils_strerror", header: "rcutils/strerror.h".}
   ##
                               ##  Retrieve the string corresponding to the last system error.

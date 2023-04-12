@@ -29,7 +29,8 @@
 ##
 
 import
-  ./visibility_control, ./visibility_control_macros
+  ./visibility_control,     ##  clang -E -dI
+  ./visibility_control_macros
 
 const
   RCUTILS_SHA256_BLOCK_SIZE* = 32
@@ -46,7 +47,7 @@ type
 
 
 
-proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.
+proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.cdecl,
     importc: "rcutils_sha256_init", header: "rcutils/sha256.h".}
   ##
                               ##  Initialize the sha256 algorithm context with starting state.
@@ -58,7 +59,7 @@ proc rcutils_sha256_init*(ctx: ptr rcutils_sha256_ctx_t) {.
                               ##
 
 proc rcutils_sha256_update*(ctx: ptr rcutils_sha256_ctx_t; data: ptr uint8;
-                            data_len: csize_t) {.
+                            data_len: csize_t) {.cdecl,
     importc: "rcutils_sha256_update", header: "rcutils/sha256.h".}
   ##
                               ##  Add data to the sha256 algorithm
@@ -72,7 +73,7 @@ proc rcutils_sha256_update*(ctx: ptr rcutils_sha256_ctx_t; data: ptr uint8;
                               ##
 
 proc rcutils_sha256_final*(ctx: ptr rcutils_sha256_ctx_t;
-                           output_hash: array[32, uint8]) {.
+                           output_hash: array[32, uint8]) {.cdecl,
     importc: "rcutils_sha256_final", header: "rcutils/sha256.h".}
   ##
                               ##  Finalize and output sha256 hash for all data added.

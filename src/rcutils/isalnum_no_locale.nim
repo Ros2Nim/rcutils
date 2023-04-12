@@ -16,6 +16,6 @@ converter charToNum*(c: char): int = c.int
 ##  \file
 
 
-proc rcutils_isalnum_no_locale*(c: char): bool {.inline,
+proc rcutils_isalnum_no_locale*(c: char): bool {.inline, cdecl,
     importc: "rcutils_isalnum_no_locale".}
   ##  Custom isalnum() which is not affected by locale.

@@ -15,11 +15,11 @@ const
   RCUTILS_FAULT_INJECTION_FAIL_NOW* = 0
 
 
-proc rcutils_fault_injection_is_test_complete*(): bool {.
+proc rcutils_fault_injection_is_test_complete*(): bool {.cdecl,
     importc: "rcutils_fault_injection_is_test_complete",
     header: "rcutils/fault_injection.h".}
 
-proc rcutils_fault_injection_set_count*(count: int64) {.
+proc rcutils_fault_injection_set_count*(count: int64) {.cdecl,
     importc: "rcutils_fault_injection_set_count",
     header: "rcutils/fault_injection.h".}
   ##
@@ -45,7 +45,7 @@ proc rcutils_fault_injection_set_count*(count: int64) {.
                                          ##  RCUTILS_FAULT_INJECTION_NEVER_FAIL.
                                          ##
 
-proc rcutils_fault_injection_get_count*(): int64 {.
+proc rcutils_fault_injection_get_count*(): int64 {.cdecl,
     importc: "rcutils_fault_injection_get_count",
     header: "rcutils/fault_injection.h".}
   ##
@@ -55,7 +55,7 @@ proc rcutils_fault_injection_get_count*(): int64 {.
                                          ##  `RCUTILS_FAULT_INJECTION_TEST`
                                          ##
 
-proc rcutils_fault_injection_maybe_fail*(): int64 {.
+proc rcutils_fault_injection_maybe_fail*(): int64 {.cdecl,
     importc: "_rcutils_fault_injection_maybe_fail",
     header: "rcutils/fault_injection.h".}
   ##

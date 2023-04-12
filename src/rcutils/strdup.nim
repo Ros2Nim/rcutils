@@ -14,12 +14,13 @@
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
   ./visibility_control_macros
 
 
 proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
-    importc: "rcutils_strdup", header: "rcutils/strdup.h".}
+    cdecl, importc: "rcutils_strdup", header: "rcutils/strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.
                               ##
@@ -36,7 +37,7 @@ proc rcutils_strdup*(str: cstring; allocator: rcutils_allocator_t): cstring {.
                               ##
 
 proc rcutils_strndup*(str: cstring; max_length: csize_t;
-                      allocator: rcutils_allocator_t): cstring {.
+                      allocator: rcutils_allocator_t): cstring {.cdecl,
     importc: "rcutils_strndup", header: "rcutils/strdup.h".}
   ##
                               ##  Return a duplicated string with an allocator, or null if an error occurs.

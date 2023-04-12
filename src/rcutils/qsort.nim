@@ -14,13 +14,15 @@
 ##  \file
 
 import
-  ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./macros,                 ##  clang -E -dI
+  ./types/rcutils_ret,      ##  clang -E -dI
+  ./visibility_control,     ##  clang -E -dI
   ./visibility_control_macros
 
 
 proc rcutils_qsort*(`ptr`: pointer; count: csize_t; size: csize_t;
-                    comp: proc (a1: pointer; a2: pointer): cint): rcutils_ret_t {.
-    importc: "rcutils_qsort", header: "rcutils/qsort.h".}
+                    comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): rcutils_ret_t {.
+    cdecl, importc: "rcutils_qsort", header: "rcutils/qsort.h".}
   ##
                               ##  Interface to qsort with rcutils-style argument validation.
                               ##

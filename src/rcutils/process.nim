@@ -14,11 +14,12 @@
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
   ./visibility_control_macros
 
 
-proc rcutils_get_pid*(): cint {.importc: "rcutils_get_pid",
+proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
                                 header: "rcutils/process.h".}
   ##
                               ##  Retrieve the current process ID.
@@ -31,7 +32,7 @@ proc rcutils_get_pid*(): cint {.importc: "rcutils_get_pid",
                               ##
 
 proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.
-    importc: "rcutils_get_executable_name", header: "rcutils/process.h".}
+    cdecl, importc: "rcutils_get_executable_name", header: "rcutils/process.h".}
   ##
                               ##  Retrieve the current executable name.
                               ##

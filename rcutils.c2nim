@@ -12,6 +12,7 @@
 #pragma c2nim anonymousAsFields
 #pragma c2nim mergeblocks
 #pragma c2nim stdints
+#pragma c2nim cdecl
 
 #pragma c2nim render extranewlines
 #pragma c2nim render reindentlongcomments

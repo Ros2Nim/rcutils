@@ -13,7 +13,8 @@
 ##  limitations under the License.
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
   ./visibility_control_macros
 
 ##  Return a newly allocated string, created with a format string.
@@ -26,7 +27,7 @@ import
 
 proc rcutils_format_string_limit*(allocator: rcutils_allocator_t;
                                   limit: csize_t; format_string: cstring): cstring {.
-    varargs, importc: "rcutils_format_string_limit",
+    varargs, cdecl, importc: "rcutils_format_string_limit",
     header: "rcutils/format_string.h".}
   ##  Return a newly allocated string, created with a format string up to a limit.
                                        ##

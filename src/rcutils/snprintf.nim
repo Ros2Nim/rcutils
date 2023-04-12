@@ -14,11 +14,13 @@
 ##  \file
 
 import
-  ./macros, ./visibility_control, ./visibility_control_macros
+  ./macros,                 ##  clang -E -dI
+  ./visibility_control,     ##  clang -E -dI
+  ./visibility_control_macros
 
 
 proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): cint {.
-    varargs, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
+    varargs, cdecl, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string.
                               ##
@@ -48,7 +50,7 @@ proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): 
   ##  @cond Doxygen_Suppress
 
 proc rcutils_vsnprintf*(buffer: cstring; buffer_size: csize_t; format: cstring;
-                        args: varargs[pointer]): cint {.
+                        args: varargs[pointer]): cint {.cdecl,
     importc: "rcutils_vsnprintf", header: "rcutils/snprintf.h".}
   ##
                               ##  Format a string with va_list for arguments, see rcutils_snprintf().

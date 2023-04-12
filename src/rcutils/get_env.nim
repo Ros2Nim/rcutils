@@ -16,4 +16,5 @@
 ##  TODO(christophebedard) remove this header completely in I-turtle
 
 import
-  ./env, ./macros, ./visibility_control, ./visibility_control_macros
+  ./env,                    ##  clang -E -dI
+  ./macros, ./visibility_control, ./visibility_control_macros

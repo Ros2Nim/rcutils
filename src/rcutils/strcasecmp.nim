@@ -14,11 +14,13 @@
 ##  \file
 
 import
-  ./macros, ./visibility_control, ./visibility_control_macros
+  ./macros,                 ##  clang -E -dI
+  ./visibility_control,     ##  clang -E -dI
+  ./visibility_control_macros
 
 
 proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
-    importc: "rcutils_strcasecmp", header: "rcutils/strcasecmp.h".}
+    cdecl, importc: "rcutils_strcasecmp", header: "rcutils/strcasecmp.h".}
   ##
                               ##  Case insensitive string compare.
                               ##
@@ -37,7 +39,7 @@ proc rcutils_strcasecmp*(s1: cstring; s2: cstring; value: ptr cint): cint {.
                               ##
 
 proc rcutils_strncasecmp*(s1: cstring; s2: cstring; n: csize_t; value: ptr cint): cint {.
-    importc: "rcutils_strncasecmp", header: "rcutils/strcasecmp.h".}
+    cdecl, importc: "rcutils_strncasecmp", header: "rcutils/strcasecmp.h".}
   ##
                               ##  Case insensitive string compare up to count characters.
                               ##

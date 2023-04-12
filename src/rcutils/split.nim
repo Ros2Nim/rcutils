@@ -14,16 +14,18 @@
 ##  \file
 
 import
-  ./allocator, ./macros, ./types/rcutils_ret, ./visibility_control,
-  ./visibility_control_macros, ./types, ./types/array_list, ./types/char_array,
-  ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
-  ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array
+  ./allocator,              ##  clang -E -dI
+  ./macros, ./types/rcutils_ret, ./visibility_control,
+  ./visibility_control_macros, ./types, ##  clang -E -dI
+  ./types/array_list, ./types/char_array, ./types/hash_map,
+  ./types/string_array, ./error_handling, ./snprintf, ./testing/fault_injection,
+  ./qsort, ./types/string_map, ./types/uint8_array
 
 
 proc rcutils_split*(str: cstring; delimiter: char;
                     allocator: rcutils_allocator_t;
                     string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    importc: "rcutils_split", header: "rcutils/split.h".}
+    cdecl, importc: "rcutils_split", header: "rcutils/split.h".}
   ##
                               ##  Split a given string with the specified delimiter
                               ##
@@ -40,7 +42,7 @@ proc rcutils_split*(str: cstring; delimiter: char;
 proc rcutils_split_last*(str: cstring; delimiter: char;
                          allocator: rcutils_allocator_t;
                          string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    importc: "rcutils_split_last", header: "rcutils/split.h".}
+    cdecl, importc: "rcutils_split_last", header: "rcutils/split.h".}
   ##
                               ##  Split a given string on the last occurrence of the specified delimiter
                               ##

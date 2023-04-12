@@ -14,10 +14,12 @@
 ##  \file
 
 import
-  ./macros, ./visibility_control, ./visibility_control_macros
+  ./macros,                 ##  clang -E -dI
+  ./visibility_control,     ##  clang -E -dI
+  ./visibility_control_macros
 
 
-proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.
+proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.cdecl,
     importc: "rcutils_set_env", header: "rcutils/env.h".}
   ##
                               ##  Set or un-set a process-scoped environment variable.
@@ -45,7 +47,7 @@ proc rcutils_set_env*(env_name: cstring; env_value: cstring): bool {.
                               ##
 
 proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
-    importc: "rcutils_get_env", header: "rcutils/env.h".}
+    cdecl, importc: "rcutils_get_env", header: "rcutils/env.h".}
   ##
                               ##  Retrieve the value of the given environment variable if it exists, or "".
                               ##  The c-string which is returned in the env_value output parameter is only
@@ -80,7 +82,7 @@ proc rcutils_get_env*(env_name: cstring; env_value: cstringArray): cstring {.
                               ##  \return an error string on failure.
                               ##
 
-proc rcutils_get_home_dir*(): cstring {.importc: "rcutils_get_home_dir",
+proc rcutils_get_home_dir*(): cstring {.cdecl, importc: "rcutils_get_home_dir",
                                         header: "rcutils/env.h".}
   ##
                               ##  Retrieve the full path to the home directory.

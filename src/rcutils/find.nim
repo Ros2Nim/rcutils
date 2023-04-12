@@ -14,13 +14,14 @@
 ##  \file
 
 import
-  ./types, ./types/array_list, ./allocator, ./macros, ./types/rcutils_ret,
+  ./types,                  ##  clang -E -dI
+  ./types/array_list, ./allocator, ./macros, ./types/rcutils_ret,
   ./visibility_control, ./visibility_control_macros, ./types/char_array,
   ./types/hash_map, ./types/string_array, ./error_handling, ./snprintf,
   ./testing/fault_injection, ./qsort, ./types/string_map, ./types/uint8_array
 
 
-proc rcutils_find*(str: cstring; delimiter: char): csize_t {.
+proc rcutils_find*(str: cstring; delimiter: char): csize_t {.cdecl,
     importc: "rcutils_find", header: "rcutils/find.h".}
   ##
                               ##  Return the first index of a character in a string.
@@ -35,7 +36,7 @@ proc rcutils_find*(str: cstring; delimiter: char): csize_t {.
                               ##
 
 proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    importc: "rcutils_findn", header: "rcutils/find.h".}
+    cdecl, importc: "rcutils_findn", header: "rcutils/find.h".}
   ##
                               ##  Return the first index of a character in a string of specified length.
                               ##
@@ -50,7 +51,7 @@ proc rcutils_findn*(str: cstring; delimiter: char; string_length: csize_t): csiz
                               ##  \return `SIZE_MAX` if the delimiter is not found.
                               ##
 
-proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.
+proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.cdecl,
     importc: "rcutils_find_last", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string.
@@ -65,7 +66,7 @@ proc rcutils_find_last*(str: cstring; delimiter: char): csize_t {.
                               ##
 
 proc rcutils_find_lastn*(str: cstring; delimiter: char; string_length: csize_t): csize_t {.
-    importc: "rcutils_find_lastn", header: "rcutils/find.h".}
+    cdecl, importc: "rcutils_find_lastn", header: "rcutils/find.h".}
   ##
                               ##  Return the last index of a character in a string of specifed length.
                               ##

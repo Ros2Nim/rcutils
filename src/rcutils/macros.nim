@@ -17,6 +17,7 @@
 
 ##  \cond Doxygen_Suppress
 ##  Apple OS's
+
 ##  macOS
 
 ##  A macro to mark an argument or variable as unused.
