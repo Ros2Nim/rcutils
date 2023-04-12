@@ -7,6 +7,7 @@
 
 import unittest
 
+import os
 import rcutils
 import rcutils/clib
 
@@ -16,6 +17,27 @@ suite "compiles":
     let ret = rcutils_system_time_now(addr time)
     check ret == 0
     check time.int64 != 0
+
+  test "env":
+    check true == rcutils_set_env("test".cstring, "valid".cstring)
+    check getEnv("test") == "valid"
+    
+  test "env":
+    check true == rcutils_set_env("test".cstring, "valid".cstring)
+    check getEnv("test") == "valid"
+    
+  test "logging":
+    check rcutils_logging_initialize() == 0
+
+    var loc: rcutils_log_location_t
+    loc.function_name = "foo".cstring
+    loc.file_name = "none".cstring
+    loc.line_number = 137
+
+    rcutils_log(addr(loc), RCUTILS_LOG_SEVERITY_INFO.cint,
+                            "logging".cstring,
+                            "testing".cstring)
+    
 
   # test "allocator":
   #   check 5 + 5 == 10

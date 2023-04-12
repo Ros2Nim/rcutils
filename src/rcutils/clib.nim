@@ -15,7 +15,7 @@ static:
   let res = staticExec("python3 -c " & quoteShellCommand([python_code]))
   if res != "":
     echo "PYTHON OUTPUT: ", res
-    {.error: "unable to run python command".}
+    raise newException(Exception, "unable to run python command: " & res)
 
 {.passC: "-Ideps/rcutils/include".}
 
