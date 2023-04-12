@@ -12,7 +12,10 @@ static:
       ]
     )
     """
-  assert "" == staticExec("python3 -c " & quoteShellCommand([python_code]))
+  let res = staticExec("python3 -c " & quoteShellCommand([python_code]))
+  if res != "":
+    echo "PYTHON OUTPUT: ", res
+    {.error: "unable to run python command".}
 
 {.passC: "-Ideps/rcutils/include".}
 

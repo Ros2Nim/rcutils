@@ -3,3 +3,4 @@
 !*/
 /rcutils
 *.out
+librcutils.so
