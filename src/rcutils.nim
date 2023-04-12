@@ -67,3 +67,6 @@ export
   uint8_array
 
 const RosDir* {.strdefine.} = "/opt/ros/humble"
+
+when defined(buildRosDeps):
+  import rcutils/clib

@@ -11,6 +11,7 @@ skipDirs      = @["deps"]
 
 # Dependencies
 requires "nim >= 1.6.0"
+requires "ants"
 
 # before install:
 #   let cmakes = getEnv("NIMBLE_CMAKES").split(",")
