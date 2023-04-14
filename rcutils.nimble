@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.4.2"
+version       = "0.4.3"
 author        = "Jaremy Creechley"
 description   = "Rcutils wrapper for Nim"
 license       = "MIT"
