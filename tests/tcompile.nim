@@ -37,9 +37,8 @@ suite "compiles":
     rcutils_log(addr(loc), RCUTILS_LOG_SEVERITY_INFO.cint,
                             "logging".cstring,
                             "testing".cstring)
-    
+
   test "allocator":
     var ac = rcutils_get_default_allocator()
-    check rcutils_allocator_is_valid(addr ac) == true
     check rcutils_allocator_is_valid(addr ac) == true
 
