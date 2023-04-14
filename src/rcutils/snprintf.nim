@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/snprintf.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +26,7 @@ import
 
 
 proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): cint {.
-    varargs, cdecl, importc: "rcutils_snprintf", header: "rcutils/snprintf.h".}
+    varargs, cdecl, importc: "rcutils_snprintf", clib.}
   ##
                               ##  Format a string.
                               ##
@@ -51,6 +57,5 @@ proc rcutils_snprintf*(buffer: cstring; buffer_size: csize_t; format: cstring): 
 
 proc rcutils_vsnprintf*(buffer: cstring; buffer_size: csize_t; format: cstring;
                         args: varargs[pointer]): cint {.cdecl,
-    importc: "rcutils_vsnprintf", header: "rcutils/snprintf.h".}
-  ##
-                              ##  Format a string with va_list for arguments, see rcutils_snprintf().
+    importc: "rcutils_vsnprintf", clib.}
+  ##  Format a string with va_list for arguments, see rcutils_snprintf().

@@ -1,6 +1,11 @@
 import rcutils_ret
 import ../allocator
 import array_list
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/hash_map.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 
 type
@@ -58,7 +63,7 @@ type
 
 
 proc rcutils_hash_map_string_hash_func*(key_str: pointer): csize_t {.cdecl,
-    importc: "rcutils_hash_map_string_hash_func", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_string_hash_func", clib.}
   ##
                               ##  A hashing function for a null terminated c string.
                               ##
@@ -67,42 +72,42 @@ proc rcutils_hash_map_string_hash_func*(key_str: pointer): csize_t {.cdecl,
                               ##
 
 proc rcutils_hash_map_string_cmp_func*(val1: pointer; val2: pointer): cint {.
-    cdecl, importc: "rcutils_hash_map_string_cmp_func",
-    header: "rcutils/hash_map.h".}
-  ##  A comparison function for a null terminated c string.
-                                  ##
-                                  ##  A comparison function for a null terminated c string.
-                                  ##  Should be used when your key is just a pointer to a c-string
-                                  ##
+    cdecl, importc: "rcutils_hash_map_string_cmp_func", clib.}
+  ##
+                              ##  A comparison function for a null terminated c string.
+                              ##
+                              ##  A comparison function for a null terminated c string.
+                              ##  Should be used when your key is just a pointer to a c-string
+                              ##
 
 proc rcutils_get_zero_initialized_hash_map*(): rcutils_hash_map_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_hash_map",
-    header: "rcutils/hash_map.h".}
-  ##  Return an empty hash_map struct.
-                                  ##
-                                  ##  This function returns an empty and zero initialized hash_map struct.
-                                  ##  All hash maps should be initialized with this or manually initialized
-                                  ##  before being used.
-                                  ##
-                                  ##  <hr>
-                                  ##  Attribute          | Adherence
-                                  ##  ------------------ | -------------
-                                  ##  Allocates Memory   | No
-                                  ##  Thread-Safe        | No
-                                  ##  Uses Atomics       | No
-                                  ##  Lock-Free          | Yes
-                                  ##
-                                  ##  Example:
-                                  ##  ```c
-                                  ##  // Do not do this:
-                                  ##  // rcutils_hash_map_t foo;
-                                  ##  // rcutils_hash_map_fini(&foo); // undefined behavior!
-                                  ##
-                                  ##  // Do this instead:
-                                  ##  rcutils_hash_map_t bar = rcutils_get_zero_initialized_hash_map();
-                                  ##  rcutils_hash_map_fini(&bar); // ok
-                                  ##  ```
-                                  ##
+    importc: "rcutils_get_zero_initialized_hash_map", clib.}
+  ##
+                              ##  Return an empty hash_map struct.
+                              ##
+                              ##  This function returns an empty and zero initialized hash_map struct.
+                              ##  All hash maps should be initialized with this or manually initialized
+                              ##  before being used.
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No
+                              ##  Thread-Safe        | No
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##
+                              ##  Example:
+                              ##  ```c
+                              ##  // Do not do this:
+                              ##  // rcutils_hash_map_t foo;
+                              ##  // rcutils_hash_map_fini(&foo); // undefined behavior!
+                              ##
+                              ##  // Do this instead:
+                              ##  rcutils_hash_map_t bar = rcutils_get_zero_initialized_hash_map();
+                              ##  rcutils_hash_map_fini(&bar); // ok
+                              ##  ```
+                              ##
 
 proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                             initial_capacity: csize_t; key_size: csize_t;
@@ -110,7 +115,7 @@ proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                             key_hashing_func: rcutils_hash_map_key_hasher_t;
                             key_cmp_func: rcutils_hash_map_key_cmp_t;
                             allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_init", header: "rcutils/hash_map.h".}
+    cdecl, importc: "rcutils_hash_map_init", clib.}
   ##
                               ##  Initialize a rcutils_hash_map_t, allocating space for given capacity.
                               ##
@@ -161,7 +166,7 @@ proc rcutils_hash_map_init*(hash_map: ptr rcutils_hash_map_t;
                               ##
 
 proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_fini", header: "rcutils/hash_map.h".}
+    cdecl, importc: "rcutils_hash_map_fini", clib.}
   ##
                               ##  Finalize the previously initialized hash_map struct.
                               ##
@@ -184,42 +189,16 @@ proc rcutils_hash_map_fini*(hash_map: ptr rcutils_hash_map_t): rcutils_ret_t {.
 
 proc rcutils_hash_map_get_capacity*(hash_map: ptr rcutils_hash_map_t;
                                     capacity: ptr csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_get_capacity",
-    header: "rcutils/hash_map.h".}
-  ##  Get the current capacity of the hash_map.
-                                  ##
-                                  ##  This function will return the internal capacity of the hash_map, which is the
-                                  ##  number of buckets the hash_map uses to sort the keys.
-                                  ##  The capacity does not indicate how many key value pairs are stored in the
-                                  ##  hash_map, the rcutils_hash_map_get_size() function can provide that, nor the
-                                  ##  maximum number that can be stored without increasing the capacity.
-                                  ##  The capacity can be set initially with rcutils_hash_map_init().
-                                  ##
-                                  ##  <hr>
-                                  ##  Attribute          | Adherence
-                                  ##  ------------------ | -------------
-                                  ##  Allocates Memory   | No
-                                  ##  Thread-Safe        | No
-                                  ##  Uses Atomics       | No
-                                  ##  Lock-Free          | Yes
-                                  ##
-                                  ##  \param[in] hash_map rcutils_hash_map_t to be queried
-                                  ##  \param[out] capacity capacity of the hash_map
-                                  ##  \return #RCUTILS_RET_OK if successful, or
-                                  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                  ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
-                                  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                  ##
-
-proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
-                                size: ptr csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_get_size", header: "rcutils/hash_map.h".}
+    cdecl, importc: "rcutils_hash_map_get_capacity", clib.}
   ##
-                              ##  Get the current size of the hash_map.
+                              ##  Get the current capacity of the hash_map.
                               ##
-                              ##  This function will return the internal size of the hash_map, which is the
-                              ##  current number of key value pairs in the hash_map.
-                              ##  The size is changed when calling rcutils_hash_map_set() or rcutils_hash_map_unset().
+                              ##  This function will return the internal capacity of the hash_map, which is the
+                              ##  number of buckets the hash_map uses to sort the keys.
+                              ##  The capacity does not indicate how many key value pairs are stored in the
+                              ##  hash_map, the rcutils_hash_map_get_size() function can provide that, nor the
+                              ##  maximum number that can be stored without increasing the capacity.
+                              ##  The capacity can be set initially with rcutils_hash_map_init().
                               ##
                               ##  <hr>
                               ##  Attribute          | Adherence
@@ -230,43 +209,67 @@ proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
                               ##  Lock-Free          | Yes
                               ##
                               ##  \param[in] hash_map rcutils_hash_map_t to be queried
-                              ##  \param[out] size size of the hash_map
+                              ##  \param[out] capacity capacity of the hash_map
                               ##  \return #RCUTILS_RET_OK if successful, or
                               ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
                               ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
+
+proc rcutils_hash_map_get_size*(hash_map: ptr rcutils_hash_map_t;
+                                size: ptr csize_t): rcutils_ret_t {.cdecl,
+    importc: "rcutils_hash_map_get_size", clib.}
+  ##  Get the current size of the hash_map.
+                                                ##
+                                                ##  This function will return the internal size of the hash_map, which is the
+                                                ##  current number of key value pairs in the hash_map.
+                                                ##  The size is changed when calling rcutils_hash_map_set() or rcutils_hash_map_unset().
+                                                ##
+                                                ##  <hr>
+                                                ##  Attribute          | Adherence
+                                                ##  ------------------ | -------------
+                                                ##  Allocates Memory   | No
+                                                ##  Thread-Safe        | No
+                                                ##  Uses Atomics       | No
+                                                ##  Lock-Free          | Yes
+                                                ##
+                                                ##  \param[in] hash_map rcutils_hash_map_t to be queried
+                                                ##  \param[out] size size of the hash_map
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                                ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                                ##
 
 proc rcutils_hash_map_set*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                            value: pointer): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_set", header: "rcutils/hash_map.h".}
-  ##
-                              ##  Set a key value pair in the hash_map, increasing capacity if necessary.
-                              ##
-                              ##  If the key already exists in the map then the value is updated to the new value
-                              ##  provided. If it does not already exist then a new entry is added for the new key
-                              ##  and value. The capacity will be increased if needed.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | Yes
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[inout] hash_map rcutils_hash_map_t to be updated
-                              ##  \param[in] key hash_map key
-                              ##  \param[in] value value for given hash_map key
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                              ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    importc: "rcutils_hash_map_set", clib.}
+  ##  Set a key value pair in the hash_map, increasing capacity if necessary.
+                                           ##
+                                           ##  If the key already exists in the map then the value is updated to the new value
+                                           ##  provided. If it does not already exist then a new entry is added for the new key
+                                           ##  and value. The capacity will be increased if needed.
+                                           ##
+                                           ##  <hr>
+                                           ##  Attribute          | Adherence
+                                           ##  ------------------ | -------------
+                                           ##  Allocates Memory   | Yes
+                                           ##  Thread-Safe        | No
+                                           ##  Uses Atomics       | No
+                                           ##  Lock-Free          | Yes
+                                           ##
+                                           ##  \param[inout] hash_map rcutils_hash_map_t to be updated
+                                           ##  \param[in] key hash_map key
+                                           ##  \param[in] value value for given hash_map key
+                                           ##  \return #RCUTILS_RET_OK if successful, or
+                                           ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                           ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                           ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
+                                           ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                           ##
 
 proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_hash_map_unset", header: "rcutils/hash_map.h".}
+    cdecl, importc: "rcutils_hash_map_unset", clib.}
   ##
                               ##  Unset a key value pair in the hash_map.
                               ##
@@ -292,7 +295,7 @@ proc rcutils_hash_map_unset*(hash_map: ptr rcutils_hash_map_t; key: pointer): rc
                               ##
 
 proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer): bool {.
-    cdecl, importc: "rcutils_hash_map_key_exists", header: "rcutils/hash_map.h".}
+    cdecl, importc: "rcutils_hash_map_key_exists", clib.}
   ##
                               ##  Get whether or not a key exists.
                               ##
@@ -318,13 +321,49 @@ proc rcutils_hash_map_key_exists*(hash_map: ptr rcutils_hash_map_t; key: pointer
 
 proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                            data: pointer): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_get", header: "rcutils/hash_map.h".}
+    importc: "rcutils_hash_map_get", clib.}
+  ##  Get value given a key.
+                                           ##
+                                           ##  This function can be used to retrieve a shallow copy of the stored data. The data
+                                           ##  pointer must point to a section of memory large enough to copy the full size of
+                                           ##  the data being stored, which is specified when the hash_map in initialized.
+                                           ##
+                                           ##  <hr>
+                                           ##  Attribute          | Adherence
+                                           ##  ------------------ | -------------
+                                           ##  Allocates Memory   | No
+                                           ##  Thread-Safe        | No
+                                           ##  Uses Atomics       | No
+                                           ##  Lock-Free          | Yes
+                                           ##
+                                           ##  \param[in] hash_map rcutils_hash_map_t to be searched
+                                           ##  \param[in] key hash_map key to look up the data for
+                                           ##  \param[out] data A copy of the data stored in the map
+                                           ##  \return #RCUTILS_RET_OK if successful, or
+                                           ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                           ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
+                                           ##  \return #RCUTILS_RET_NOT_FOUND if the key doesn't exist in the map, or
+                                           ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                           ##
+
+proc rcutils_hash_map_get_next_key_and_data*(hash_map: ptr rcutils_hash_map_t;
+    previous_key: pointer; key: pointer; data: pointer): rcutils_ret_t {.cdecl,
+    importc: "rcutils_hash_map_get_next_key_and_data", clib.}
   ##
-                              ##  Get value given a key.
+                              ##  Get the next key in the hash_map, unless NULL is given, then get the first key.
                               ##
-                              ##  This function can be used to retrieve a shallow copy of the stored data. The data
-                              ##  pointer must point to a section of memory large enough to copy the full size of
-                              ##  the data being stored, which is specified when the hash_map in initialized.
+                              ##  This function allows you to iteratively get each key/value pair in the hash_map.
+                              ##
+                              ##  If NULL is given for the previous_key, then the first key in the hash_map is returned.
+                              ##  If that returned key is given as the previous_key for the next call to this function,
+                              ##  then the next key in the hash_map is returned.
+                              ##  If there are no more keys in the hash_map or if the given key is not in the hash_map,
+                              ##  an error will be returned.
+                              ##
+                              ##  The order of the keys in the hash_map is arbitrary and if the hash_map is modified
+                              ##  between calls to this function the behavior is undefined.
+                              ##  If the hash_map is modified then iteration should begin again by passing NULL to
+                              ##  get the first key again.
                               ##
                               ##  <hr>
                               ##  Attribute          | Adherence
@@ -334,62 +373,25 @@ proc rcutils_hash_map_get*(hash_map: ptr rcutils_hash_map_t; key: pointer;
                               ##  Uses Atomics       | No
                               ##  Lock-Free          | Yes
                               ##
-                              ##  \param[in] hash_map rcutils_hash_map_t to be searched
-                              ##  \param[in] key hash_map key to look up the data for
-                              ##  \param[out] data A copy of the data stored in the map
+                              ##  Example:
+                              ##  ```c
+                              ##  printf("entries in the hash_map:\n");
+                              ##  int key = 0, data = 0;
+                              ##  rcutils_ret_t status = rcutils_hash_map_get_next_key(&hash_map, NULL, &key, &data);
+                              ##  while (RCUTILS_RET_OK == status) {
+                              ##    printf("%i: %i\n", key, data);
+                              ##    status = rcutils_hash_map_get_next_key(&hash_map, &key, &key, &data);
+                              ##  }
+                              ##  ```
+                              ##
+                              ##  \param[in] hash_map rcutils_hash_map_t to be queried
+                              ##  \param[in] previous_key NULL to get the first key or the previous key to get the next for
+                              ##  \param[out] key A copy of the next key in the sequence
+                              ##  \param[out] data A copy of the next data in the sequence
                               ##  \return #RCUTILS_RET_OK if successful, or
                               ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
                               ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
-                              ##  \return #RCUTILS_RET_NOT_FOUND if the key doesn't exist in the map, or
+                              ##  \return #RCUTILS_RET_NOT_FOUND if the previous_key doesn't exist in the map, or
+                              ##  \return #RCUTILS_RET_HASH_MAP_NO_MORE_ENTRIES if there is no more data beyound the previous_key, or
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
-
-proc rcutils_hash_map_get_next_key_and_data*(hash_map: ptr rcutils_hash_map_t;
-    previous_key: pointer; key: pointer; data: pointer): rcutils_ret_t {.cdecl,
-    importc: "rcutils_hash_map_get_next_key_and_data",
-    header: "rcutils/hash_map.h".}
-  ##  Get the next key in the hash_map, unless NULL is given, then get the first key.
-                                  ##
-                                  ##  This function allows you to iteratively get each key/value pair in the hash_map.
-                                  ##
-                                  ##  If NULL is given for the previous_key, then the first key in the hash_map is returned.
-                                  ##  If that returned key is given as the previous_key for the next call to this function,
-                                  ##  then the next key in the hash_map is returned.
-                                  ##  If there are no more keys in the hash_map or if the given key is not in the hash_map,
-                                  ##  an error will be returned.
-                                  ##
-                                  ##  The order of the keys in the hash_map is arbitrary and if the hash_map is modified
-                                  ##  between calls to this function the behavior is undefined.
-                                  ##  If the hash_map is modified then iteration should begin again by passing NULL to
-                                  ##  get the first key again.
-                                  ##
-                                  ##  <hr>
-                                  ##  Attribute          | Adherence
-                                  ##  ------------------ | -------------
-                                  ##  Allocates Memory   | No
-                                  ##  Thread-Safe        | No
-                                  ##  Uses Atomics       | No
-                                  ##  Lock-Free          | Yes
-                                  ##
-                                  ##  Example:
-                                  ##  ```c
-                                  ##  printf("entries in the hash_map:\n");
-                                  ##  int key = 0, data = 0;
-                                  ##  rcutils_ret_t status = rcutils_hash_map_get_next_key(&hash_map, NULL, &key, &data);
-                                  ##  while (RCUTILS_RET_OK == status) {
-                                  ##    printf("%i: %i\n", key, data);
-                                  ##    status = rcutils_hash_map_get_next_key(&hash_map, &key, &key, &data);
-                                  ##  }
-                                  ##  ```
-                                  ##
-                                  ##  \param[in] hash_map rcutils_hash_map_t to be queried
-                                  ##  \param[in] previous_key NULL to get the first key or the previous key to get the next for
-                                  ##  \param[out] key A copy of the next key in the sequence
-                                  ##  \param[out] data A copy of the next data in the sequence
-                                  ##  \return #RCUTILS_RET_OK if successful, or
-                                  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                  ##  \return #RCUTILS_RET_NOT_INITIALIZED if the hash_map is invalid, or
-                                  ##  \return #RCUTILS_RET_NOT_FOUND if the previous_key doesn't exist in the map, or
-                                  ##  \return #RCUTILS_RET_HASH_MAP_NO_MORE_ENTRIES if there is no more data beyound the previous_key, or
-                                  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                  ## 
+                              ## 

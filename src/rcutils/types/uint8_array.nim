@@ -1,5 +1,10 @@
 import rcutils_ret
 import ../allocator
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/uint8_array.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 ##  Copyright 2018 Open Source Robotics Foundation, Inc.
 ##
@@ -34,17 +39,17 @@ type
 
 
 proc rcutils_get_zero_initialized_uint8_array*(): rcutils_uint8_array_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_uint8_array",
-    header: "rcutils/uint8_array.h".}
-  ##  Return a zero initialized uint8 array struct.
-                                     ##
-                                     ##  \return rcutils_uint8_array_t a zero initialized uint8 array struct
-                                     ##
+    importc: "rcutils_get_zero_initialized_uint8_array", clib.}
+  ##
+                              ##  Return a zero initialized uint8 array struct.
+                              ##
+                              ##  \return rcutils_uint8_array_t a zero initialized uint8 array struct
+                              ##
 
 proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                                buffer_capacity: csize_t;
                                allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_init", header: "rcutils/uint8_array.h".}
+    cdecl, importc: "rcutils_uint8_array_init", clib.}
   ##
                               ##  Initialize a zero initialized uint8 array struct.
                               ##
@@ -62,7 +67,7 @@ proc rcutils_uint8_array_init*(uint8_array: ptr rcutils_uint8_array_t;
                               ##
 
 proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_uint8_array_fini", header: "rcutils/uint8_array.h".}
+    cdecl, importc: "rcutils_uint8_array_fini", clib.}
   ##
                               ##  Finalize a uint8 array struct.
                               ##
@@ -80,21 +85,20 @@ proc rcutils_uint8_array_fini*(uint8_array: ptr rcutils_uint8_array_t): rcutils_
 
 proc rcutils_uint8_array_resize*(uint8_array: ptr rcutils_uint8_array_t;
                                  new_size: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_uint8_array_resize", header: "rcutils/uint8_array.h".}
-  ##
-                              ##  Resize the internal buffer of the uint8 array.
-                              ##
-                              ##  The internal buffer of the uint8 array can be resized dynamically if needed.
-                              ##  If the new size is smaller than the current capacity, then the memory is
-                              ##  truncated.
-                              ##  Be aware, that this might deallocate the memory and therefore invalidates any
-                              ##  pointers to this storage.
-                              ##
-                              ##  \param[inout] uint8_array pointer to the instance of rcutils_uint8_array_t which is
-                              ##  being resized
-                              ##  \param[in] new_size the new size of the internal buffer
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT if new_size is set to zero
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                              ## 
+    importc: "rcutils_uint8_array_resize", clib.}
+  ##  Resize the internal buffer of the uint8 array.
+                                                 ##
+                                                 ##  The internal buffer of the uint8 array can be resized dynamically if needed.
+                                                 ##  If the new size is smaller than the current capacity, then the memory is
+                                                 ##  truncated.
+                                                 ##  Be aware, that this might deallocate the memory and therefore invalidates any
+                                                 ##  pointers to this storage.
+                                                 ##
+                                                 ##  \param[inout] uint8_array pointer to the instance of rcutils_uint8_array_t which is
+                                                 ##  being resized
+                                                 ##  \param[in] new_size the new size of the internal buffer
+                                                 ##  \return #RCUTILS_RET_OK if successful, or
+                                                 ##  \return #RCUTILS_RET_INVALID_ARGUMENT if new_size is set to zero
+                                                 ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                                 ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                                 ## 

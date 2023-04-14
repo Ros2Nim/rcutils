@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/visibility_control.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2015 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");

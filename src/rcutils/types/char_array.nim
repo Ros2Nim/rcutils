@@ -1,5 +1,10 @@
 import rcutils_ret
 import ../allocator
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/char_array.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 ##  Copyright 2018 Open Source Robotics Foundation, Inc.
 ##
@@ -39,17 +44,17 @@ type
 
 
 proc rcutils_get_zero_initialized_char_array*(): rcutils_char_array_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_char_array",
-    header: "rcutils/char_array.h".}
-  ##  Return a zero initialized char array struct.
-                                    ##
-                                    ##  \return rcutils_char_array_t a zero initialized char array struct
-                                    ##
+    importc: "rcutils_get_zero_initialized_char_array", clib.}
+  ##
+                              ##  Return a zero initialized char array struct.
+                              ##
+                              ##  \return rcutils_char_array_t a zero initialized char array struct
+                              ##
 
 proc rcutils_char_array_init*(char_array: ptr rcutils_char_array_t;
                               buffer_capacity: csize_t;
                               allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_init", header: "rcutils/char_array.h".}
+    cdecl, importc: "rcutils_char_array_init", clib.}
   ##
                               ##  Initialize a zero initialized char array struct.
                               ##
@@ -68,7 +73,7 @@ proc rcutils_char_array_init*(char_array: ptr rcutils_char_array_t;
                               ##
 
 proc rcutils_char_array_fini*(char_array: ptr rcutils_char_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_fini", header: "rcutils/char_array.h".}
+    cdecl, importc: "rcutils_char_array_fini", clib.}
   ##
                               ##  Finalize a char array struct.
                               ##
@@ -88,71 +93,69 @@ proc rcutils_char_array_fini*(char_array: ptr rcutils_char_array_t): rcutils_ret
 
 proc rcutils_char_array_resize*(char_array: ptr rcutils_char_array_t;
                                 new_size: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_resize", header: "rcutils/char_array.h".}
-  ##
-                              ##  Resize the internal buffer of the char array.
-                              ##
-                              ##  The internal buffer of the char array can be resized dynamically if needed.
-                              ##  If the new size is smaller than the current capacity, then the memory is
-                              ##  truncated.
-                              ##  Be aware, that this will deallocate the memory and therefore invalidates any
-                              ##  pointers to this storage.
-                              ##  If the new size is larger, new memory is getting allocated and the existing
-                              ##  content is copied over.
-                              ##  Note that if the array doesn't own the current buffer the function just
-                              ##  allocates a new block of memory and copies the contents of the old buffer
-                              ##  instead of resizing the existing buffer.
-                              ##
-                              ##  \param[in] char_array pointer to the instance of rcutils_char_array_t which is being resized
-                              ##  \param[in] new_size the new size of the internal buffer
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT if new_size is set to zero
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                              ##
+    importc: "rcutils_char_array_resize", clib.}
+  ##  Resize the internal buffer of the char array.
+                                                ##
+                                                ##  The internal buffer of the char array can be resized dynamically if needed.
+                                                ##  If the new size is smaller than the current capacity, then the memory is
+                                                ##  truncated.
+                                                ##  Be aware, that this will deallocate the memory and therefore invalidates any
+                                                ##  pointers to this storage.
+                                                ##  If the new size is larger, new memory is getting allocated and the existing
+                                                ##  content is copied over.
+                                                ##  Note that if the array doesn't own the current buffer the function just
+                                                ##  allocates a new block of memory and copies the contents of the old buffer
+                                                ##  instead of resizing the existing buffer.
+                                                ##
+                                                ##  \param[in] char_array pointer to the instance of rcutils_char_array_t which is being resized
+                                                ##  \param[in] new_size the new size of the internal buffer
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_INVALID_ARGUMENT if new_size is set to zero
+                                                ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                                ##
 
 proc rcutils_char_array_expand_as_needed*(char_array: ptr rcutils_char_array_t;
     new_size: csize_t): rcutils_ret_t {.cdecl, importc: "rcutils_char_array_expand_as_needed",
-                                        header: "rcutils/char_array.h".}
+                                        clib.}
+  ##  Expand the internal buffer of the char array.
+                                              ##
+                                              ##  This function is equivalent to `rcutils_char_array_resize` except that it resizes
+                                              ##  the internal buffer only when it is not big enough.
+                                              ##  If the buffer is already big enough for `new_size`, it returns `RCUTILS_RET_OK` without
+                                              ##  doing anything.
+                                              ##
+                                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being resized
+                                              ##  \param[in] new_size the new size of the internal buffer
+                                              ##  \return #RCUTILS_RET_OK if successful, or
+                                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                              ##
+
+proc rcutils_char_array_vsprintf*(char_array: ptr rcutils_char_array_t;
+                                  format: cstring; args: varargs[pointer]): rcutils_ret_t {.
+    cdecl, importc: "rcutils_char_array_vsprintf", clib.}
   ##
-                              ##  Expand the internal buffer of the char array.
+                              ##  Produce output according to format and args.
                               ##
-                              ##  This function is equivalent to `rcutils_char_array_resize` except that it resizes
-                              ##  the internal buffer only when it is not big enough.
-                              ##  If the buffer is already big enough for `new_size`, it returns `RCUTILS_RET_OK` without
-                              ##  doing anything.
+                              ##  This function is equivalent to `vsprintf(char_array->buffer, format, args)`
+                              ##  except that the buffer grows as needed so a user doesn't have to deal with
+                              ##  memory management.
+                              ##  The `va_list args` will be cloned before being used, so a user can safely
+                              ##  use it again after calling this function.
                               ##
-                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being resized
-                              ##  \param[in] new_size the new size of the internal buffer
+                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
+                              ##  written to
+                              ##  \param[in] format the format string used by the underlying `vsnprintf`
+                              ##  \param[in] args the `va_list` used by the underlying `vsnprintf`
                               ##  \return #RCUTILS_RET_OK if successful, or
                               ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
                               ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
                               ##
 
-proc rcutils_char_array_vsprintf*(char_array: ptr rcutils_char_array_t;
-                                  format: cstring; args: varargs[pointer]): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_vsprintf",
-    header: "rcutils/char_array.h".}
-  ##  Produce output according to format and args.
-                                    ##
-                                    ##  This function is equivalent to `vsprintf(char_array->buffer, format, args)`
-                                    ##  except that the buffer grows as needed so a user doesn't have to deal with
-                                    ##  memory management.
-                                    ##  The `va_list args` will be cloned before being used, so a user can safely
-                                    ##  use it again after calling this function.
-                                    ##
-                                    ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
-                                    ##  written to
-                                    ##  \param[in] format the format string used by the underlying `vsnprintf`
-                                    ##  \param[in] args the `va_list` used by the underlying `vsnprintf`
-                                    ##  \return #RCUTILS_RET_OK if successful, or
-                                    ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                                    ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                                    ##
-
 proc rcutils_char_array_strncat*(char_array: ptr rcutils_char_array_t;
                                  src: cstring; n: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_strncat", header: "rcutils/char_array.h".}
+    cdecl, importc: "rcutils_char_array_strncat", clib.}
   ##
                               ##  Append a string (or part of it) to the string in buffer.
                               ##
@@ -171,26 +174,25 @@ proc rcutils_char_array_strncat*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_strcat*(char_array: ptr rcutils_char_array_t;
                                 src: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_strcat", header: "rcutils/char_array.h".}
-  ##
-                              ##  Append a string to the string in buffer.
-                              ##
-                              ##  This function treats the internal buffer as a string and appends the src string to it.
-                              ##  It is virtually equivalent to `strcat(char_array->buffer, src)` except that the buffer
-                              ##  grows as needed. That is to say, a user can safely use it without doing calculation or
-                              ##  checks on the sizes of the src and buffer.
-                              ##
-                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
-                              ##  appended to
-                              ##  \param[in] src the string to be appended to the end of the string in buffer
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                              ##
+    importc: "rcutils_char_array_strcat", clib.}
+  ##  Append a string to the string in buffer.
+                                                ##
+                                                ##  This function treats the internal buffer as a string and appends the src string to it.
+                                                ##  It is virtually equivalent to `strcat(char_array->buffer, src)` except that the buffer
+                                                ##  grows as needed. That is to say, a user can safely use it without doing calculation or
+                                                ##  checks on the sizes of the src and buffer.
+                                                ##
+                                                ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
+                                                ##  appended to
+                                                ##  \param[in] src the string to be appended to the end of the string in buffer
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                                ##
 
 proc rcutils_char_array_memcpy*(char_array: ptr rcutils_char_array_t;
                                 src: cstring; n: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_char_array_memcpy", header: "rcutils/char_array.h".}
+    cdecl, importc: "rcutils_char_array_memcpy", clib.}
   ##
                               ##  Copy memory to buffer.
                               ##
@@ -207,17 +209,16 @@ proc rcutils_char_array_memcpy*(char_array: ptr rcutils_char_array_t;
 
 proc rcutils_char_array_strcpy*(char_array: ptr rcutils_char_array_t;
                                 src: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_char_array_strcpy", header: "rcutils/char_array.h".}
-  ##
-                              ##  Copy a string to buffer.
-                              ##
-                              ##  This function is equivalent to `strcpy(char_array->buffer, src)` except that the buffer
-                              ##  grows as needed so that `src` will fit without overflow.
-                              ##
-                              ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
-                              ##  copied to
-                              ##  \param[in] src the string to be copied from
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
-                              ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
-                              ## 
+    importc: "rcutils_char_array_strcpy", clib.}
+  ##  Copy a string to buffer.
+                                                ##
+                                                ##  This function is equivalent to `strcpy(char_array->buffer, src)` except that the buffer
+                                                ##  grows as needed so that `src` will fit without overflow.
+                                                ##
+                                                ##  \param[inout] char_array pointer to the instance of rcutils_char_array_t which is being
+                                                ##  copied to
+                                                ##  \param[in] src the string to be copied from
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation failed, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unexpected error occurs.
+                                                ## 

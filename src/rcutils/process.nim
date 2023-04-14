@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/process.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2019 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +25,7 @@ import
   ./visibility_control_macros
 
 
-proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
-                                header: "rcutils/process.h".}
+proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid", clib.}
   ##
                               ##  Retrieve the current process ID.
                               ##
@@ -32,7 +37,7 @@ proc rcutils_get_pid*(): cint {.cdecl, importc: "rcutils_get_pid",
                               ##
 
 proc rcutils_get_executable_name*(allocator: rcutils_allocator_t): cstring {.
-    cdecl, importc: "rcutils_get_executable_name", header: "rcutils/process.h".}
+    cdecl, importc: "rcutils_get_executable_name", clib.}
   ##
                               ##  Retrieve the current executable name.
                               ##

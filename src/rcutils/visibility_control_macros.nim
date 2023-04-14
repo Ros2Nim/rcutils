@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/visibility_control_macros.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");

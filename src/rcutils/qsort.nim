@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/qsort.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,20 +28,19 @@ import
 
 proc rcutils_qsort*(`ptr`: pointer; count: csize_t; size: csize_t;
                     comp: proc (a1: pointer; a2: pointer): cint {.cdecl.}): rcutils_ret_t {.
-    cdecl, importc: "rcutils_qsort", header: "rcutils/qsort.h".}
-  ##
-                              ##  Interface to qsort with rcutils-style argument validation.
-                              ##
-                              ##  This function changes the order of the elements in the array so that they
-                              ##  are in ascending order according to the given comparison function.
-                              ##
-                              ##  This function is thread-safe.
-                              ##
-                              ##  \param[inout] ptr object whose elements should be sorted.
-                              ##  \param[in] count number of elements present in the object.
-                              ##  \param[in] size size of each element, in bytes.
-                              ##  \param[in] comp function used to compare two elements.
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ## 
+    cdecl, importc: "rcutils_qsort", clib.}
+  ##  Interface to qsort with rcutils-style argument validation.
+                                           ##
+                                           ##  This function changes the order of the elements in the array so that they
+                                           ##  are in ascending order according to the given comparison function.
+                                           ##
+                                           ##  This function is thread-safe.
+                                           ##
+                                           ##  \param[inout] ptr object whose elements should be sorted.
+                                           ##  \param[in] count number of elements present in the object.
+                                           ##  \param[in] size size of each element, in bytes.
+                                           ##  \param[in] comp function used to compare two elements.
+                                           ##  \return #RCUTILS_RET_OK if successful, or
+                                           ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                           ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                           ## 

@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/allocator.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2015 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -73,15 +79,15 @@ type
 
 
 proc rcutils_get_zero_initialized_allocator*(): rcutils_allocator_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_allocator",
-    header: "rcutils/allocator.h".}
-  ##  Return a zero initialized allocator.
-                                   ##
-                                   ##  Note that this is an invalid allocator and should only be used as a placeholder.
-                                   ##
+    importc: "rcutils_get_zero_initialized_allocator", clib.}
+  ##
+                              ##  Return a zero initialized allocator.
+                              ##
+                              ##  Note that this is an invalid allocator and should only be used as a placeholder.
+                              ##
 
 proc rcutils_get_default_allocator*(): rcutils_allocator_t {.cdecl,
-    importc: "rcutils_get_default_allocator", header: "rcutils/allocator.h".}
+    importc: "rcutils_get_default_allocator", clib.}
   ##
                               ##  Return a properly initialized rcutils_allocator_t with default values.
                               ##
@@ -103,7 +109,7 @@ proc rcutils_get_default_allocator*(): rcutils_allocator_t {.cdecl,
                               ##
 
 proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
-    cdecl, importc: "rcutils_allocator_is_valid", header: "rcutils/allocator.h".}
+    cdecl, importc: "rcutils_allocator_is_valid", clib.}
   ##
                               ##  Return true if the given allocator has non-null function pointers.
                               ##
@@ -117,13 +123,12 @@ proc rcutils_allocator_is_valid*(allocator: ptr rcutils_allocator_t): bool {.
 
 proc rcutils_reallocf*(pointer: pointer; size: csize_t;
                        allocator: ptr rcutils_allocator_t): pointer {.cdecl,
-    importc: "rcutils_reallocf", header: "rcutils/allocator.h".}
-  ##
-                              ##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
-                              ##
-                              ##  This function will return `NULL` if the allocator is `NULL` or has `NULL` for
-                              ##  function pointer fields.
-                              ##  \param[inout] pointer to the memory which will be reallocated
-                              ##  \param[in] size in bytes
-                              ##  \param[in] allocator to be used to allocate and deallocate memory
-                              ## 
+    importc: "rcutils_reallocf", clib.}
+  ##  Emulate the behavior of [reallocf](https://linux.die.net/man/3/reallocf).
+                                       ##
+                                       ##  This function will return `NULL` if the allocator is `NULL` or has `NULL` for
+                                       ##  function pointer fields.
+                                       ##  \param[inout] pointer to the memory which will be reallocated
+                                       ##  \param[in] size in bytes
+                                       ##  \param[in] allocator to be used to allocate and deallocate memory
+                                       ## 

@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/time.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2015 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +50,7 @@ type
 
 
 proc rcutils_system_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_system_time_now", header: "rcutils/time.h".}
+    cdecl, importc: "rcutils_system_time_now", clib.}
   ##
                               ##
                               ##  This function returns the time from a system clock.
@@ -70,7 +76,7 @@ proc rcutils_system_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_
                               ##
 
 proc rcutils_steady_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_steady_time_now", header: "rcutils/time.h".}
+    cdecl, importc: "rcutils_steady_time_now", clib.}
   ##
                               ##  Retrieve the current time as a rcutils_time_point_value_t object.
                               ##
@@ -98,9 +104,9 @@ proc rcutils_steady_time_now*(now: ptr rcutils_time_point_value_t): rcutils_ret_
 
 proc rcutils_time_point_value_as_nanoseconds_string*(
     time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_time_point_value_as_nanoseconds_string",
-    header: "rcutils/time.h".}
-  ##  Return a time point as nanoseconds in a string.
+    cdecl, importc: "rcutils_time_point_value_as_nanoseconds_string", clib.}
+  ##
+                              ##  Return a time point as nanoseconds in a string.
                               ##
                               ##  The number is always fixed width, with left padding zeros up to the maximum
                               ##  number of digits the time point can represent.
@@ -134,9 +140,9 @@ proc rcutils_time_point_value_as_nanoseconds_string*(
 
 proc rcutils_time_point_value_as_seconds_string*(
     time_point: ptr rcutils_time_point_value_t; str: cstring; str_size: csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_time_point_value_as_seconds_string",
-    header: "rcutils/time.h".}
-  ##  Return a time point as floating point seconds in a string.
+    cdecl, importc: "rcutils_time_point_value_as_seconds_string", clib.}
+  ##
+                              ##  Return a time point as floating point seconds in a string.
                               ##
                               ##  The number is always fixed width, with left padding zeros up to the maximum
                               ##  number of digits for the mantissa that the time point can represent and a

@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/split.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,31 +31,29 @@ import
 proc rcutils_split*(str: cstring; delimiter: char;
                     allocator: rcutils_allocator_t;
                     string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split", header: "rcutils/split.h".}
-  ##
-                              ##  Split a given string with the specified delimiter
-                              ##
-                              ##  \param[in] str string to split
-                              ##  \param[in] delimiter on where to split
-                              ##  \param[in] allocator for allocating new memory for the output array
-                              ##  \param[out] string_array with the split tokens
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
-                              ##
+    cdecl, importc: "rcutils_split", clib.}
+  ##  Split a given string with the specified delimiter
+                                           ##
+                                           ##  \param[in] str string to split
+                                           ##  \param[in] delimiter on where to split
+                                           ##  \param[in] allocator for allocating new memory for the output array
+                                           ##  \param[out] string_array with the split tokens
+                                           ##  \return #RCUTILS_RET_OK if successful, or
+                                           ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                           ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                           ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
+                                           ##
 
 proc rcutils_split_last*(str: cstring; delimiter: char;
                          allocator: rcutils_allocator_t;
                          string_array: ptr rcutils_string_array_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_split_last", header: "rcutils/split.h".}
-  ##
-                              ##  Split a given string on the last occurrence of the specified delimiter
-                              ##
-                              ##  \param[in] str string to split
-                              ##  \param[in] delimiter on where to split
-                              ##  \param[in] allocator for allocating new memory for the output array
-                              ##  \param[out] string_array with the split tokens
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
-                              ## 
+    cdecl, importc: "rcutils_split_last", clib.}
+  ##  Split a given string on the last occurrence of the specified delimiter
+                                                ##
+                                                ##  \param[in] str string to split
+                                                ##  \param[in] delimiter on where to split
+                                                ##  \param[in] allocator for allocating new memory for the output array
+                                                ##  \param[out] string_array with the split tokens
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unknown error occurs
+                                                ## 

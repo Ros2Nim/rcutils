@@ -1,5 +1,10 @@
 import rcutils_ret
 import ../allocator
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/array_list.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 
 type
@@ -39,39 +44,39 @@ type
 
 
 proc rcutils_get_zero_initialized_array_list*(): rcutils_array_list_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_array_list",
-    header: "rcutils/array_list.h".}
-  ##  Return an empty array_list struct.
-                                    ##
-                                    ##  This function returns an empty and zero initialized array_list struct.
-                                    ##  Calling rcutils_array_list_fini() on any non-initialized instance leads
-                                    ##  to undefined behavior.
-                                    ##  Every instance of array_list_t has to either be zero_initialized with this
-                                    ##  function or manually allocated.
-                                    ##
-                                    ##  <hr>
-                                    ##  Attribute          | Adherence
-                                    ##  ------------------ | -------------
-                                    ##  Allocates Memory   | No
-                                    ##  Thread-Safe        | Yes
-                                    ##  Uses Atomics       | No
-                                    ##  Lock-Free          | Yes
-                                    ##
-                                    ##  Example:
-                                    ##
-                                    ##  ```c
-                                    ##  rcutils_array_list_t foo;
-                                    ##  rcutils_array_list_fini(&foo); // undefined behavior!
-                                    ##
-                                    ##  rcutils_array_list_t bar = rcutils_get_zero_initialized_array_list();
-                                    ##  rcutils_array_list_fini(&bar); // ok
-                                    ##  ```
-                                    ##
+    importc: "rcutils_get_zero_initialized_array_list", clib.}
+  ##
+                              ##  Return an empty array_list struct.
+                              ##
+                              ##  This function returns an empty and zero initialized array_list struct.
+                              ##  Calling rcutils_array_list_fini() on any non-initialized instance leads
+                              ##  to undefined behavior.
+                              ##  Every instance of array_list_t has to either be zero_initialized with this
+                              ##  function or manually allocated.
+                              ##
+                              ##  <hr>
+                              ##  Attribute          | Adherence
+                              ##  ------------------ | -------------
+                              ##  Allocates Memory   | No
+                              ##  Thread-Safe        | Yes
+                              ##  Uses Atomics       | No
+                              ##  Lock-Free          | Yes
+                              ##
+                              ##  Example:
+                              ##
+                              ##  ```c
+                              ##  rcutils_array_list_t foo;
+                              ##  rcutils_array_list_fini(&foo); // undefined behavior!
+                              ##
+                              ##  rcutils_array_list_t bar = rcutils_get_zero_initialized_array_list();
+                              ##  rcutils_array_list_fini(&bar); // ok
+                              ##  ```
+                              ##
 
 proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               initial_capacity: csize_t; data_size: csize_t;
                               allocator: ptr rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_init", header: "rcutils/array_list.h".}
+    cdecl, importc: "rcutils_array_list_init", clib.}
   ##
                               ##  Initialize an array list with a given initial capacity.
                               ##
@@ -115,7 +120,7 @@ proc rcutils_array_list_init*(array_list: ptr rcutils_array_list_t;
                               ##
 
 proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_fini", header: "rcutils/array_list.h".}
+    cdecl, importc: "rcutils_array_list_fini", clib.}
   ##
                               ##  Finalize an array list, reclaiming all resources.
                               ##
@@ -139,7 +144,7 @@ proc rcutils_array_list_fini*(array_list: ptr rcutils_array_list_t): rcutils_ret
                               ##
 
 proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_add", header: "rcutils/array_list.h".}
+    cdecl, importc: "rcutils_array_list_add", clib.}
   ##
                               ##  Adds an entry to the list
                               ##
@@ -165,7 +170,7 @@ proc rcutils_array_list_add*(array_list: ptr rcutils_array_list_t; data: pointer
 
 proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_set", header: "rcutils/array_list.h".}
+    cdecl, importc: "rcutils_array_list_set", clib.}
   ##
                               ##  Sets an entry in the list to the provided data
                               ##
@@ -192,32 +197,31 @@ proc rcutils_array_list_set*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_remove*(array_list: ptr rcutils_array_list_t;
                                 index: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_array_list_remove", header: "rcutils/array_list.h".}
-  ##
-                              ##  Removes an entry in the list at the provided index
-                              ##
-                              ##  This function removes data from the list at the specified index. The capacity
-                              ##  of the list will never decrease when entries are removed.
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##  \param[in] array_list to add the data to
-                              ##  \param[in] index the index of the item to remove from the list
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT if index out of bounds, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    importc: "rcutils_array_list_remove", clib.}
+  ##  Removes an entry in the list at the provided index
+                                                ##
+                                                ##  This function removes data from the list at the specified index. The capacity
+                                                ##  of the list will never decrease when entries are removed.
+                                                ##
+                                                ##  <hr>
+                                                ##  Attribute          | Adherence
+                                                ##  ------------------ | -------------
+                                                ##  Allocates Memory   | No
+                                                ##  Thread-Safe        | No
+                                                ##  Uses Atomics       | No
+                                                ##  Lock-Free          | Yes
+                                                ##
+                                                ##  \param[in] array_list to add the data to
+                                                ##  \param[in] index the index of the item to remove from the list
+                                                ##  \return #RCUTILS_RET_OK if successful, or
+                                                ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                                ##  \return #RCUTILS_RET_INVALID_ARGUMENT if index out of bounds, or
+                                                ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                                ##
 
 proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
                              index: csize_t; data: pointer): rcutils_ret_t {.
-    cdecl, importc: "rcutils_array_list_get", header: "rcutils/array_list.h".}
+    cdecl, importc: "rcutils_array_list_get", clib.}
   ##
                               ##  Retrieves an entry in the list at the provided index
                               ##
@@ -242,24 +246,23 @@ proc rcutils_array_list_get*(array_list: ptr rcutils_array_list_t;
 
 proc rcutils_array_list_get_size*(array_list: ptr rcutils_array_list_t;
                                   size: ptr csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_array_list_get_size", header: "rcutils/array_list.h".}
-  ##
-                              ##  Retrieves the size of the provided array_list
-                              ##
-                              ##  This function retrieves the number of items in the provided array list
-                              ##
-                              ##  <hr>
-                              ##  Attribute          | Adherence
-                              ##  ------------------ | -------------
-                              ##  Allocates Memory   | No
-                              ##  Thread-Safe        | No
-                              ##  Uses Atomics       | No
-                              ##  Lock-Free          | Yes
-                              ##
-                              ##
-                              ##  \param[in] array_list list to get the size of
-                              ##  \param[out] size The number of items currently stored in the list
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ## 
+    importc: "rcutils_array_list_get_size", clib.}
+  ##  Retrieves the size of the provided array_list
+                                                  ##
+                                                  ##  This function retrieves the number of items in the provided array list
+                                                  ##
+                                                  ##  <hr>
+                                                  ##  Attribute          | Adherence
+                                                  ##  ------------------ | -------------
+                                                  ##  Allocates Memory   | No
+                                                  ##  Thread-Safe        | No
+                                                  ##  Uses Atomics       | No
+                                                  ##  Lock-Free          | Yes
+                                                  ##
+                                                  ##
+                                                  ##  \param[in] array_list list to get the size of
+                                                  ##  \param[out] size The number of items currently stored in the list
+                                                  ##  \return #RCUTILS_RET_OK if successful, or
+                                                  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                                  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                                  ## 

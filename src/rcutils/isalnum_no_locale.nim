@@ -1,4 +1,9 @@
 converter charToNum*(c: char): int = c.int
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/isalnum_no_locale.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 ##  Copyright 2017 Open Source Robotics Foundation, Inc.
 ##

@@ -2,6 +2,11 @@ import rcutils_ret
 import ../allocator
 import ../allocator
 import ../types/array_list
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/string_map.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
 
 
 type
@@ -34,29 +39,29 @@ type
 
 
 proc rcutils_get_zero_initialized_string_map*(): rcutils_string_map_t {.cdecl,
-    importc: "rcutils_get_zero_initialized_string_map",
-    header: "rcutils/string_map.h".}
-  ##  Return an empty string map struct.
-                                    ##
-                                    ##  This function returns an empty and zero initialized string map struct.
-                                    ##
-                                    ##  Example:
-                                    ##
-                                    ##  ```c
-                                    ##  // Do not do this:
-                                    ##  // rcutils_string_map_t foo;
-                                    ##  // rcutils_string_map_fini(&foo); // undefined behavior!
-                                    ##
-                                    ##  // Do this instead:
-                                    ##  rcutils_string_map_t bar = rcutils_get_zero_initialized_string_map();
-                                    ##  rcutils_string_map_fini(&bar); // ok
-                                    ##  ```
-                                    ##
+    importc: "rcutils_get_zero_initialized_string_map", clib.}
+  ##
+                              ##  Return an empty string map struct.
+                              ##
+                              ##  This function returns an empty and zero initialized string map struct.
+                              ##
+                              ##  Example:
+                              ##
+                              ##  ```c
+                              ##  // Do not do this:
+                              ##  // rcutils_string_map_t foo;
+                              ##  // rcutils_string_map_fini(&foo); // undefined behavior!
+                              ##
+                              ##  // Do this instead:
+                              ##  rcutils_string_map_t bar = rcutils_get_zero_initialized_string_map();
+                              ##  rcutils_string_map_fini(&bar); // ok
+                              ##  ```
+                              ##
 
 proc rcutils_string_map_init*(string_map: ptr rcutils_string_map_t;
                               initial_capacity: csize_t;
                               allocator: rcutils_allocator_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_init", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_init", clib.}
   ##
                               ##  Initialize a rcutils_string_map_t, allocating space for given capacity.
                               ##
@@ -95,7 +100,7 @@ proc rcutils_string_map_init*(string_map: ptr rcutils_string_map_t;
                               ##
 
 proc rcutils_string_map_fini*(string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_fini", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_fini", clib.}
   ##
                               ##  Finalize the previously initialized string map struct.
                               ##
@@ -110,74 +115,72 @@ proc rcutils_string_map_fini*(string_map: ptr rcutils_string_map_t): rcutils_ret
 
 proc rcutils_string_map_get_capacity*(string_map: ptr rcutils_string_map_t;
                                       capacity: ptr csize_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_get_capacity",
-    header: "rcutils/string_map.h".}
-  ##  Get the current capacity of the string map.
-                                    ##
-                                    ##  This function will return the internal capacity of the map, which is the
-                                    ##  maximum number of key value pairs the map could hold.
-                                    ##  The capacity can be set initially with rcutils_string_map_init() or
-                                    ##  with rcutils_string_map_reserve().
-                                    ##  The capacity does not indicate how many key value paris are stored in the
-                                    ##  map, the rcutils_string_map_get_size() function can provide that.
-                                    ##
-                                    ##  \param[in] string_map rcutils_string_map_t to be queried
-                                    ##  \param[out] capacity capacity of the string map
-                                    ##  \return #RCUTILS_RET_OK if successful, or
-                                    ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                    ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
-                                    ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                    ##
+    cdecl, importc: "rcutils_string_map_get_capacity", clib.}
+  ##
+                              ##  Get the current capacity of the string map.
+                              ##
+                              ##  This function will return the internal capacity of the map, which is the
+                              ##  maximum number of key value pairs the map could hold.
+                              ##  The capacity can be set initially with rcutils_string_map_init() or
+                              ##  with rcutils_string_map_reserve().
+                              ##  The capacity does not indicate how many key value paris are stored in the
+                              ##  map, the rcutils_string_map_get_size() function can provide that.
+                              ##
+                              ##  \param[in] string_map rcutils_string_map_t to be queried
+                              ##  \param[out] capacity capacity of the string map
+                              ##  \return #RCUTILS_RET_OK if successful, or
+                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                              ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                              ##
 
 proc rcutils_string_map_get_size*(string_map: ptr rcutils_string_map_t;
                                   size: ptr csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_string_map_get_size", header: "rcutils/string_map.h".}
-  ##
-                              ##  Get the current size of the string map.
-                              ##
-                              ##  This function will return the internal size of the map, which is the
-                              ##  current number of key value pairs in the map.
-                              ##  The size is changed when calling rcutils_string_map_set_no_resize(),
-                              ##  rcutils_string_map_set(), or rcutils_string_map_unset().
-                              ##
-                              ##  \param[in] string_map rcutils_string_map_t to be queried
-                              ##  \param[out] size size of the string map
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    importc: "rcutils_string_map_get_size", clib.}
+  ##  Get the current size of the string map.
+                                                  ##
+                                                  ##  This function will return the internal size of the map, which is the
+                                                  ##  current number of key value pairs in the map.
+                                                  ##  The size is changed when calling rcutils_string_map_set_no_resize(),
+                                                  ##  rcutils_string_map_set(), or rcutils_string_map_unset().
+                                                  ##
+                                                  ##  \param[in] string_map rcutils_string_map_t to be queried
+                                                  ##  \param[out] size size of the string map
+                                                  ##  \return #RCUTILS_RET_OK if successful, or
+                                                  ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                                  ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                                                  ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                                  ##
 
 proc rcutils_string_map_reserve*(string_map: ptr rcutils_string_map_t;
                                  capacity: csize_t): rcutils_ret_t {.cdecl,
-    importc: "rcutils_string_map_reserve", header: "rcutils/string_map.h".}
-  ##
-                              ##  Reserve a given amount of capacity in the map.
-                              ##
-                              ##  Increases the capacity of the map to at least the given size.
-                              ##
-                              ##  If the current capacity is less than requested capacity then the capacity
-                              ##  is increased using the allocator given during initialization of the map in
-                              ##  rcutils_string_map_init().
-                              ##  If the requested capacity is less than the current capacity, the capacity
-                              ##  may be reduced, but no existing key value pairs will be truncated to do so.
-                              ##  In effect, the capacity will be shrunk to fit the number of items in map or
-                              ##  the requested capacity, which ever is larger.
-                              ##
-                              ##  If recovering all resources is desired first call rcutils_string_map_clear()
-                              ##  and then this function with a capacity of 0.
-                              ##
-                              ##  \param[inout] string_map rcutils_string_map_t to have space reserved in
-                              ##  \param[in] capacity requested size to reserve in the map
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                              ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    importc: "rcutils_string_map_reserve", clib.}
+  ##  Reserve a given amount of capacity in the map.
+                                                 ##
+                                                 ##  Increases the capacity of the map to at least the given size.
+                                                 ##
+                                                 ##  If the current capacity is less than requested capacity then the capacity
+                                                 ##  is increased using the allocator given during initialization of the map in
+                                                 ##  rcutils_string_map_init().
+                                                 ##  If the requested capacity is less than the current capacity, the capacity
+                                                 ##  may be reduced, but no existing key value pairs will be truncated to do so.
+                                                 ##  In effect, the capacity will be shrunk to fit the number of items in map or
+                                                 ##  the requested capacity, which ever is larger.
+                                                 ##
+                                                 ##  If recovering all resources is desired first call rcutils_string_map_clear()
+                                                 ##  and then this function with a capacity of 0.
+                                                 ##
+                                                 ##  \param[inout] string_map rcutils_string_map_t to have space reserved in
+                                                 ##  \param[in] capacity requested size to reserve in the map
+                                                 ##  \return #RCUTILS_RET_OK if successful, or
+                                                 ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                                 ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                                 ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                                                 ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                                 ##
 
 proc rcutils_string_map_clear*(string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_clear", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_clear", clib.}
   ##
                               ##  Remove all key value pairs from the map.
                               ##
@@ -194,14 +197,45 @@ proc rcutils_string_map_clear*(string_map: ptr rcutils_string_map_t): rcutils_re
 
 proc rcutils_string_map_set*(string_map: ptr rcutils_string_map_t; key: cstring;
                              value: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_string_map_set", header: "rcutils/string_map.h".}
+    importc: "rcutils_string_map_set", clib.}
+  ##  Set a key value pair in the map, increasing capacity if necessary.
+                                             ##
+                                             ##  The capacity will be increased if needed using rcutils_string_map_reserve().
+                                             ##  Otherwise it is the same as rcutils_string_map_set_no_resize().
+                                             ##
+                                             ##  \see rcutils_string_map_set_no_resize()
+                                             ##
+                                             ##  \param[inout] string_map rcutils_string_map_t to be updated
+                                             ##  \param[in] key map key, must be null terminated c string
+                                             ##  \param[in] value value for given map key, must be null terminated c string
+                                             ##  \return #RCUTILS_RET_OK if successful, or
+                                             ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                             ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
+                                             ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                                             ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                             ##
+
+proc rcutils_string_map_set_no_resize*(string_map: ptr rcutils_string_map_t;
+                                       key: cstring; value: cstring): rcutils_ret_t {.
+    cdecl, importc: "rcutils_string_map_set_no_resize", clib.}
   ##
-                              ##  Set a key value pair in the map, increasing capacity if necessary.
+                              ##  Set a key value pair in the map but only if the map has enough capacity.
                               ##
-                              ##  The capacity will be increased if needed using rcutils_string_map_reserve().
-                              ##  Otherwise it is the same as rcutils_string_map_set_no_resize().
+                              ##  If the map already contains the given key, the existing value will be
+                              ##  replaced with the given value.
+                              ##  If the map does not contain the given key, and the map has additional
+                              ##  unused capacity, then it will store the given key and value in the map.
+                              ##  If there is no unused capacity in the map, then RCUTILS_RET_NOT_ENOUGH_SPACE
+                              ##  is returned.
                               ##
-                              ##  \see rcutils_string_map_set_no_resize()
+                              ##  The given key and value c strings are copied into the map, and so storage is
+                              ##  allocated for them in the map when this function is called if necessary.
+                              ##  The storage allocated for this purpose is reclaimed either when
+                              ##  rcutils_string_map_fini() is called on this map or when using this function
+                              ##  or rcutils_string_map_unset().
+                              ##
+                              ##  Any allocation that occurs in this functions uses the allocator of the map,
+                              ##  which is given when the map is initialized in rcutils_string_map_init().
                               ##
                               ##  \param[inout] string_map rcutils_string_map_t to be updated
                               ##  \param[in] key map key, must be null terminated c string
@@ -210,63 +244,30 @@ proc rcutils_string_map_set*(string_map: ptr rcutils_string_map_t; key: cstring;
                               ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
                               ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
                               ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                              ##  \return #RCUTILS_RET_NOT_ENOUGH_SPACE if map is full, or
                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
                               ##
-
-proc rcutils_string_map_set_no_resize*(string_map: ptr rcutils_string_map_t;
-                                       key: cstring; value: cstring): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_set_no_resize",
-    header: "rcutils/string_map.h".}
-  ##  Set a key value pair in the map but only if the map has enough capacity.
-                                    ##
-                                    ##  If the map already contains the given key, the existing value will be
-                                    ##  replaced with the given value.
-                                    ##  If the map does not contain the given key, and the map has additional
-                                    ##  unused capacity, then it will store the given key and value in the map.
-                                    ##  If there is no unused capacity in the map, then RCUTILS_RET_NOT_ENOUGH_SPACE
-                                    ##  is returned.
-                                    ##
-                                    ##  The given key and value c strings are copied into the map, and so storage is
-                                    ##  allocated for them in the map when this function is called if necessary.
-                                    ##  The storage allocated for this purpose is reclaimed either when
-                                    ##  rcutils_string_map_fini() is called on this map or when using this function
-                                    ##  or rcutils_string_map_unset().
-                                    ##
-                                    ##  Any allocation that occurs in this functions uses the allocator of the map,
-                                    ##  which is given when the map is initialized in rcutils_string_map_init().
-                                    ##
-                                    ##  \param[inout] string_map rcutils_string_map_t to be updated
-                                    ##  \param[in] key map key, must be null terminated c string
-                                    ##  \param[in] value value for given map key, must be null terminated c string
-                                    ##  \return #RCUTILS_RET_OK if successful, or
-                                    ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                                    ##  \return #RCUTILS_RET_BAD_ALLOC if memory allocation fails, or
-                                    ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
-                                    ##  \return #RCUTILS_RET_NOT_ENOUGH_SPACE if map is full, or
-                                    ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                                    ##
 
 proc rcutils_string_map_unset*(string_map: ptr rcutils_string_map_t;
                                key: cstring): rcutils_ret_t {.cdecl,
-    importc: "rcutils_string_map_unset", header: "rcutils/string_map.h".}
-  ##
-                              ##  Unset a key value pair in the map.
-                              ##
-                              ##  The key needs to be a null terminated c string.
-                              ##  If the given key is not found, RCUTILS_RET_STRING_KEY_NOT_FOUND is returned.
-                              ##
-                              ##  \param[inout] string_map rcutils_string_map_t to be updated
-                              ##  \param[in] key map key, must be null terminated c string
-                              ##  \return #RCUTILS_RET_OK if successful, or
-                              ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
-                              ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
-                              ##  \return #RCUTILS_RET_STRING_KEY_NOT_FOUND if key not found, or
-                              ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
-                              ##
+    importc: "rcutils_string_map_unset", clib.}
+  ##  Unset a key value pair in the map.
+                                               ##
+                                               ##  The key needs to be a null terminated c string.
+                                               ##  If the given key is not found, RCUTILS_RET_STRING_KEY_NOT_FOUND is returned.
+                                               ##
+                                               ##  \param[inout] string_map rcutils_string_map_t to be updated
+                                               ##  \param[in] key map key, must be null terminated c string
+                                               ##  \return #RCUTILS_RET_OK if successful, or
+                                               ##  \return #RCUTILS_RET_INVALID_ARGUMENT for invalid arguments, or
+                                               ##  \return #RCUTILS_RET_STRING_MAP_INVALID if the string map is invalid, or
+                                               ##  \return #RCUTILS_RET_STRING_KEY_NOT_FOUND if key not found, or
+                                               ##  \return #RCUTILS_RET_ERROR if an unknown error occurs.
+                                               ##
 
 proc rcutils_string_map_key_exists*(string_map: ptr rcutils_string_map_t;
                                     key: cstring): bool {.cdecl,
-    importc: "rcutils_string_map_key_exists", header: "rcutils/string_map.h".}
+    importc: "rcutils_string_map_key_exists", clib.}
   ##
                               ##  Get whether or not a key exists.
                               ##
@@ -286,24 +287,24 @@ proc rcutils_string_map_key_exists*(string_map: ptr rcutils_string_map_t;
 
 proc rcutils_string_map_key_existsn*(string_map: ptr rcutils_string_map_t;
                                      key: cstring; key_length: csize_t): bool {.
-    cdecl, importc: "rcutils_string_map_key_existsn",
-    header: "rcutils/string_map.h".}
-  ##  Get whether or not a key of known length exists.
-                                    ##
-                                    ##  Identical to rcutils_string_map_key_exists() but without relying on key to be
-                                    ##  a null terminated c string.
-                                    ##
-                                    ##  \param[in] string_map rcutils_string_map_t to be searched
-                                    ##  \param[in] key map key
-                                    ##  \param[in] key_length map key length
-                                    ##  \return `true` if key is in the map, or
-                                    ##  \return `false` if key is not in the map, or
-                                    ##  \return `false` for invalid arguments, or
-                                    ##  \return `false` if the string map is invalid.
-                                    ##
+    cdecl, importc: "rcutils_string_map_key_existsn", clib.}
+  ##
+                              ##  Get whether or not a key of known length exists.
+                              ##
+                              ##  Identical to rcutils_string_map_key_exists() but without relying on key to be
+                              ##  a null terminated c string.
+                              ##
+                              ##  \param[in] string_map rcutils_string_map_t to be searched
+                              ##  \param[in] key map key
+                              ##  \param[in] key_length map key length
+                              ##  \return `true` if key is in the map, or
+                              ##  \return `false` if key is not in the map, or
+                              ##  \return `false` for invalid arguments, or
+                              ##  \return `false` if the string map is invalid.
+                              ##
 
 proc rcutils_string_map_get*(string_map: ptr rcutils_string_map_t; key: cstring): cstring {.
-    cdecl, importc: "rcutils_string_map_get", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_get", clib.}
   ##
                               ##  Get value given a key.
                               ##
@@ -331,7 +332,7 @@ proc rcutils_string_map_get*(string_map: ptr rcutils_string_map_t; key: cstring)
 
 proc rcutils_string_map_getn*(string_map: ptr rcutils_string_map_t;
                               key: cstring; key_length: csize_t): cstring {.
-    cdecl, importc: "rcutils_string_map_getn", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_getn", clib.}
   ##
                               ##  Get value given a key and key length.
                               ##
@@ -350,7 +351,7 @@ proc rcutils_string_map_getn*(string_map: ptr rcutils_string_map_t;
 
 proc rcutils_string_map_get_next_key*(string_map: ptr rcutils_string_map_t;
                                       key: cstring): cstring {.cdecl,
-    importc: "rcutils_string_map_get_next_key", header: "rcutils/string_map.h".}
+    importc: "rcutils_string_map_get_next_key", clib.}
   ##
                               ##  Get the next key in the map, unless NULL is given, then get the first key.
                               ##
@@ -396,7 +397,7 @@ proc rcutils_string_map_get_next_key*(string_map: ptr rcutils_string_map_t;
 
 proc rcutils_string_map_copy*(src_string_map: ptr rcutils_string_map_t;
                               dst_string_map: ptr rcutils_string_map_t): rcutils_ret_t {.
-    cdecl, importc: "rcutils_string_map_copy", header: "rcutils/string_map.h".}
+    cdecl, importc: "rcutils_string_map_copy", clib.}
   ##
                               ##  Copy all the key value pairs from one map into another, overwritting and resizing if needed.
                               ##

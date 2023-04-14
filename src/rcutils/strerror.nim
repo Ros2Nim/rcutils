@@ -1,3 +1,9 @@
+const rcutilsDynlib {.strdefine.}: string = ""
+when rcutilsDynlib == "":
+  {.pragma: clib, header: "rcutils/strerror.h" .}
+else:
+  {.pragma: clib, dynlib: "" & rcutilsDynlib.}
+
 ##  Copyright 2020 Open Source Robotics Foundation, Inc.
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,18 +25,17 @@ import
 
 
 proc rcutils_strerror*(buffer: cstring; buffer_length: csize_t) {.cdecl,
-    importc: "rcutils_strerror", header: "rcutils/strerror.h".}
-  ##
-                              ##  Retrieve the string corresponding to the last system error.
-                              ##
-                              ##  This function retrieves the value of errno, and calls the system-specific
-                              ##  equivalent of `strerror` on it, storing the output in the provided buffer.
-                              ##  If the error message is longer than the buffer, it will be truncated.
-                              ##  The memory for the c-string buffer that is passed in must be managed by the
-                              ##  caller.
-                              ##
-                              ##  This function is thread-safe.
-                              ##
-                              ##  \param[inout] buffer The buffer in which to store the data
-                              ##  \param[in] buffer_length the maximum length of the buffer
-                              ## 
+    importc: "rcutils_strerror", clib.}
+  ##  Retrieve the string corresponding to the last system error.
+                                       ##
+                                       ##  This function retrieves the value of errno, and calls the system-specific
+                                       ##  equivalent of `strerror` on it, storing the output in the provided buffer.
+                                       ##  If the error message is longer than the buffer, it will be truncated.
+                                       ##  The memory for the c-string buffer that is passed in must be managed by the
+                                       ##  caller.
+                                       ##
+                                       ##  This function is thread-safe.
+                                       ##
+                                       ##  \param[inout] buffer The buffer in which to store the data
+                                       ##  \param[in] buffer_length the maximum length of the buffer
+                                       ## 
