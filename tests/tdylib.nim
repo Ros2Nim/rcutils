@@ -22,28 +22,28 @@ suite "compiles":
     check ret == 0
     check time.int64 != 0
 
-  # test "env":
-  #   check true == rcutils_set_env("test".cstring, "valid".cstring)
-  #   check getEnv("test") == "valid"
+  test "env":
+    check true == rcutils_set_env("test".cstring, "valid".cstring)
+    check getEnv("test") == "valid"
     
-  # test "env":
-  #   check true == rcutils_set_env("test".cstring, "valid".cstring)
-  #   check getEnv("test") == "valid"
+  test "env":
+    check true == rcutils_set_env("test".cstring, "valid".cstring)
+    check getEnv("test") == "valid"
     
-  # test "logging":
-  #   check rcutils_logging_initialize() == 0
+  test "logging":
+    check rcutils_logging_initialize() == 0
 
-  #   var loc: rcutils_log_location_t
-  #   loc.function_name = "foo".cstring
-  #   loc.file_name = "none".cstring
-  #   loc.line_number = 137
+    var loc: rcutils_log_location_t
+    loc.function_name = "foo".cstring
+    loc.file_name = "none".cstring
+    loc.line_number = 137
 
-  #   rcutils_log(addr(loc), RCUTILS_LOG_SEVERITY_INFO.cint,
-  #                           "logging".cstring,
-  #                           "testing".cstring)
+    rcutils_log(addr(loc), RCUTILS_LOG_SEVERITY_INFO.cint,
+                            "logging".cstring,
+                            "testing".cstring)
     
-  # test "allocator":
-  #   var ac = rcutils_get_default_allocator()
-  #   check rcutils_allocator_is_valid(addr ac) == true
-  #   check rcutils_allocator_is_valid(addr ac) == true
+  test "allocator":
+    var ac = rcutils_get_default_allocator()
+    check rcutils_allocator_is_valid(addr ac) == true
+    check rcutils_allocator_is_valid(addr ac) == true
 
