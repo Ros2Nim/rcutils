@@ -8,6 +8,7 @@ antExport ImporterConfig:
     sources: "deps/rcutils/include"
     globs: ["**/*.h"]
     headerPrefix: "rcutils/"
+    clibDynPragma: true
     skipFiles:list:
       "rcutils/stdatomic_helper/win32/stdatomic.h"
       "rcutils/stdatomic_helper/gcc/stdatomic.h"
@@ -31,6 +32,7 @@ antExport ImporterConfig:
       - CSrcMods:
         fileMatch: peg"'rcutils/logging.h'"
         deletes:list:
+          LineDelete(match: peg"'g_rcutils_logging_initialized'")
           LineDelete(match: peg"'RCUTILS_LOGGING_AUTOINIT'")
           LineDelete(match: peg"'RCUTILS_DEFAULT_LOGGER_DEFAULT_LEVEL'")
       - CSrcMods:
